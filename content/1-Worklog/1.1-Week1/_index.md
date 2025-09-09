@@ -1,28 +1,28 @@
 ---
 title: "Week 1 Worklog"
-date: "`r Sys.Date()`"
+date: "2025-09-09"
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 1 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Connect with FCJ members and mentors.
+* Find out what working in an office is like.
+* Install Linux, learn how to properly use Linux.
+* Learn the basics of AWS, console and CLI.
+* Complete first and second module.
+
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
+| Day |Task| Start Date | Completion Date | Reference Material |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Mon   | - Read internship rules <br> - Create AWS account <br>  - Learnt what AWS is <br>- Module 1 Lab 1 Done (Learnt how to create AWS account and manage user groups) <br>- Module 1 Lab 7 Done (Learnt how to create budgets of using the service) <br>- Lab 7-3 (Usage Budget) cannot be done, error in usage type dropdown, showing nothing <br>- Module 1 Lab 9 Done (Learnt about AWS Support Services, Its type, benefits and how to request supports) | 08/09/2025 | 08/09/2025 | [Create new AWS Account](https://000001.awsstudygroup.com/1-create-new-aws-account/) <br><br> [MFA for AWS Accounts](https://000001.awsstudygroup.com/2-mfa-setup-for-aws-user-root/) <br><br> [Create Admin Group and Admin User](https://000001.awsstudygroup.com/3-create-admin-user-and-group/) <br><br> [Account Authentication Support](https://000001.awsstudygroup.com/4-verify-new-account/) <br><br> [Explore and Configure AWS Management Console](https://000001.awsstudygroup.com/5-explore-and-configure-the-aws-management-console/) <br><br> [Creating Support Cases and Case Management in AWS](https://000001.awsstudygroup.com/6-support-cases/) |
+| Tue   | - Get started on module 2 <br> - Setup site for workshop report <br> - Installed Hugo <br> - Successfully write worklog using markdown and Hugo | 09/09/2025 | 09/09/2025 | <https://cloudjourney.awsstudygroup.com/> |
+| Wed   | | 08/13/2025 | 08/13/2025 | <https://cloudjourney.awsstudygroup.com/> |
+| Thu   | | 08/14/2025 | 08/15/2025 | <https://cloudjourney.awsstudygroup.com/> |
+| Fri   | | 08/15/2025 | 08/15/2025 | <https://cloudjourney.awsstudygroup.com/> |
 
 
 ### Week 1 Achievements:
