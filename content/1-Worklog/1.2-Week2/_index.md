@@ -13,13 +13,14 @@ pre: " <b> 1.2. </b> "
 * Help team members get up to speed
 * Discuss workshop ideas
 * Do first optional research: AWS Architechture
+* Check out AWS Skill Builder
 
 ### Tasks to be carried out this week:
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
 | 2   |- Started on module 4 theory                                          | 08/11/2025 | 08/11/2025      |
-| 3   | - Lab 6: Succesfully used Linux via EC2 instance to: <br>&npsv; + Install and use MySQL database <br>&npsv; + Install and run a web apllication, can be connected to from browers <br> - Created Load Balancer and Target Groups <br> -Paessler Webstress tool has been discontinued, cannot test using the given tool  <br> - Successfully install Siege on EC2 instance to test  <br> - Succesfully hosted database using RDS                                         | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 3   |- Lab 4 <br> - Lab 6: Succesfully used Linux via EC2 instance to: <br>&npsv; + Install and use MySQL database <br>&npsv; + Install and run a web apllication, can be connected to from browers <br> - Created Load Balancer and Target Groups <br> -Paessler Webstress tool has been discontinued, cannot test using the given tool  <br> - Successfully install Siege on EC2 instance to test  <br> - Succesfully hosted database using RDS                                         | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 4   | - Learnt about S3 <br> Module 4 3, module 4 4 <br> - Help teammate with Lab 5: - Instruction of lab 5 is missing some steps: 5.5.3: The given script didnt connect the RDS database to MySQL, 5.5.5: The instruction is missing the step: cd to the application folder <> | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
 | 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
 | 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
