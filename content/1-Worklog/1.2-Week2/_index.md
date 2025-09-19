@@ -22,7 +22,7 @@ pre: " <b> 1.2. </b> "
 | 3   |- Lab 4 <br> - Lab 6: RDS Database <br> -Succesfully used Linux via EC2 instance to: <br>&emsp; + Install and use MySQL database <br>&emsp; + Install and run a web apllication, can be connected to from browers <br> - Created Load Balancer and Target Groups <br> -Paessler Webstress tool has been discontinued, cannot test using the given tool  <br> - Successfully install Siege on EC2 instance to load test: &emsp; +  <br> - Succesfully hosted database using RDS                                         | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
 | 4   | - Learnt about S3 Bucket <br> Module 4 3, module 4 4 <br> - Help teammate with Lab 5: - Instruction of lab 5 is missing some steps: 5.5.3: The given script didnt connect the RDS database to MySQL, 5.5.5: The instruction is missing the step: cd to the application folder <> | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
 | 5   | - Joined the AWS Cloud Day 2025 HCM Event: Gen AI and Data track <br>&emsp; | 08/14/2025 | 08/15/2025      | <https://pages.awscloud.com/vietnam-cloud-day-hcmc-connect-edition.html?trk=a3b21210-a497-4502-8073-982920d98210&sc_channel=em#agenda/> |
-| 6   | - Retry Lab 10| 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 6   | - Retry Lab 10 <br> - Reformat worklog <br> - Write about Cloud Day 2025 experience | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
 
 ### Week 2 Achievements:
