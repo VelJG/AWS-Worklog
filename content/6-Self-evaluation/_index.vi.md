@@ -1,6 +1,6 @@
 ---
 title: "Tự đánh giá"
-date: "`r Sys.Date()`"
+date: "2000-01-01"
 weight: 6
 chapter: false
 pre: " <b> 6. </b> "

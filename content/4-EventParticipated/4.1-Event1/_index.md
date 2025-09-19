@@ -1,6 +1,6 @@
 ---
-title: "Event: Vietnam Cloud Day 2025 : Ho Chi Minh City Connect Edition for Builders"
-date: "18/09/2025"
+title: "Event 1"
+date: "2005-09-18"
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
@@ -46,86 +46,44 @@ pre: " <b> 4.1. </b> "
     + **Governance**
 - Ensuring that organizations can effectively manage and utilize their data for advanced analytics and AI initiatives
 
-#### Domain-Driven Design (DDD)
+#### Building the Future: Gen AI Adoption and Roadmap on AWS
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
+- Showcase comprehensive vision, emerging trends, and strategic roadmap for the adoption of Generative AI (GenAI) technologies
+- Cover key AWS services and initiatives designed to empower organizations in leveraging GenAI to drive innovation and efficiency.
 
-#### Event-Driven Architecture
+#### AI-Driven Development Lifecycle (AI-DLC)
 
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
+- Transformative, AI-centric approach reshaping the future of software implementation by fully embedding AI as a central collaborator in the entire software development lifecycle.
 
-#### Compute Evolution
+#### Securing Generative AI Applications with AWS: Fundamentals and Best Practices
 
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
+- Explore security challenges at each layer of the generative AI stack—infrastructure, models, and applications.
+- Showcase built-in security measures such as encryption, zero-trust architecture, continuous monitoring, and fine-grained access controls to safeguard generative AI workloads
 
-#### Amazon Q Developer
+#### Beyond Automation: AI Agents as Your Ultimate Productivity Multipliers
 
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+- Paradigm shift where AI agents aren't just tools, but intelligent partners actively driving businesses forward.
+- Showcases upcoming AWS AI Agent: AWS Quick Suite
 
 ### Key Takeaways
 
-#### Design Mindset
+#### Bridging Theory with Industry Application
+- **The Critical Role of Data Pipelines in AI/ML**: The sessions confirmed that sophisticated AI/ML models are entirely dependent on a robust data foundation. This involves more than just storing data; it requires well-architected pipelines for ingestion, processing, governance, and storage, which is the true engineering challenge before any model training can begin.
+- **The Shift Towards AI-Augmented Development and Asynchronous Systems**: The future of software development was presented as a combination of two powerful trends. First, the **AI-Driven Development Lifecycle (AI-DLC)**, with tools like **Amazon Q Developer**, is set to become a standard, augmenting developer productivity. Second, there was a strong preference for **event-driven, asynchronous communication** over traditional synchronous APIs to build more resilient and scalable systems.
+- **Integrating Security Throughout the Development Lifecycle**: Security is not a final step but an integral part of the entire development process. The discussions covered securing the full stack—from the cloud infrastructure and the AI models to the application layer itself.
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
-
-#### Technical Architecture
-
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
-
-#### Modernization Strategy
-
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
-
-### Applying to Work
-
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
+***
 
 ### Event Experience
 
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
+The **"Vietnam Cloud Day 2025"** was incredibly valuable as it provided a clear, practical context for many of the theoretical concepts I'm learning in my Computer Technology program. It bridged the gap between academic knowledge and real-world industry application.
 
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
+The showcase of the **AI-Driven Development Lifecycle** was a highlight. It suggested a paradigm shift where the developer's role evolves to focus more on architecture and complex problem-solving, while AI assistants like **Amazon Q Developer** handle more of the routine code generation and debugging. Learning about upcoming technologies like the **AWS Quick Suite** for AI agents provided a compelling look at the next wave of automation.
 
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
+I left the event with a much clearer understanding of current industry trends and a better sense of which skills to focus on to prepare for future internships and my career. 
 
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
-
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
-
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
+***
 
 #### Some event photos
-*Add your event photos here*  
-
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+![Selfie](/images/4-Event/SelfieCD.jpg)
+![Group picture](/images/4-Event/GroupCD.jpg)
