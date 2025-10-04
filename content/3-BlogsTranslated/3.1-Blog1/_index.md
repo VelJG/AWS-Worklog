@@ -36,7 +36,7 @@ Gần đây, họ đã thêm [SLM Data Platform](https://www.syncron.com/slm-pla
 
 Cách tiếp cận toàn diện này điều chỉnh việc ra quyết định giữa các phòng ban, thay thế các hệ thống bị phân mảnh bằng một giải pháp thống nhất, dựa trên dữ liệu và tăng cường sự linh hoạt, cho phép các doanh nghiệp nhanh chóng phản ứng với sự thay đổi của thị trường. _Hình 1_ minh họa cách SLM Data Platform tích hợp dữ liệu trên giải pháp của Syncron và các nguồn dữ liệu.
 
-[](https://d2908q01vomqb2.cloudfront.net/77de68daecd823babbb58edb1c8e14d7106e83bb/2025/07/07/fig1-syncron-1024x413-1.png)
+![](https://d2908q01vomqb2.cloudfront.net/77de68daecd823babbb58edb1c8e14d7106e83bb/2025/07/07/fig1-syncron-1024x413-1.png)
 
 _Hình 1 – Service Lifecycle Management (SLM) của Syncron_
 
@@ -70,7 +70,7 @@ Cung cấp quyền truy cập dữ liệu theo thời gian thực, cho phép kh�
 
 Hình 2 làm nổi bật kiến trúc cấp cao của SLM Data Platform của Syncron.
 
-[](https://d2908q01vomqb2.cloudfront.net/77de68daecd823babbb58edb1c8e14d7106e83bb/2025/07/07/fig2-syncron-1024x413-1.png)
+![](https://d2908q01vomqb2.cloudfront.net/77de68daecd823babbb58edb1c8e14d7106e83bb/2025/07/07/fig2-syncron-1024x413-1.png)
 
 _Hình 2 – Kiến trúc SLM Data Platform của Syncron_
 
@@ -79,7 +79,7 @@ _Hình 2 – Kiến trúc SLM Data Platform của Syncron_
 Các giải pháp của Syncron trên AWS cung cấp một nền tảng mạnh mẽ để khai thác dữ liệu, thúc đẩy việc ra quyết định thông minh hơn và phối hợp giữa các phòng ban. Dù là tối ưu hóa kho hàng, định giá, hay thực hiện dịch vụ, SLM Data Platform đều cung cấp một nền tảng dữ liệu mạnh mẽ cho các trường hợp sử dụng phân tích và AI.
 
 Để tìm hiểu thêm về cách nền tảng SLM của Syncron có thể phù hợp với quy trình hậu mãi của bạn, hãy nói chuyện với [đội ngũ quản lý tài khoản](https://partnercentral.awspartner.com/PartnerConnect?id=0010h00001jDZUnAAO&source=Blog&campaign=) của chúng tôi.
-[](https://partnercentral.awspartner.com/PartnerConnect?id=0010h00001dpdPDAAY&source=Blog&campaign=).
+![](https://partnercentral.awspartner.com/PartnerConnect?id=0010h00001dpdPDAAY&source=Blog&campaign=).
 
 * * *
 
