@@ -5,24 +5,18 @@ weight: 1
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 5 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
-
+* Complete proposal
 ### Tasks to be carried out this week:
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Lab 35: <br>&emsp; + Succesfully setted up data stream using Kinesis <br>&emsp; + Successfully sent sample data to the S3 using Kinesis Data Generator with Amazon Cognito <br>&emsp; + Learnt how to use AWS Glue Crawler to map data to S3 Bucket <br>&emsp; + Used Athena to query data  <br>&emsp; + USed AWS Glue Notebook to build dataset based on sample data <br>&emsp; + Used Athena to analyze data and visualized with QuickSight  | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2   |- Family matters | 08/11/2025 | 08/11/2025      |
+| 3   |- Family matters | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 4   |- Learnt how to create AWS Architecture Diagrams <br> - Created team's workshop architecture diagram | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 5   | - Lab 35: <br>&emsp; + Succesfully setted up data stream using Kinesis <br>&emsp; + Successfully sent sample data to the S3 using Kinesis Data Generator with Amazon Cognito <br>&emsp; + Learnt how to use AWS Glue Crawler to map data to S3 Bucket <br>&emsp; + Used Athena to query data  <br>&emsp; + USed AWS Glue Notebook to build dataset based on sample data <br>&emsp; + Used Athena to analyze data and visualized with QuickSight <br> - Updated the architecure diagram based on changes in the workshop proposal <br> - Started researching Guard Duty to use as a component of the workshop  | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 6   | | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
 
 ### Week 5 Achievements:
