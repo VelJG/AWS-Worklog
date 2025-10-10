@@ -224,8 +224,12 @@ TAGS: [aws fault injection simulator](https://aws.amazon.com/blogs/mt/tag/aws-fa
 
 ### Ozgur Canibeyaz
 
+![](https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/06/13/canibeya.jpeg)
+
+
 Ozgur là Senior Technical Account Manager tại Amazon Web Services với 8 năm kinh nghiệm. Ozgur giúp khách hàng tối ưu hóa việc sử dụng AWS của họ bằng cách xử lý các thách thức kỹ thuật, khám phá các cơ hội tiết kiệm chi phí, đạt được sự xuất sắc trong vận hành và xây dựng các dịch vụ sáng tạo bằng các sản phẩm AWS.
 
 ### Pablo Colazurdo
+![](https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/06/15/pablo.png)
 
 Pablo là Principal Solutions Architect tại AWS, nơi anh ấy thích giúp khách hàng ra mắt các dự án thành công trên Cloud. Anh ấy có nhiều năm kinh nghiệm làm việc với nhiều công nghệ đa dạng và đam mê học hỏi những điều mới. Pablo lớn lên ở Argentina nhưng hiện đang tận hưởng cơn mưa ở Ireland trong khi nghe nhạc, đọc sách hoặc chơi D&D với các con.
