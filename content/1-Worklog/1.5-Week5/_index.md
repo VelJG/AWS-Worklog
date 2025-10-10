@@ -16,7 +16,7 @@ pre: " <b> 1.5. </b> "
 | 3   |- Family matters | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
 | 4   |- Learnt how to create AWS Architecture Diagrams <br> - Created team's workshop architecture diagram | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
 | 5   | - Lab 35: <br>&emsp; + Succesfully setted up data stream using Kinesis <br>&emsp; + Successfully sent sample data to the S3 using Kinesis Data Generator with Amazon Cognito <br>&emsp; + Learnt how to use AWS Glue Crawler to map data to S3 Bucket <br>&emsp; + Used Athena to query data  <br>&emsp; + USed AWS Glue Notebook to build dataset based on sample data <br>&emsp; + Used Athena to analyze data and visualized with QuickSight <br> - Updated the architecure diagram based on changes in the workshop proposal <br> - Started researching Guard Duty to use as a component of the workshop  | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 6   |- Lab 40: <br>&emsp; + Praticed more with AWS Glue and Athena, used it to analyze AWS Monthy Cost data | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
 
 ### Week 5 Achievements:
