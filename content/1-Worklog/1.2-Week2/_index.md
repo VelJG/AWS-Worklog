@@ -29,31 +29,20 @@ pre: " <b> 1.2. </b> "
 
 ### Week 2 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Successfully completed core labs in Module 3 (focused on RDS, Load Balancing) and made significant progress in Module 4.
 
-* Successfully created and configured an AWS Free Tier account.
+* Utilized Linux via EC2 to install and run a MySQL database and deploy a connected web application, successfully hosting the database using RDS (Relational Database Service).
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Successfully set up a Load Balancer and Target Groups, and adapted to a discontinued tool by installing and using Siege on an EC2 instance to execute a load test.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Configured Route 53 endpoints and rules for a hybrid DNS setup, including the deployment of Microsoft AD.
 
-* Used AWS CLI to perform basic operations such as:
+* Gained foundational knowledge in cloud monitoring by viewing metrics and graphs in CloudWatch, configuring Alarms and Dashboards, and learning the basics of log management.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* Team Support: Assisted team members with labs, identifying and helping to correct missing steps in the lab instructions.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Attended the AWS Cloud Day 2025 HCM Event (Gen AI and Data track).
+
+* Optional Research: Completed research on the AWS Well-Architected Framework, documenting its purpose, usage steps, key features (Lenses, Templates, Profiles), and security considerations.
+
+* Technical Setup: Successfully installed Ubuntu on a machine and reformatted the worklog for improved presentation.

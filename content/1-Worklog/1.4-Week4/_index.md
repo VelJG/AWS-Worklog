@@ -9,7 +9,8 @@ pre: " <b> 1.4. </b> "
 
 
 ### Week 4 Objectives:
-
+- Complete Module 6
+- Started on proposal
 
 ### Tasks to be carried out this week:
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
@@ -18,36 +19,27 @@ pre: " <b> 1.4. </b> "
 | 3   |- Lab 43: Guide is broken, the link doesnt go anywhere, going by video &emsp; + Downloaded Schema Conversion Tool &emsp; + Downloaded MSSQL in EC2 Instance &emsp; + No SQL script was given, trying with custom basic MSSQL Database &emsp; + No CloudFormation Stack was given, skipping Oracle Database connection &emsp; + Installed MySQL on EC2 Instance &emsp; + Migrated custom MSSQL Database to MySQL Database using AWS Schema Conversion Tool &emsp; + Created custom RDS to test migration task &emsp; + Attempted to migrate from local machine to RDS &emsp; + Tried to use AWS Replication Agent: Unsuccessful due to it being made for Window/Linux server only, not OS &emsp; + Tried to portforward PC to be used as an endpoint &emsp; + Failed portforwarding, skipping this step for now &emsp; +   | 08/12/2025 | 08/12/2025      | https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html |
 | 4   |- Found out AWS account's credits are all expired from doing lab 12 <br> - Wrote a support case <br> - Stopping labs for now <br> - Focus on research about team's proposal| 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
 | 5   |- Continued doing labs by aquiring help from team member: Created an IAM User with admin privilege for me to log in and use their account <br> - Lab 35: <br> - Translate first blog| 2/10/2025 | 2/10/2025      | https://aws.amazon.com/blogs/apn/achieve-excellence-in-aftermarket-service-with-syncron-and-aws/ |
-| 6   |- Joined the AI-Driven Development Life Cycle: Reimagining Software Engineering event <br> - Translate second and third blog| 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 6   |- Joined the AI-Driven Development Life Cycle: Reimagining Software Engineering event <br> - Translated second and third blog| 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
 
 ### Week 4 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Completed a comprehensive review of core database concepts including RDBMS, keys, indexes, partitioning, OLTP/OLAP, and AWS-specific database services.
 
-* Successfully created and configured an AWS Free Tier account.
+* Gained theoretical knowledge of the features and use cases for AWS RDS, Amazon Aurora (e.g., Backtrack, Global Database), Amazon Redshift (Data Warehouse for OLAP), and Amazon ElastiCache (caching with Redis/Memcached).
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Database Migration: Attempted a complex database migration lab, demonstrating resourcefulness by:
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+  *  Sourcing a custom MSSQL Database and installing necessary services on an EC2 instance due to broken lab guides.
 
-* Used AWS CLI to perform basic operations such as:
+  *  Successfully migrating the custom MSSQL database to MySQL using the AWS Schema Conversion Tool (SCT).
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* Identified and addressed the issue of expired AWS credits by raising a support case.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Secured continuation of lab work by setting up an IAM User with admin privileges on a team member's account.
+
+* Formulated a proposal for the team's upcoming workshop with teammates.
+
+* Completed the translation of three blogs.
+
+* Attended the AI-Driven Development Life Cycle: Reimagining Software Engineering event.
