@@ -8,7 +8,7 @@ pre: " <b> 1.5. </b> "
 
 ### Week 5 Objectives:
 
-* Complete proposal
+* Continue building and planning proposal
 ### Tasks to be carried out this week:
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
@@ -21,31 +21,18 @@ pre: " <b> 1.5. </b> "
 
 ### Week 5 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Proposal Development: Successfully created and updated the team's workshop architecture diagram, learning the best practices for diagramming AWS architecture.
 
-* Successfully created and configured an AWS Free Tier account.
+* Data Streaming and Analytics: Completed a complex lab focused on data pipelines:
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+  *  Successfully set up a real-time data stream using Amazon Kinesis.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+  *  Used Kinesis Data Generator with Amazon Cognito to send sample data to S3.
 
-* Used AWS CLI to perform basic operations such as:
+  * Learned to use AWS Glue Crawler to map data and AWS Glue Notebook to build datasets.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+  * Used Amazon Athena for querying data and Amazon QuickSight for data visualization.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Practiced advanced analytics skills by using AWS Glue and Athena to analyze AWS Monthly Cost data.
+
+* Workshop Research: Initiated research on Amazon GuardDuty as a component for the team's workshop proposal.
