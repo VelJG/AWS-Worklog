@@ -21,7 +21,7 @@ pre: " <b> 1.6. </b> "
 
 | 2   | - Reformmatted and refined worklog, add informations and summaries <br> - Succesfully deployed worklog to Github Page | 08/11/2025 | 08/11/2025||
 | 3   | - Team meeting <br> - Changed workshop proposal: Focusing more on using Guard Duty to detect intrusion activities instead of making own Lambda detection due to requirement of large dataset and long time  <br> - Redrew AWS Architecture: Added Guard Duty replacing CloudWatch Alarm <br> - Wrote a draft of the proposal with basic function and rough cost estimation | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 4   | - Team meeting <br> - Changed workshop proposal: &emsp; + Added the usage of EventBridge &emsp; + Recalculated cost, added  <br> - Updated AWS Architecture: Added EventBridge icon | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
 | 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
 | 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
