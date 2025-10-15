@@ -18,6 +18,7 @@ pre: " <b> 1.6. </b> "
 ### Tasks to be carried out this week:
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
+
 | 2   | - Reformmatted and refined worklog, add informations and summaries <br> - Succesfully deployed worklog to Github Page | 08/11/2025 | 08/11/2025||
 | 3   | - Team meeting <br> - Changed workshop proposal: Focusing more on using Guard Duty to detect intrusion activities instead of making own Lambda detection due to requirement of large dataset and long time  <br> - Redrew AWS Architecture: Added Guard Duty replacing CloudWatch Alarm <br> - Wrote a draft of the proposal with basic function and rough cost estimation | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
 | 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
