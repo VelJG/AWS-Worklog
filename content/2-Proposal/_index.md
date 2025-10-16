@@ -82,8 +82,8 @@ The budget estimate was calculated on [AWS Pricing Calculator](https://calculato
 | Amazon S3 | 5gb free + 3gb extra | $0.21 |
 | AWS Lambda  | 1 million free requests + compute charges | $0.02 |
 | Amazon Athena  | 50 queries per month and 1gb of data scanned per query | $0.24 |
-| **TOTAL ESTIMATED MONTHLY COST** | | **~$8.22 USD** |
-| **TOTAL ESTIMATED ANNUAL COST** | | **~$98.64 USD** |
+| **TOTAL ESTIMATED MONTHLY COST** | | **~$8.21 USD** |
+| **TOTAL ESTIMATED ANNUAL COST** | | **~$98.52 USD** |
 
 ### 7. Risk Assessment
 | Risk | Impact | Probability | Mitigation Strategies |
