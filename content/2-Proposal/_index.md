@@ -1,115 +1,97 @@
 ---
 title: "Proposal"
-date: "2000-01-01"
+date: "2025-10-16"
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
-
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+# Proposal: Automated AWS Incident Response and Forensics Workshop
 
 ### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
+The Automated Incident Response and Forensics Workshop is designed to provide security and operations teams with hands-on experience building an AWS-native, cost-optimized security automation pipeline. The architecture leverages Amazon GuardDuty's machine learning for detection, instantly contains threats via AWS Lambda orchestrated by Amazon EventBridge, and utilizes AWS Glue and Athena for cost-efficient forensic analysis. The system is configured for minimal operational cost, making it ideal for an enterprise pilot.
 
 ### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
+#### What’s the Problem?
+Traditional security operations rely on manual log review and human intervention, leading to high Mean Time To Respond (MTTR) and potentially devastating breaches. Manual incident investigation is slow and expensive due to unoptimized querying of massive log files.
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+#### The Solution
+The proposed solution implements a complete Detection-to-Containment-to-Forensics lifecycle using serverless AWS services:
+- **Detection**: Managed threat intelligence via GuardDuty eliminates the need for complex custom rule writing.
+- **Orchestration**: Amazon EventBridge ensures the GuardDuty finding instantly triggers multiple response actions.
+- **Containment**: Lambda is triggered by EventBridge to instantly quarantine compromised EC2 instances and disable suspicious IAM keys.
+- **Forensics**: S3, Glue, and Athena form a highly cost-optimized data lake, allowing analysts to run fast, targeted SQL queries on historical logs (VPC Flow Logs, CloudTrail) to generate comprehensive incident reports.
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+#### Benefits and Return on Investment
+- **Reduced MTTR**: Containment time drops from minutes/hours (manual) to **seconds** (automated Lambda).
+- **Cost Efficiency**: AWS Glue optimizes S3 logs into partitioned, columnar data (Parquet), drastically cutting the data scanned and thus minimizing Athena query costs.
+- **Security Insight**: Provides an immutable, centralized data foundation for all security investigations.
+- **Monthly Costs**: Estimated minimal recurring cost of **~$10.79 USD**, demonstrating responsible cloud financial management.
 
 ### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
+The architecture implements a serverless, event-driven pipeline that covers the entire IR lifecycle.
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+![AWS Incident Response and Forensics Architecture](/images/2-Proposal/AWSWorkshopArchitecture.jpg)
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
-
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
-
-### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+#### AWS Services Used
+| Service | Purpose in IR Lifecycle |
+|---|---|
+| **AWS GuardDuty** | **Detection**: Analyzes CloudTrail & VPC Flow Logs for threats, generates high-fidelity findings. |
+| **Amazon EventBridge** | **Event Routing**: Receives GuardDuty findings and routes them to multiple response targets (Lambda and SNS). |
+| **Main Lambda (IR Orchestrator)** | **Containment**: Executes immediate response actions (Quarantine EC2, Disable IAM Key). |
+| **AWS SSM (Forensic)** | **Forensics**: Provides secure remote execution to collect evidence inside the EC2 OS. |
+| **Amazon SNS** | **Alerting**: Publishes GuardDuty findings for multi-channel delivery. |
+| **Notification Lambda (Alert Dispatch)** | **Custom Channel**: Translates SNS alerts into messages for a 3rd party platform (e.g., Telegram). |
+| **EC2 Instance** | **Target**: The asset being monitored and quarantined. |
+| **Amazon S3** | **Storage**: Immutable Data Lake for all historical log data. |
+| **AWS Glue (Crawler)** | **Optimization**: Catalogs log data, enabling efficient, low-cost querying. |
+| **Athena** | **Analysis**: Serverless SQL engine for querying S3 logs during forensics. |
 
 ### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
+#### Implementation Phases (6 Weeks)
+The workshop focuses on deploying the automation and optimization layers over six weeks:
+- **Week 1-2 (Foundation)**: Enable core logging (CloudTrail, VPC Flow Logs, EC2 logs to CloudWatch). Activate GuardDuty and monitor initial findings.
+- **Week 3-4 (Automation)**: Develop and deploy the two Lambda functions (Main Logic and Notification Logic). Configure EventBridge rules to connect GuardDuty to the Lambdas and SNS. Finalize AWS SSM runbooks for forensic data collection.
+- **Week 5-6 (Optimization & Launch)**: Configure AWS Glue Crawler to run weekly on S3 log data. Test complex forensic queries using Athena to validate cost-efficiency. Conduct a full simulation of an intrusion and automated response.
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+#### Technical Requirements
+- **Detection**: GuardDuty configuration for high/medium severity findings.
+- **Response Logic**: Python/Node.js SDK knowledge within Lambda to call the EC2 and IAM APIs. Configuration of EventBridge rules for event routing.
+- **Forensics**: Proficiency in setting up S3 and Glue for a data lake (including partitioning) and using standard SQL queries in Athena.
+- **Best Practice**: EC2 instance runs only as needed (e.g., 168 hours/month) to minimize operational costs.
 
 ### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
+| Timeline | Key Milestones and Achievements |
+|---|---|
+| **Week 1-2: Logging & Detection** | <ul><li>All foundational logging (CloudTrail, VPC Flow Logs) enabled.</li><li>Amazon GuardDuty fully enabled and generating sample findings.</li><li>Initial S3 log archiving policies created.</li></ul> |
+| **Week 3-4: Automation & Alerting** | <ul><li>Main Lambda deployed and tested (Quarantine EC2 action validated).</li><li>Notification Lambda deployed and integrated with Telegram.</li><li>AWS SSM configured for secure remote forensic data collection.</li></ul> |
+| **Week 5-6: Forensics & Optimization** | <ul><li>AWS Glue Crawler configured and running weekly to catalog S3 logs.</li><li>Athena queries validated against optimized log data for cost efficiency.</li><li>Full simulation of intrusion → detection → containment → forensics completed.</li></ul> |
 
 ### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
+The budget assumes a single-person lab environment operating under a paid tier model, demonstrating cost control.
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
-
-Total: $0.7/month, $8.40/12 months
-
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+| Infrastructure Costs | Assumption | Cost/Month (USD) |
+|---|---|---|
+| EC2 Instance (t3.micro) | 168 hours/month (7 days runtime) | $1.75 |
+| EBS Volume (30GB gp3) | Persistent storage for OS/SSM Agent | $2.40 |
+| Amazon GuardDuty | Continuous monitoring, minimal log volume | ~$5.00 |
+| AWS Glue (Crawler) | 4 weekly runs @ 10 min each | ~$0.59 |
+| CloudWatch Logs/S3/Lambda/SNS/Athena | Minimal operational overhead | ~$1.05 |
+| **TOTAL ESTIMATED MONTHLY COST** | | **~$10.79 USD** |
+| **TOTAL ESTIMATED ANNUAL COST** | | **~$129.48 USD** |
 
 ### 7. Risk Assessment
-#### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
-
-#### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
-
-#### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+| Risk | Impact | Probability | Mitigation Strategies |
+|---|---|---|---|
+| **GuardDuty Cost Spike** (Due to high event volume) | Medium | Medium | Implement strict budget alarms; utilize the 30-day Free Trial to establish a cost baseline. |
+| **Logic Failure** (Lambda fails to quarantine) | High | Low | Robust error handling and logging in Lambda; Main Lambda will log failure to a Dead-Letter Queue (DLQ) for investigation and re-execution. Immediate manual intervention via the EC2 console. |
+| **Unoptimized Athena Query** | Medium | Medium | Strict requirement to use AWS Glue partitioning and Parquet conversion to minimize data scanned. |
 
 ### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
-#### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+#### Technical Improvements:
+- Achieve an **Automated MTTR** (Mean Time To Respond) for EC2 quarantine measured in seconds.
+- Establish an AWS-native, cost-optimized **Security Data Lake**.
+- Gain hands-on expertise with key security and analysis tools: GuardDuty, Lambda, SSM, Glue, and Athena.
+
+#### Long-term Value:
+- Provides a reusable, security-hardened **reference architecture** for future production cloud environments.
+- Generates a foundational dataset of security logs suitable for **AI/ML security research** (anomaly detection model training).
