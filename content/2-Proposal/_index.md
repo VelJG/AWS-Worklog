@@ -68,17 +68,22 @@ The workshop focuses on deploying the automation and optimization layers over si
 | **Week 5-6: Forensics & Optimization** | <ul><li>AWS Glue Crawler configured and running weekly to catalog S3 logs.</li><li>Athena queries validated against optimized log data for cost efficiency.</li><li>Full simulation of intrusion → detection → containment → forensics completed.</li></ul> |
 
 ### 6. Budget Estimation
-The budget assumes a single-person lab environment operating under a paid tier model, demonstrating cost control.
+The budget assumes a lab environment operating under a paid tier model, demonstrating cost control.
+
+The budget estimate was calculated on [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=131622a3245dca4f1c3a5b934a9dbbf210470fc9).
+
 
 | Infrastructure Costs | Assumption | Cost/Month (USD) |
 |---|---|---|
-| EC2 Instance (t3.micro) | 168 hours/month (7 days runtime) | $1.75 |
-| EBS Volume (30GB gp3) | Persistent storage for OS/SSM Agent | $2.40 |
-| Amazon GuardDuty | Continuous monitoring, minimal log volume | ~$5.00 |
-| AWS Glue (Crawler) | 4 weekly runs @ 10 min each | ~$0.59 |
-| CloudWatch Logs/S3/Lambda/SNS/Athena | Minimal operational overhead | ~$1.05 |
-| **TOTAL ESTIMATED MONTHLY COST** | | **~$10.79 USD** |
-| **TOTAL ESTIMATED ANNUAL COST** | | **~$129.48 USD** |
+| EC2 Instance (t3.micro) | 168 hours/month (7 days runtime) | $2.88 |
+| Amazon GuardDuty | Continuous monitoring, minimal log volume | ~$2.08 |
+| AWS Glue (Crawler) | 4 weekly runs @ 15 min each | $0.44 |
+| Amazon CloudWatch  | 1000 GetMetric calls | $2.34 |
+| Amazon S3 | 5gb free + 3gb extra | $0.21 |
+| AWS Lambda  | 1 million free requests + compute charges | $0.02 |
+| Amazon Athena  | 50 queries per month and 1gb of data scanned per query | $0.24 |
+| **TOTAL ESTIMATED MONTHLY COST** | | **~$8.22 USD** |
+| **TOTAL ESTIMATED ANNUAL COST** | | **~$98.64 USD** |
 
 ### 7. Risk Assessment
 | Risk | Impact | Probability | Mitigation Strategies |
