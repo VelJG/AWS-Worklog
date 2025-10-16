@@ -25,7 +25,7 @@ The proposed solution implements a complete Detection-to-Containment-to-Forensic
 - **Reduced MTTR**: Containment time drops from minutes/hours (manual) to **seconds** (automated Lambda).
 - **Cost Efficiency**: AWS Glue optimizes S3 logs into partitioned, columnar data (Parquet), drastically cutting the data scanned and thus minimizing Athena query costs.
 - **Security Insight**: Provides an immutable, centralized data foundation for all security investigations.
-- **Monthly Costs**: Estimated minimal recurring cost of **~$10.79 USD**, demonstrating responsible cloud financial management.
+- **Monthly Costs**: Estimated minimal recurring cost of **~$8.21 USD**, demonstrating responsible cloud financial management.
 
 ### 3. Solution Architecture
 The architecture implements a serverless, event-driven pipeline that covers the entire IR lifecycle.
