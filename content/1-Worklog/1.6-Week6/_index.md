@@ -14,11 +14,11 @@ pre: " <b> 1.6. </b> "
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
 
-| 2   | - Reformmatted and refined worklog, add informations and summaries <br> - Succesfully deployed worklog to Github Page | 08/11/2025 | 08/11/2025||
-| 3   | - Team meeting <br> - Changed workshop proposal: Focusing more on using Guard Duty to detect intrusion activities instead of making own Lambda detection due to requirement of large dataset and long time  <br> - Redrew AWS Architecture: Added Guard Duty replacing CloudWatch Alarm <br> - Wrote a draft of the proposal with basic function and rough cost estimation | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Team meeting <br> - Changed workshop proposal: <br> &emsp; + Added the usage of EventBridge <br> &emsp; + Recalculated cost, added  <br> - Updated AWS Architecture: Added EventBridge icon | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   |  | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2   | - Reformmatted and refined the worklog, adding information and summaries <br> - Succesfully deployed worklog to Github Page | 13/10/2025 | 13/10/2025||
+| 3   | - Team meeting <br> - Revised workshop proposal: Focused on using Guard Duty for intrusion dectection instead of a custom Lambda function due to the need for a large dataset and extensive development time.  <br> - Redrew AWS Architecture: Added Guard Duty replacing CloudWatch Alarm <br> - Wrote a draft of the proposal with outlining basic function and providing a rough cost estimate. | 14/10/2025 | 14/10/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 4   | - Team meeting <br> - Revised workshop proposal: <br> &emsp; + Incorporated the use of EventBridge <br> &emsp; + Recalculated costs by reducing the EC2 instance type and active hours <br> - Updated AWS Architecture: Include the EventBridge icon and connections | 15/10/2025 | 15/10/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 5   | - Updated AWS Arhitecture: Rearranged icons for clearer connections. <br> - Translated proposal draft into markdown code and successfully  deployed it to Github Pages | 16/10/2025 | 16/10/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 6   | | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
 
 ### Week 6 Achievements:
