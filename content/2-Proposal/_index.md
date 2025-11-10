@@ -31,7 +31,7 @@ The proposed solution implements a complete Detection-to-Containment-to-Forensic
 
 ### 3. Solution Architecture
 The architecture implements a serverless, event-driven pipeline that covers the entire IR lifecycle.
-![AWS Incident Response and Forensics Architecture](AWS-Worklog/static/images/2-Proposal/AWSWorkshopArchitecture-DataPrep.jpg)
+ ![AWS Incident Response and Forensics Architecture](/AWS-Worklog/static/images/2-Proposal/AWSWorkshopArchitecture-DataPrep.jpg)
 _AWS Incident Response and Forensics Architecture_
 
 #### AWS Services Used
