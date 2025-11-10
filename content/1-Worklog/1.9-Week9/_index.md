@@ -23,17 +23,17 @@ pre: " <b> 1.9. </b> "
 
 * Architecture Refinement:
 
-  * Updated the Incident Response (IR) mechanism to use a **Step Functions Workflow** instead of a single Lambda function.
+  * Updated the Incident Response (IR) mechanism to use a Step Functions Workflow instead of a single Lambda function.
 
-  * Introduced a **Custom Dashboard** (static website hosted on S3) that uses Athena to query the data lake.
+  * Introduced a Custom Dashboard (static website hosted on S3) that uses Athena to query the data lake.
   
-  * Created a new **DATA PREP group** in the architecture, including a Raw Log S3 Bucket and an ETL Lambda to manage log transformation.
+  * Created a new DATA PREP group in the architecture, including a Raw Log S3 Bucket and an ETL Lambda to manage log transformation.
 
 * Successfully configured the pipeline to export GuardDuty Findings to an S3 Bucket.
 
 * Built and deployed a custom ETL Lambda pipeline** to process CloudTrail logs, triggered by new objects in the Raw Log S3 Bucket.
 
-* Successfully crawled and queried the processed CloudTrail logs** using Glue/Athena to demonstrate CloudTrail Events.
+* Successfully crawled and queried the processed CloudTrail logs using Glue/Athena to demonstrate CloudTrail Events.
 
 * Team members completed half of the IR Step Functions Workflow, with the EC2 quarantine function being finished.
 

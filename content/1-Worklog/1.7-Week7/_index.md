@@ -22,31 +22,28 @@ pre: " <b> 1.7. </b> "
 
 ### Week 7 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* GuardDuty Hands-on Practice:
 
-* Successfully created and configured an AWS Free Tier account.
+  * Completed the "Getting Hands on with Amazon GuardDuty - AWS Virtual Workshop" and an in-depth lab generated with Amazon Q.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+  * Successfully created, tested, and triggered various GuardDuty findings through console settings, EC2 activity, and CloudTrail API access.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+  * Established an easier testing environment by successfully triggering sample alerts with different severities and types via CloudShell CLI.
 
-* Used AWS CLI to perform basic operations such as:
+  * Successfully configured a GuardDuty threat list to trigger findings from EC2 Instance activities.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* Workshop Proposal and Architecture Advancement:
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+  * Updated the proposal and AWS Architecture to incorporate AWS Detective for further investigation capabilities.
+
+  * Added a plan for CDK implementation following the completion of the workshop.
+
+  * Initiated research into mentor recommendations, including custom-coded data visualization and saving GuardDuty findings to S3 for analysis.
+
+  * Formulated a new workshop idea for a simple data graphing page hosted in S3 using API Gateway and Lambda.
+
+* Service Integration and Automation:
+
+  * Successfully configured EventBridge to act upon specific GuardDuty findings.
+  
+  * Automated notifications by sending SNS emails to team members and triggering a Lambda script based on GuardDuty alerts.

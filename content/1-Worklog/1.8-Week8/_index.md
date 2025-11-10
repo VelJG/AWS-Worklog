@@ -24,31 +24,22 @@ pre: " <b> 1.8. </b> "
 
 ### Week 8 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* FCJ Midterm Exam:
+ 
+  * Completed extensive practice by taking five AWS Certified Cloud Practitioner practice tests and answering 40 AWS Certified Solutions Architect Associate practice questions.   
 
-* Successfully created and configured an AWS Free Tier account.
+  * Collaborated with team members to create 500 AWS Flashcards for concentrated learning.
+ 
+  * Completed the AWS Cloud Essentials Quiz and rewatched FCJ Bootcamp study videos.
+ 
+  * Successfully participated in the FCJ Midterm Exam and achieved a score of 320/650.
+ 
+  * Reviewed key AWS services and the AWS Well-Architected Labs to understand the main pillars.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Workshop Architecture Research:
+  
+  * Researched the architectural integration of AWS Step Functions to orchestrate Incident Response actions, replacing a single Lambda function.
+ 
+  * Successfully performed foundational logging tasks by exporting log streams to S3 and creating a CloudTrail to track S3 and Lambda activities.
+  
+  * Explored the use of AWS Kinesis Data Firehose for continuous, reliable log streaming to S3.
