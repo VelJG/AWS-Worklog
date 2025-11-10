@@ -5,7 +5,7 @@ weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-# Proposal: Automated AWS Incident Response and Forensics Workshop (Revised)
+# Proposal: Automated AWS Incident Response and Forensics Workshop
 
 ### 1. Executive Summary
 The Automated Incident Response and Forensics Workshop is designed to provide security and operations teams with hands-on experience building an AWS-native, cost-optimized security automation pipeline. The revised architecture leverages Amazon GuardDuty for detection, instantly orchestrates complex threat containment via **AWS Step Functions**, and utilizes a robust, modern data pipeline with **AWS Glue and Athena** for highly efficient forensic analysis and visualization via a **CloudFront/S3 Dashboard**. The system is configured for high automation and minimal operational cost, making it ideal for an enterprise pilot.
