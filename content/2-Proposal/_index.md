@@ -8,7 +8,7 @@ pre: " <b> 2. </b> "
 # Proposal: Automated AWS Incident Response and Forensics Workshop
 
 ### 1. Executive Summary
-The Automated Incident Response and Forensics Workshop is designed to provide security and operations teams with hands-on experience building an AWS-native, cost-optimized security automation pipeline. The revised architecture leverages Amazon GuardDuty for detection, instantly orchestrates complex threat containment via **AWS Step Functions**, and utilizes a robust, modern data pipeline with **AWS Glue and Athena** for highly efficient forensic analysis and visualization via a **CloudFront/S3 Dashboard**. The system is configured for high automation and minimal operational cost, making it ideal for an enterprise pilot.
+The Automated Incident Response and Forensics Workshop is designed to provide security and operations teams with hands-on experience building an AWS-native, cost-optimized security automation pipeline. The revised architecture leverages **Amazon GuardDuty** for detection, instantly orchestrates response workflow that automatically selects and executes the correct containment strategy based on the type of security finding via **AWS Step Functions**, and utilizes a robust, modern data pipeline with **AWS Glue and Athena** for highly efficient forensic analysis and visualization via a **CloudFront/S3 Dashboard**. The system is configured for high automation and minimal operational cost, making it ideal for an enterprise pilot.
 
 ### 2. Problem Statement
 #### What’s the Problem?
@@ -37,7 +37,7 @@ _AWS Incident Response and Forensics Architecture_
 #### AWS Services Used
 | Service | Purpose in IR Lifecycle |
 |---|---|
-| **AWS Step Functions** | **Orchestration**: Central workflow engine that coordinates complex, branching response actions based on finding type (e.g., IAM vs. EC2). |
+| **AWS Step Functions** | **Orchestration**: Central workflow engine that coordinates branching response actions based on finding type (e.g., IAM vs. EC2). |
 | **AWS GuardDuty** | **Detection**: Analyzes CloudTrail & VPC Flow Logs for threats, generates high-fidelity findings. |
 | **Amazon EventBridge** | **Event Routing**: Receives GuardDuty findings and routes them to the Step Functions workflow and the alerting pipeline. |
 | **AWS Lambda (SSM Forensic)** | **Containment/Forensics**: Executes immediate containment actions and triggers secure remote execution via SSM to collect evidence. |
@@ -64,7 +64,6 @@ The phases now reflect the development of the Step Functions workflow and the se
 - **Detection/Orchestration**: GuardDuty configuration. **Step Functions** State Language (ASL) and decision/branching logic for IAM vs EC2 threats. Configuration of EventBridge rules for event routing.
 - **Response Logic**: Python/Node.js SDK knowledge within Lambda to call the EC2 and IAM APIs. Finalize AWS SSM runbooks for forensic data collection.
 - **Forensics/Reporting**: Proficiency in setting up S3, **CloudWatch**, **ETL Lambda**, and Glue for a data lake (including partitioning). Setting up **API Gateway** and **CloudFront** for secure, global report delivery.
-- **Best Practice**: EC2 instance runs only as needed (e.g., 168 hours/month) to minimize operational costs.
 
 ### 5. Timeline & Milestones
 | Timeline | Key Milestones and Achievements |
@@ -75,23 +74,23 @@ The phases now reflect the development of the Step Functions workflow and the se
 
 ### 6. Budget Estimation
 
-The budget estimate was calculated on [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=131622a3245dca4f1c3a5b934a9dbbf210470fc9).
+The budget estimate was calculated on [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=6b763a94cdaf502737f0797f62cc374ca3d289a4).
 
 | Infrastructure Costs | Assumption | Cost/Month (USD) |
 |---|---|---|
 | EC2 Instance (t3.micro) | 168 hours/month (7 days runtime) | $2.88 |
 | Amazon GuardDuty | Continuous monitoring, minimal log volume | ~$2.08 |
-| AWS Glue (Crawler) | 4 weekly runs @ 15 min each | $0.44 |
-| Amazon S3 | 5gb free + 3gb extra | $0.21 |
-| **AWS Lambda (IR Orchestrator + ETL)** | 1 million free requests + compute charges (two functions) | $0.05 |
-| **AWS Step Functions** | 10,000 state transitions/month | $0.03 |
+| AWS Glue (Crawler) | 3 Glue Crawlers: One each for CloudWatch, CloudTrail and GuardDuty log (4 weekly runs @ 10 min each + On Demand runs = 6 runs/months)  | $1.32 |
+| Amazon S3 | 5GB free + 3GB extra | $0.21 |
+| AWS Lambda (IR Orchestrator + ETL) | 1 million free requests + compute charges  | $0.02 |
+| AWS Step Functions | 1,000 state transitions/month | $0.00 |
 | Amazon Athena | 50 queries per month and 1gb of data scanned per query | $0.24 |
-| **API Gateway** | 1 million requests/month (free tier) + minimal overage | $0.05 |
-| **CloudFront** | 100GB Data Transfer Out (global distribution) | $4.14 |
-| Amazon CloudWatch | 1000 GetMetric calls | $0.00 |
-| **Route 53** | 1 hosted zone | $0.50 |
-| **TOTAL ESTIMATED MONTHLY COST** | | **~$10.12 USD** |
-| **TOTAL ESTIMATED ANNUAL COST** | | **~$121.44 USD** |
+| API Gateway | 1 million requests/month (free tier) + minimal overage | $0.05 |
+| CloudFront | 5GB Data Transfer (Always Free Tier) | $0.00  |
+| Amazon CloudWatch | 10 metrics and 5GB log ingestion Free Tier + 1GB Extra | $0.83 |
+| Route 53 | 1 hosted zone | $0.50 |
+| **TOTAL ESTIMATED MONTHLY COST** | | **~$8.13 USD** |
+| **TOTAL ESTIMATED ANNUAL COST** | | **~$97.56 USD** |
 
 ### 7. Risk Assessment
 | Risk | Impact | Probability | Mitigation Strategies |
