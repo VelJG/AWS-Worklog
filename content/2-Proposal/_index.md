@@ -5,98 +5,106 @@ weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-# Proposal: Automated AWS Incident Response and Forensics Workshop
+# Proposal: Automated AWS Incident Response and Forensics Workshop (Revised)
 
 ### 1. Executive Summary
-The Automated Incident Response and Forensics Workshop is designed to provide security and operations teams with hands-on experience building an AWS-native, cost-optimized security automation pipeline. The architecture leverages Amazon GuardDuty's machine learning for detection, instantly contains threats via AWS Lambda orchestrated by Amazon EventBridge, and utilizes AWS Glue and Athena for cost-efficient forensic analysis. The system is configured for minimal operational cost, making it ideal for an enterprise pilot.
+The Automated Incident Response and Forensics Workshop is designed to provide security and operations teams with hands-on experience building an AWS-native, cost-optimized security automation pipeline. The revised architecture leverages Amazon GuardDuty for detection, instantly orchestrates complex threat containment via **AWS Step Functions**, and utilizes a robust, modern data pipeline with **AWS Glue and Athena** for highly efficient forensic analysis and visualization via a **CloudFront/S3 Dashboard**. The system is configured for high automation and minimal operational cost, making it ideal for an enterprise pilot.
 
 ### 2. Problem Statement
 #### What’s the Problem?
-Traditional security operations rely on manual log review and human intervention, leading to high Mean Time To Respond (MTTR) and potentially devastating breaches. Manual incident investigation is slow and expensive due to unoptimized querying of massive log files.
+Traditional security operations rely on manual log review and human intervention, leading to high Mean Time To Respond (MTTR) and complex, non-standard containment actions. Manual incident investigation is slow and expensive due to unoptimized querying of massive log files.
 
 #### The Solution
 The proposed solution implements a complete Detection-to-Containment-to-Forensics lifecycle using serverless AWS services:
 - **Detection**: Managed threat intelligence via GuardDuty eliminates the need for complex custom rule writing.
-- **Orchestration**: Amazon EventBridge ensures the GuardDuty finding instantly triggers multiple response actions.
-- **Containment**: Lambda is triggered by EventBridge to instantly quarantine compromised EC2 instances and disable suspicious IAM keys.
-- **Forensics**: S3, Glue, and Athena form a highly cost-optimized data lake, allowing analysts to run fast, targeted SQL queries on historical logs (VPC Flow Logs, CloudTrail) to generate comprehensive incident reports.
+- **Orchestration**: **AWS Step Functions**, triggered by Amazon EventBridge, provides a state machine for orchestrating complex, branching incident response actions based on the threat type (IAM vs. EC2).
+- **Containment**: Lambda and AWS SSM are executed via Step Functions to instantly quarantine compromised EC2 instances and disable suspicious IAM keys.
+- **Alerting & Collaboration**: Amazon SNS and the **Notification Lambda (Alert Dispatch)** ensure real-time, immediate alerts are pushed to the **3rd party messaging platform (e.g., Telegram)**, enabling **immediate team communication**.
+- **Forensics & Reporting**: **CloudWatch** aggregates logs, an **ETL Lambda** processes raw data, and S3, Glue, and Athena form a highly cost-optimized data lake. Reports are delivered globally via **CloudFront** and an **S3 Static Dashboard**.
 
 #### Benefits and Return on Investment
-- **Reduced MTTR**: Containment time drops from minutes/hours (manual) to **seconds** (automated Lambda).
+- **Reduced MTTR**: Complex, multi-step containment is standardized and executed in **seconds** using the Step Functions workflow.
+- **Real-time Communication**: **Instant, out-of-band notification** via 3rd party messaging ensures the security team is aware and can **collaborate immediately**, bypassing potentially compromised email or network systems.
 - **Cost Efficiency**: AWS Glue optimizes S3 logs into partitioned, columnar data (Parquet), drastically cutting the data scanned and thus minimizing Athena query costs.
-- **Security Insight**: Provides an immutable, centralized data foundation for all security investigations.
-- **Monthly Costs**: Estimated minimal recurring cost of **~$8.21 USD**, demonstrating responsible cloud financial management.
+- **Global Insight**: **CloudFront** distributes the security dashboard globally for fast, reliable reporting.
+- **Monthly Costs**: Estimated low recurring cost of **~$10.12 USD** (revised), demonstrating responsible cloud financial management.
 
 ### 3. Solution Architecture
 The architecture implements a serverless, event-driven pipeline that covers the entire IR lifecycle.
-
-![AWS Incident Response and Forensics Architecture](/images/2-Proposal/AWSWorkshopArchitecture.jpg)
+![AWS Incident Response and Forensics Architecture](AWS-Worklog/static/images/2-Proposal/AWSWorkshopArchitecture-DataPrep.jpg)
 _AWS Incident Response and Forensics Architecture_
 
 #### AWS Services Used
 | Service | Purpose in IR Lifecycle |
 |---|---|
+| **AWS Step Functions** | **Orchestration**: Central workflow engine that coordinates complex, branching response actions based on finding type (e.g., IAM vs. EC2). |
 | **AWS GuardDuty** | **Detection**: Analyzes CloudTrail & VPC Flow Logs for threats, generates high-fidelity findings. |
-| **Amazon EventBridge** | **Event Routing**: Receives GuardDuty findings and routes them to multiple response targets (Lambda and SNS). |
-| **Main Lambda (IR Orchestrator)** | **Containment**: Executes immediate response actions (Quarantine EC2, Disable IAM Key). |
-| **AWS SSM (Forensic)** | **Forensics**: Provides secure remote execution to collect evidence inside the EC2 OS. |
-| **Amazon SNS** | **Alerting**: Publishes GuardDuty findings for multi-channel delivery. |
-| **Notification Lambda (Alert Dispatch)** | **Custom Channel**: Translates SNS alerts into messages for a 3rd party platform (e.g., Telegram). |
-| **EC2 Instance** | **Target**: The asset being monitored and quarantined. |
-| **Amazon S3** | **Storage**: Immutable Data Lake for all historical log data. |
-| **AWS Glue (Crawler)** | **Optimization**: Catalogs log data, enabling efficient, low-cost querying. |
+| **Amazon EventBridge** | **Event Routing**: Receives GuardDuty findings and routes them to the Step Functions workflow and the alerting pipeline. |
+| **AWS Lambda (SSM Forensic)** | **Containment/Forensics**: Executes immediate containment actions and triggers secure remote execution via SSM to collect evidence. |
+| **AWS Lambda (ETL)** | **Data Transformation**: Runs the Extract, Transform, Load process to convert raw logs into an optimized, queryable format. |
+| **Amazon CloudWatch** | **Log Aggregation**: Central hub for collecting and monitoring VPC Flow Logs and CloudTrail data before processing. |
+| **Amazon S3** | **Storage**: Immutable Data Lake for all historical log data and host for the static dashboard. |
+| **AWS Glue (Crawler)** | **Optimization**: Catalogs and partitions processed log data, enabling efficient, low-cost querying. |
 | **Athena** | **Analysis**: Serverless SQL engine for querying S3 logs during forensics. |
+| **API Gateway** | **Integration**: Provides secure HTTPS endpoints for external systems to query Athena results and populate the dashboard. |
+| **CloudFront** | **Delivery**: Distributes the S3 Static Dashboard globally with low latency and high availability. |
+| **Route 53** | **DNS**: Provides reliable, managed DNS resolution for the CloudFront distribution and any other infrastructure. |
+| **Amazon SNS** | **Alerting**: Publishes GuardDuty findings for multi-channel delivery. |
+| **Notification Lambda (Alert Dispatch)** | **Custom Channel**: Translates SNS alerts into messages for a **3rd party messaging platform (e.g., Telegram)** to enable **real-time team communication and ChatOps.** |
+| **EC2 Instance** | **Target**: The asset being monitored and quarantined. |
 
 ### 4. Technical Implementation
 #### Implementation Phases (6 Weeks)
-The workshop focuses on deploying the automation and optimization layers over six weeks:
-- **Week 1-2 (Foundation)**: Enable core logging (CloudTrail, VPC Flow Logs, EC2 logs to CloudWatch). Activate GuardDuty and monitor initial findings.
-- **Week 3-4 (Automation)**: Develop and deploy the two Lambda functions (Main Logic and Notification Logic). Configure EventBridge rules to connect GuardDuty to the Lambdas and SNS. Finalize AWS SSM runbooks for forensic data collection.
-- **Week 5-6 (Optimization & Launch)**: Configure AWS Glue Crawler to run weekly on S3 log data. Test complex forensic queries using Athena to validate cost-efficiency. Conduct a full simulation of an intrusion and automated response.
+The phases now reflect the development of the Step Functions workflow and the setup of the enhanced data pipeline.
+- **Week 1-2 (Foundation & Data Prep)**: Enable core logging (CloudTrail, VPC Flow Logs, EC2 logs to **CloudWatch**). Activate GuardDuty. Set up the log aggregation (CloudWatch to S3), **ETL Lambda**, and initial Glue Crawler configuration.
+- **Week 3-4 (Advanced Automation)**: Design and deploy the **Step Functions workflow** for orchestration, including the decision logic for IAM vs. EC2 findings. Finalize the Lambda/SSM components for containment actions. Configure EventBridge to trigger the Step Functions state machine.
+- **Week 5-6 (Forensics, Reporting & Launch)**: Configure **API Gateway** to query Athena results. Deploy the **S3 Static Dashboard**, configure **CloudFront** distribution, and set up **Route 53** for domain resolution. Conduct a full simulation of an intrusion and automated response.
 
 #### Technical Requirements
-- **Detection**: GuardDuty configuration for high/medium severity findings.
-- **Response Logic**: Python/Node.js SDK knowledge within Lambda to call the EC2 and IAM APIs. Configuration of EventBridge rules for event routing.
-- **Forensics**: Proficiency in setting up S3 and Glue for a data lake (including partitioning) and using standard SQL queries in Athena.
+- **Detection/Orchestration**: GuardDuty configuration. **Step Functions** State Language (ASL) and decision/branching logic for IAM vs EC2 threats. Configuration of EventBridge rules for event routing.
+- **Response Logic**: Python/Node.js SDK knowledge within Lambda to call the EC2 and IAM APIs. Finalize AWS SSM runbooks for forensic data collection.
+- **Forensics/Reporting**: Proficiency in setting up S3, **CloudWatch**, **ETL Lambda**, and Glue for a data lake (including partitioning). Setting up **API Gateway** and **CloudFront** for secure, global report delivery.
 - **Best Practice**: EC2 instance runs only as needed (e.g., 168 hours/month) to minimize operational costs.
 
 ### 5. Timeline & Milestones
 | Timeline | Key Milestones and Achievements |
 |---|---|
-| **Week 1-2: Logging & Detection** | <ul><li>All foundational logging (CloudTrail, VPC Flow Logs) enabled.</li><li>Amazon GuardDuty fully enabled and generating sample findings.</li><li>Initial S3 log archiving policies created.</li></ul> |
-| **Week 3-4: Automation & Alerting** | <ul><li>Main Lambda deployed and tested (Quarantine EC2 action validated).</li><li>Notification Lambda deployed and integrated with Telegram.</li><li>AWS SSM configured for secure remote forensic data collection.</li></ul> |
-| **Week 5-6: Forensics & Optimization** | <ul><li>AWS Glue Crawler configured and running weekly to catalog S3 logs.</li><li>Athena queries validated against optimized log data for cost efficiency.</li><li>Full simulation of intrusion → detection → containment → forensics completed.</li></ul> |
+| **Week 1-2: Data Prep & Foundation** | <ul><li>All foundational logging (CloudTrail, VPC Flow Logs) enabled, data flowing through **CloudWatch**.</li><li>Amazon GuardDuty fully enabled and generating sample findings.</li><li>**ETL Lambda** developed and successfully transforming raw logs to Parquet in S3.</li></ul> |
+| **Week 3-4: Advanced Automation** | <ul><li>**Step Functions workflow** deployed, including **decision logic** for IAM vs. EC2 threats.</li><li>Containment state machine transitions (SSM Forensic, Disable IAM Key, EC2 Quarantine) validated.</li><li>Notification Lambda deployed and integrated with **3rd party messaging platform**.</li></ul> |
+| **Week 5-6: Forensics, Reporting & Launch** | <ul><li>AWS Glue Crawler configured and running weekly to catalog processed logs.</li><li>**API Gateway** configured to provide secure access to Athena query results.</li><li>**S3 Static Dashboard** deployed and distributed via **CloudFront** and **Route 53** DNS.</li><li>Full simulation of intrusion → detection → containment → forensics completed.</li></ul> |
 
 ### 6. Budget Estimation
-The budget assumes a lab environment operating under a paid tier model, demonstrating cost control.
 
 The budget estimate was calculated on [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=131622a3245dca4f1c3a5b934a9dbbf210470fc9).
-
 
 | Infrastructure Costs | Assumption | Cost/Month (USD) |
 |---|---|---|
 | EC2 Instance (t3.micro) | 168 hours/month (7 days runtime) | $2.88 |
 | Amazon GuardDuty | Continuous monitoring, minimal log volume | ~$2.08 |
 | AWS Glue (Crawler) | 4 weekly runs @ 15 min each | $0.44 |
-| Amazon CloudWatch  | 1000 GetMetric calls | $2.34 |
 | Amazon S3 | 5gb free + 3gb extra | $0.21 |
-| AWS Lambda  | 1 million free requests + compute charges | $0.02 |
-| Amazon Athena  | 50 queries per month and 1gb of data scanned per query | $0.24 |
-| **TOTAL ESTIMATED MONTHLY COST** | | **~$8.21 USD** |
-| **TOTAL ESTIMATED ANNUAL COST** | | **~$98.52 USD** |
+| **AWS Lambda (IR Orchestrator + ETL)** | 1 million free requests + compute charges (two functions) | $0.05 |
+| **AWS Step Functions** | 10,000 state transitions/month | $0.03 |
+| Amazon Athena | 50 queries per month and 1gb of data scanned per query | $0.24 |
+| **API Gateway** | 1 million requests/month (free tier) + minimal overage | $0.05 |
+| **CloudFront** | 100GB Data Transfer Out (global distribution) | $4.14 |
+| Amazon CloudWatch | 1000 GetMetric calls | $0.00 |
+| **Route 53** | 1 hosted zone | $0.50 |
+| **TOTAL ESTIMATED MONTHLY COST** | | **~$10.12 USD** |
+| **TOTAL ESTIMATED ANNUAL COST** | | **~$121.44 USD** |
 
 ### 7. Risk Assessment
 | Risk | Impact | Probability | Mitigation Strategies |
 |---|---|---|---|
 | **GuardDuty Cost Spike** (Due to high event volume) | Medium | Medium | Implement strict budget alarms; utilize the 30-day Free Trial to establish a cost baseline. |
-| **Logic Failure** (Lambda fails to quarantine) | High | Low | Robust error handling and logging in Lambda; Main Lambda will log failure to a Dead-Letter Queue (DLQ) for investigation and re-execution. Immediate manual intervention via the EC2 console. |
-| **Unoptimized Athena Query** | Medium | Medium | Strict requirement to use AWS Glue partitioning and Parquet conversion to minimize data scanned. |
+| **Step Functions Logic Failure** (Workflow fails to complete) | High | Low | Robust error handling and catch states within the Step Functions State Machine Definition; Lambda functions log failure to a Dead-Letter Queue (DLQ). Immediate manual intervention. |
+| **Unoptimized Athena Query** | Medium | Medium | Strict requirement to use AWS Glue partitioning and Parquet conversion (via ETL Lambda) to minimize data scanned. |
 
 ### 8. Expected Outcomes
 #### Technical Improvements:
-- Achieve an **Automated MTTR** (Mean Time To Respond) for EC2 quarantine measured in seconds.
-- Establish an AWS-native, cost-optimized **Security Data Lake**.
-- Gain hands-on expertise with key security and analysis tools: GuardDuty, Lambda, SSM, Glue, and Athena.
+- Achieve an **Automated MTTR** (Mean Time To Respond) for EC2 quarantine and IAM disablement measured in seconds, orchestrated by the **Step Functions workflow**.
+- Establish an AWS-native, cost-optimized **Security Data Lake and a global reporting platform** via CloudFront/S3.
+- Gain hands-on expertise with key security and analysis tools: GuardDuty, **Step Functions**, Glue, Athena, **API Gateway**, and **CloudFront**.
 
 #### Long-term Value:
 - Provides a reusable, security-hardened **reference architecture** for future production cloud environments.
