@@ -61,8 +61,9 @@ The phases now reflect the development of the Step Functions workflow and the se
 - **Week 5-6 (Forensics, Reporting & Launch)**: Configure **API Gateway** to query Athena results. Deploy the **S3 Static Dashboard**, configure **CloudFront** distribution, and set up **Route 53** for domain resolution. Conduct a full simulation of an intrusion and automated response.
 
 #### Technical Requirements
-- **Detection/Orchestration**: GuardDuty configuration. **Step Functions** State Language (ASL) and decision/branching logic for IAM vs EC2 threats. Configuration of EventBridge rules for event routing.
-- **Response Logic**: Python/Node.js SDK knowledge within Lambda to call the EC2 and IAM APIs. Finalize AWS SSM runbooks for forensic data collection.
+- **Detection/Orchestration**: GuardDuty configuration. 
+- **Step Functions** State Language (ASL) and decision/branching logic for IAM vs EC2 threats. Configuration of EventBridge rules for event routing.
+- **Response Logic**: Python SDK knowledge within Lambda to call the EC2 and IAM APIs. Finalize AWS SSM runbooks for forensic data collection.
 - **Forensics/Reporting**: Proficiency in setting up S3, **CloudWatch**, **ETL Lambda**, and Glue for a data lake (including partitioning). Setting up **API Gateway** and **CloudFront** for secure, global report delivery.
 
 ### 5. Timeline & Milestones
