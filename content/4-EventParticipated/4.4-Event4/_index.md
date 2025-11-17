@@ -1,18 +1,19 @@
 ---
-title: "Event 2"
-date: "2025-10-03"
+title: "Event 4"
+date: "2025-11-17"
 weight: 1
 chapter: false
-pre: " <b> 4.2. </b> "
+pre: " <b> 4.4. </b> "
 ---
 
-# Summary Report: “AI-Driven Development Life Cycle: Reimagining Software Engineering”
+# Summary Report: “AWS Cloud Mastery Series #2 - DevOps on AWS”
 
 ### Event Objectives
 
-- Explore the transformative shift in software development driven by generative AI.
-- Introduce the AI-Driven Development Life Cycle (AI-DLC) and its core concepts.
-- Kiro and Amazon Q Developer demonstration
+- Introduce AWS DevOps Services – CI/CD Pipeline
+- Introduce Infrastructure as Code (IaC) and related tools
+- Introduce Container Services on AWS
+- Ensure Monitoring and Observability capabilitiy using AWS Services
 
 ### Speakers
 

@@ -53,12 +53,12 @@ pre: " <b> 4.1. </b> "
 
 #### AI-Driven Development Lifecycle (AI-DLC)
 
-- Transformative, AI-centric approach reshaping the future of software implementation by fully embedding AI as a central collaborator in the entire software development lifecycle.
+- AI-centric approach paving the future of software implementation by fully embedding AI as a central collaborator in the entire software development lifecycle.
 
 #### Securing Generative AI Applications with AWS: Fundamentals and Best Practices
 
 - Explore security challenges at each layer of the generative AI stack—infrastructure, models, and applications.
-- Showcase built-in security measures such as encryption, zero-trust architecture, continuous monitoring, and fine-grained access controls to safeguard generative AI workloads
+- Explore security measures such as encryption, zero-trust architecture, continuous monitoring, and fine-grained access controls to safeguard generative AI workloads
 
 #### Beyond Automation: AI Agents as Your Ultimate Productivity Multipliers
 
