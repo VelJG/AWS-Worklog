@@ -86,7 +86,10 @@ pre: " <b> 4.3. </b> "
 - Q&A: Team member ask a out of topic question but crucial to our project 
   + Q: The SNS in our architecture which is used to processes Guard Duty Findings have encountered a situation where over 1000+ alert appear at once, how would we resolve this?
   + A: Add SQS to queue the events and ensure not one alert is to be missed
-- Placed top 10 in the end of event Kahoot Quiz and got a picture with the speakers  
+- Placed top 10 in the end of event Kahoot Quiz and got a picture with the speakers 
+- Created an unofficial group: "Mèo Cam Đeo Khăn", a joint collaboration between my group "The Ballers" and "Vinhomies" 
 
 #### Some event photos
-![Group picture during the event](/images/4-Event/TheBois-AIDLC.jpg)
+![Top 10 Kahoot](/images/4-Event/Kahoottop10.jpg)
+![A Picture with the speakers and top 10 players](/images/4-Event/WithSpeaker.jpg)
+![Mèo Cam Đeo Khăn group](/images/4-Event/Meocamdeokhan.jpg)
