@@ -17,6 +17,7 @@ pre: " <b> 4.3. </b> "
 - **Lam Tuan Kiet** – Sr DevOps Engineer, FPT Software
 - **Danh Hoang Hieu Nghi** - AI Engineer, Renova Cloud
 - **Dinh Le Hoang Anh** - Cloud Engineer Trainee, First Cloud AI Journey
+- **Van Hoang Kha** - Community Builder
 
 ### Key Highlights
 
