@@ -80,10 +80,11 @@ pre: " <b> 4.3. </b> "
 - AgentCore Solves Production Issues: Amazon Bedrock AgentCore is the new comprehensive platform that handles the difficult parts of running AI Agents at scale (like Memory, Identity, and Observability).
 
 ### Applying to Work
-- Can be very useful in later projects which could include more usage of AI in our architecture
+
+- Very useful in our team's later projects which could include more usage of AI Foundation Models in our architecture.
 
 ### Event Experience
-- The speakers are very good and informative
+- The speakers are very well spoken and informative
 - Q&A: Team member ask a out of topic question but crucial to our project 
   + Q: The SNS in our architecture which is used to processes Guard Duty Findings have encountered a situation where over 1000+ alert appear at once, how would we resolve this?
   + A: Add SQS to queue the events and ensure not one alert is to be missed
