@@ -141,7 +141,9 @@ Suitable for quick deployment of web applications and REST APIS, ideal for small
 **- Distributed Tracing:** Tracks requests end-to-end, and draw maps and paths between service visited, add SDK to code to trace IDs
 
 **- Performance Insight:** Root cause analysis for latency and errors, deduce insights from traces and provide Real User Monitoring
+
 ### Event Experience
+
 This event was very important for our project as it tackle our plan of adding IaC using CDK, instead of using ClickOps for maintainability and repoducibility. Also some more insights on CloudWatch helped greatly with our data monitoring feature
 
 The speakers answered our team's question:
