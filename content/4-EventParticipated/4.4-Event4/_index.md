@@ -78,7 +78,62 @@ Open-source software development framework, support IaC using real programming l
 
 AWS platform that makes it easy to build, deploy, and scale web and mobile apps, uses CloudFormation under the hood: Stacks deployed to built infastructure programmatically 
 
-### Key Takeaways
+# Terraform
+
+IaC tool, start by defining infastructure in Terraform code and plan then apply the infastructure on multiple cloud platforms like Azura, AWS, Google Cloud, etc..
+
+**- Strength:** Multi-Cloud support, State tracking with the same configuration
+
+# How to choose IaC Tools?
+**-Criteria:**
+  + Plan using one Cloud or many?
+  + Role as Developer or Ops?
+  + Does the Cloud and Ecosystem support the tool?
+
+## Container Services on AWS
+
+# Dockerfile
+
+A Dockerfile defines how to build a container image, which describe the environment, dependencies, build steps, and final runtime configuration, ensuring that the application run consistently across any system that support Dockers
+
+**- Images:** A packaged blueprint of an application, build from a Dockerfile using layered file system, used to create containers consistently across environments
+
+**- Workflow:** Dockerfile build a Docker Image which can be used to run Container and push to ECR/Docker Hub
+
+# Amazon ECR
+
+A fully managed container registry that make it easy to store, manage, and securely share Docker container image.
+AWS's own secure and scalable private container registry
+
+**-Features:** 
+  + Image Scanning
+  + Immutable Tags
+  + Lifecycle Policies
+  + Encryption & IAM
+
+**- Orchestration:** Orchestrate many containers processes: restart containers, scale up automatically under high load, distribute traffic efficiently, manage where containers are placed and run
+
+# Kubernetes
+Open source, automates deployment, scaling, healing, and load balancing
+**- Components:**
+  + Master Node: Control Plane, manage worker nodes and pods
+  + Worker Node: Run application workloads inside pods
+  + Pod: Smallest deployable unit, can contain one or more containers
+  + Service
+
+ECS vs EKS
+
+# App Runner
+
+Suitable for quick deployment of web applications and REST APIS, ideal for small to medium production workload
+
+## Monitoring & Observability
+
+# CloudWatch
+- Monitor AWS Resources and Apllications running on AWS in real time
+- Provide observabilty
+- Alarms and automated responses
+- Dashboard to help with operational and cost optimization
 
 ### Event Experience
 
