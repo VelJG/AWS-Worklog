@@ -1,6 +1,6 @@
 ---
 title: "Blog 1"
-date: "2000-01-01"
+date: "2025-10-02"
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
@@ -58,7 +58,7 @@ Cuối cùng, các nhà sản xuất có thể xây dựng các sản phẩm d�
 Cốt lõi của SLM Data Platform của Syncron là một hệ sinh thái dữ liệu mạnh mẽ, hợp nhất nhiều nguồn—dữ liệu định giá, hợp đồng, lập kế hoạch phụ tùng và bảo hành—thành một khung thông minh, duy nhất. Sự hợp nhất này cho phép các doanh nghiệp biến dữ liệu thô thành thông tin chi tiết có ý nghĩa, thúc đẩy hiệu suất và lợi nhuận. Nền tảng được xây dựng trên AWS bao gồm các thành phần chính sau:
 
   * **Data Landing Zone**  
-Một nền tảng an toàn, có khả năng mở rộng để tiếp nhận dữ liệu đa đối tượng thuê từ nhiều nguồn, được xây dựng trên [Amazon Simple Storage Service (Amazon S3).](https://aws.amazon.com/s3/?p=pm&c=s3&z=4). Data Landing Zone chứa cả dữ liệu có cấu trúc và phi cấu trúc.
+Một nền tảng an toàn, có khả năng mở rộng để tiếp nhận dữ liệu đa đối tượng thuê từ nhiều nguồn, được xây dựng trên [Amazon Simple Storage Service (Amazon S3).](https://aws.amazon.com/s3/?p=pm&c=s3&z=4) Data Landing Zone chứa cả dữ liệu có cấu trúc và phi cấu trúc.
   * **Data Product Framework**  
 Một cách tiếp cận có cấu trúc để tinh chỉnh và triển khai các bộ dữ liệu được điều chỉnh theo mô hình vận hành OEM của Syncron, tận dụng [AWS Glue](https://aws.amazon.com/glue/).
   * **Multi-Tenant Data.all Setup**  
