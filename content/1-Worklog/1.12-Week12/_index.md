@@ -1,15 +1,10 @@
 ---
 title: "Week 12 Worklog"
-date: "2025-09-09"
+date: "2025-11-24"
 weight: 2
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
-
 ### Week 12 Objectives:
 
 * Connect and get acquainted with members of First Cloud Journey.
@@ -18,11 +13,11 @@ pre: " <b> 1.12. </b> "
 ### Tasks to be carried out this week:
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2   | - Successfully installed AWS CDK with AWS CLI <br> Completed the tutorial for creating a first application with CDK: <br>&emsp; + Deployed stacks on AWS Accounts <br>&emsp; + Used diff to compare changes <br>&emsp; + Destroyed stack after finishing <br> - Created a Github Organization for the team | 08/11/2025 | 08/11/2025      |[CDK Tutorial](https://docs.aws.amazon.com/cdk/v2/guide/hello-world.html)|
+| 3   | - Added to IR Step Functions: Added a Map State to illiterate isolated Instances and trigger SSM Lambda for those Instances to collect logs from them for forensics <br> - Succesfully helped with creating auto export CloudWatch logs: Used Lambda to parse subcription filter form log stream to Raw Log S3 bucket, will have to modify CloudWatch ETL Lambda to work with the new auto export rather than the batch export job <br> - Update CloudTrail ETL Lambda: Noticed the usually high storage cost in the Processed CloudTrail Log bucket => The current Lambda Function save files as unzipped .jsonl => Updated the function so that the files is compressed by gzip before saving <br> - CloudTrail ETL Lambda have some spiking and error invocations when multiple people is interacting with the account => Raised timeout limit <br> CDK: Moved the CDK testing environment to a new account <br> - CDK: Created a Stack that enables GuardDuty and CloudTrail and the Raw Log S3 Bucket   | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 4   | - CDK: Updated Bucket and CloudTrail Policy to replicate the current infastructure: got into circular dependencies but is resolved <br> CDK: Successfully recreated CloudTrailETL pipeline with Raw and Processed log buckets, ETL Lambda and Glue table to be queried with Athena and set the related polices | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 5   | - CDK: Configured CloudWatch, Log Group, Dns Query logging, added cdk-context for user to enter VPC ids to add logging for analysis <br> - Optimization: CloudTrail logs have gotten too much, quick check reveals that it also logs S3 Put events from the ETL Lambdas, causing a loop => Created custom event exclusion in CloudTrail Events tab to exclude APIs called by the ETL Lambdas <br> - Exclude event by Lambdas ARN wasn't reliable => Exclude API from log buckets <br> - CDK: Its impossible to configure advanced event selectors in CDK so that will have to be removed <br>- CDK: Succesfully configured the CloudWatch Auto Export Lambda and Subscription Filter: Got a lot of permission error from Subscription Filter permission to invoke Lambda => Used L2 construct and explicit dependency for _create_subscription_filter  | 27/11/2025 | 27/11/2025 | |
+| 6   | - CDK: Added ClouWatch ETL and the related Glue Table and Processed Bucket  <br> -CDK: Added KMS Key to allow GuardDuty to export findings to S3 BUcket and added the GuardDutyETL to process the findings for querying => Fully completed the ETL Pipeline and Data Forensics  | 28/11/2025 | 28/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
 
 ### Week 12 Achievements:
