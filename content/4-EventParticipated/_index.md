@@ -50,7 +50,7 @@ During my internship, I participated in four events. Each one was a memorable ex
 
 &emsp;**Role:** Attendee  
 
-### [Event 5](4.4-Event5/)  
+### [Event 5](4.5-Event5/)  
 &emsp;**Event Name:** Secure Your Applications: AWS Perimeter Protection Workshop  
 
 &emsp;**Date & Time:** 08:30, November 19th, 2025  
@@ -59,7 +59,7 @@ During my internship, I participated in four events. Each one was a memorable ex
 
 &emsp;**Role:** Attendee  
 
-### [Event 6](4.4-Event6/)  
+### [Event 6](4.6-Event6/)  
 &emsp;**Event Name:** AWS Well-Architected – Security Pillar Workshop
 
 &emsp;**Date & Time:** 08:30, November 29th, 2025  
