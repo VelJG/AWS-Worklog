@@ -19,6 +19,7 @@ pre: " <b> 4.5. </b> "
 
 - **Nguyen Gia Hung:** Head of Solution Architect
 - **Julian Ju:** Senior Edge Services Specialist Solution Architect
+- **Kevin Lim:** Senior Edge Services Specialist GTM
 
 ### Key Highlights
 
@@ -59,6 +60,7 @@ Solution: CloudFront
 - Caching benefits for improved availability: Cache content based on TTL, respond without request to origin and respond stale content in case of origin timeout
 - Built-in failover and origin failover: Automatically route traffic to optimal and healthy edge location, same goes with origin when the primary fails=> failover to secondary origin
 - Graceful failure: Support for custom error pages, stale content and cached error result
+
 # Enhanced performance with Amazon CloudFront
 - Multi-player caching architecture: Aggregates traffic from CloudFront PoPs in Regional Edge Caches and Origin Shield, enable request collasing and imrpove cache hit ratio
 - Multiplexing: Download in parallel
@@ -69,12 +71,14 @@ Solution: CloudFront
     + URL Rewrite / AB Testing / Geographic Redirect Device-base Redirect
     + Device based content delivery
     + Respone faster without origin: Rate limiting / API Mocking / Health check / Error Handling
+
 # CloudFront use cases
 - Static web resources: High cache hit ratio => Performance gains + Minimal origin load
 - Whole website delivery: Global performance + Security + High availability + Cost optimization
 - API acceleration: Reuse connection + Aws backbone => Reduce latency + Selective caching
 - Media Streaming: Unlimited scale + Low latency + Cost-effective + Millions of concurrent user
 - Large file download: Range requests + Edge caching + 80-90% cost savings
+
 # CloudFront best practices
 - End to end visibility: Real user/Internet/Infastructure monitoring
 - Maximize caching: Normalize cache key, cache dynamic/private content and error caching
@@ -83,15 +87,19 @@ Solution: CloudFront
 - Automatic failover: Route 53 failover routing + CloudFront Origin Group for request level failover
 
 ## AWS WAF & Application Protection
+
 # Threats and impact to bussiness
 - Denial of Service
 - App Vulnerabilities
 - Bot traffic
   => Stolen data, compromised credentials, spam, downtime, manual intervention, raise infastructure cost, losing credibility
+
 # Surge in bot activites
 Diverse AI bots from a wide range of source significantly increased in customer environment: 155% increase YoY
+
 # Route 53 in perimeter protection
 Globally dispersed DNS servers => Automati scaling and DDoS mitigation + Availbility SLA 100%
+
 # Infastructure Protection with AWS Shield
 - At edge:
     + SYN Proxy
@@ -103,40 +111,68 @@ Globally dispersed DNS servers => Automati scaling and DDoS mitigation + Availbi
     + Traffic filtering
     + Resource-level dectection and mitigation
     + Health-based detection
+
 # Inspecting HTTP with AWS WAF
 - WAF works together with CloudFront
 - Detect HTTP flood, malicious patterns, bad IP
 - Bot control
 - Fraud control
+
 # Shield Advanced Incident Response
 - Shield/Shield Advanced has metric to trigger alarm to start incident response
 - Shield Advanced provides Shield Response Team 24/7
 - Find attack vector and contributor
+
 # WAF Configuration
 - Add rules and rules group
 - Use managed rules and custom rules
 - Start with COUNT mode: Monitor to avoid false positives
 - Use labels to customize logic and responses
 - Scope-down to optimize cost
+
 # Web ACL/Protection Pack
 - Set of rules, rule groups and default action
 - Associated to resources like CloudFront Distribution
 - Logging and sampling configurations
+
 # WAF Rules
 - Inspection criteria (IP Adress/Header value/Request Body) => Action (Allow/Block/Count/Custom)
 - Rate-based rule: Based on number of HTTP request from one IP
+
 # WAF Anti-DDoS Application Layer Protection
 - Automatic application layer DDoS mitigation
 - Protection with pre-configured rules
 - Configurable DDoS Protection based on application needs
+
 # WAF Labels
 Added by managed rules (Always) and custom rules (Optional): Indicate matched rule, session status, Geographic and IP-based data and Bot/Fraud activites
+
 # Common bots
 What: Self-identifying or Search Engines,Social media, HTTP libabry
 Common bot control: Looks for request, IP, TLS fingerprint and verifies the bot with labels
+
 # Evasive bots
 What: Scrapers, credential stuffers, vulnerability scanners, use existing browser headers and values, not well known and mimic real common bots
 Solution: Client intterrogation, identify unique client session and monitor its behaviour
+
+## CloudFront hands-on: Perimeter Protection Workshop
+
+# Comparison between normal static S3 hosting Origin and S3 hosting with CloudFront
+- CloudFront delivers an object faster when its served from cache
+- CloudFront delivers an object faster by using the AWS global network instead of the public internet
+- In CloudFront,compression is applied, the object size is significantly reduced
+
+## AWS WAF hands-on: Strengthen Your Web Application Defenses with AWS WAF 
+
+- Created WAF rules to defend against:
+  + Cross site Scripting (XSS)
+  + SQL Injection
+  + Path traversal attack
+  + Server-side asset
+  + Common/Evasive Bot
+  + API misuse
+  + Mystery Test: Configured rule to block an access with encrypted header value
+
 ### Event Experience
 
 The event was very informative and right on time as our team was setting up CloudFront the night before. The new pricing system is so much better for us, with additional WAF for security
@@ -154,3 +190,6 @@ _Event Attendee Group Picture_
 
 ![Top24Kahoot](/images/4-Event/Event5KahootTop24.jpg)
 _Placed Top 24 on end of event Kahoot Quiz_
+
+![Full Threat Blocked](/images/4-Event/FullThreatBlockedWAFWorkshop.jpg)
+_Blocked all workshop's threats_
