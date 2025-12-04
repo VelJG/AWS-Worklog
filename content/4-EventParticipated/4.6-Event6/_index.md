@@ -40,6 +40,8 @@ pre: " <b> 4.5. </b> "
 
 ### Key Highlights
 
+
+
 ### Event Experience
 
 #### Some event photos

@@ -17,9 +17,9 @@ pre: " <b> 4.5. </b> "
 
 ### Speakers
 
-- **Nguyen Gia Hung:** Head of Solution Architect
-- **Julian Ju:** Senior Edge Services Specialist Solution Architect
-- **Kevin Lim:** Senior Edge Services Specialist GTM
+- **Nguyen Gia Hung** - Head of Solution Architect
+- **Julian Ju** - Senior Edge Services Specialist Solution Architect
+- **Kevin Lim** - Senior Edge Services Specialist GTM
 
 ### Key Highlights
 
