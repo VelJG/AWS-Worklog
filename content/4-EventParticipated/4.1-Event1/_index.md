@@ -27,7 +27,7 @@ pre: " <b> 4.1. </b> "
 - **Nguyen Hoa Binh** – Chairman, Texttech Group
 - **Taiki Dang** – Solutions Architect, AWS 
 - **Jun Kai Loke** – AI/ML Specialist SA, AWS
-- **Kien Nguyens** – Solutions Architect, AWS
+- **Kien Nguyen** – Solutions Architect, AWS
 - **Tamelly Lim** – Storage Specialist SA, AWS 
 - **Binh Tran** – Senior Solutions Architect, AWS 
 - **Michael Armentano** - Principal WW GTM Specialist, AWS

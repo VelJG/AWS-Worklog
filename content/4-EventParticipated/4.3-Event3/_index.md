@@ -24,17 +24,17 @@ pre: " <b> 4.3. </b> "
 # Explored Generative AI with Amazon Bedrock:
 
 **- Foundation Models:** Different from Traditional Model in a sense that it can be adapted for many tasks, provided many fully managed model from leading AI Companies such as: OpenAI, Claude, Anthropic, etc.  
-**- Promt Engineering:** Crafting and Refining Instructions
+**- Prompt Engineering:** Crafting and Refining Instructions
    + Zero-Shot Prompting: A prompt with no prior context or example
    + Few-shot Prompting: A prompt with a few prior context and example
    + Chain of Thought: A prompt with thought processes and steps for the actual answer 
 **- Retrieval Augmented Generation(RAG):** Retrieving relevant information from a data source
-   + R: Retrieval - Retrieves relevant infomation from a knowledge base or data sources 
+   + R: Retrieval - Retrieves relevant information from a knowledge base or data sources 
    + A: Augmented - Adding the information retrieved as additional context in the user's prompt before inputting it into the model
    + G: Generation - Responses from the model for the augmented prompt
    + Use cases: Improved content quality, contextual chatbots and question answering, personalized search and real time data summarization
 
-**- Amazon Titan Embedding:** Light weight model that excel in translates text into numerical representations(embeddings) for high accuracy retrieval tasks, with support for 100+ languages
+**- Amazon Titan Embedding:** Lightweight model that excels in translating text into numerical representations(embeddings) for high accuracy retrieval tasks, with support for 100+ languages
 
 **- Pretrained AI Services:** 
   + Amazon Rekognition: Image and Video analysis
@@ -44,10 +44,10 @@ pre: " <b> 4.3. </b> "
   + Amazon Polly: Text-to-speech
   + Amazon Comprehend: Extract Insights and Relationships from text
   + Amazon Kendra: Intelligent Search Service
-  + Amazon Lookout: Detect Anomalies in business metrics, equipments and images
+  + Amazon Lookout: Detect Anomalies in business metrics, equipment and images
   + Amazon Personalize: Tailor recommendations to user 
 
-**- Demo:** AMZPhoto: Face recognitions from images using AI
+**- Demo:** AMZPhoto: Face recognition from images using AI
 
 **- Amazon Bedrock AgentCore:** A comprehensive agentic platform designed to address challenges in bringing agents into production:
   + Securely execute and scale agent code.
@@ -71,7 +71,7 @@ pre: " <b> 4.3. </b> "
 ### Key Takeaways
 - Bedrock is the GenAI Hub: Amazon Bedrock provides fully managed Foundation Models from top companies for many different tasks.
 
-- Customization via Prompts and Data: Various ways to prompts (Zero-Shot, Few-shot, CoT) and ultilize RAG to add info for better model responses.
+- Customization via Prompts and Data: Various ways to prompts (Zero-Shot, Few-shot, CoT) and utilize RAG to add info for better model responses.
 
 - Embeddings Power Search: Amazon Titan Embedding is a key lightweight model for translating text to numbers, which helps achieve high accuracy in retrieval tasks (like RAG).
 
@@ -85,9 +85,9 @@ pre: " <b> 4.3. </b> "
 
 ### Event Experience
 - The speakers are very well spoken and informative
-- Q&A: Team member ask a out of topic question but crucial to our project 
-  + Q: The SNS in our architecture which is used to processes Guard Duty Findings have encountered a situation where over 1000+ alert appear at once, how would we resolve this?
-  + A: Add SQS to queue the events and ensure not one alert is to be missed
+- Q&A: Team member asked an out of topic question but crucial to our project 
+  + Q: The SNS in our architecture which is used to process Guard Duty Findings have encountered a situation where over 1000+ alerts appear at once, how would we resolve this?
+  + A: Add SQS to queue the events and ensure no alert is to be missed
 - Placed top 10 in the end of event Kahoot Quiz and got a picture with the speakers 
 - Created an unofficial group: "Mèo Cam Đeo Khăn", a joint collaboration between my group "The Ballers" and "Vinhomies" 
 

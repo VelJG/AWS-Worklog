@@ -24,9 +24,9 @@ pre: " <b> 4.2. </b> "
 
 - Focused on the concept of AI-DLC, a framework where AI orchestrates the development process, including planning, task decomposition, and architectural suggestions, while developers retain ultimate responsibility for validation, decision-making, and oversight
 
-**- AI-DLC Core Concept:** The approach is Human-Centric, with AI acting as a Collaborator to enhance developer capabilities, leading to Accelerated Delivery (cycles measured in hours/days instead of weeks/months) .
+**- AI-DLC Core Concept:** The approach is Human-Centric, with AI acting as a Collaborator to enhance developer capabilities, leading to Accelerated Delivery (cycles measured in hours/days instead of weeks/months).
 
-**- AI-DLC Workflow:** It's an iterative loop involving AI Tasks (Create plan, Implement Plan, Seek clarification) and Human Tasks (Provide clarification, Implement Plan), where the AI repeatedly asks clarifying questions and only implements solutions after human validation .
+**- AI-DLC Workflow:** It's an iterative loop involving AI Tasks (Create plan, Implement Plan, Seek clarification) and Human Tasks (Provide clarification, Implement Plan), where the AI repeatedly asks clarifying questions and only implements solutions after human validation.
 
 **- AI-DLC Stages:** The lifecycle is broken down into Inception, Construction, and Operation. Each stage builds richer context for the next:
 
@@ -44,7 +44,7 @@ pre: " <b> 4.2. </b> "
 
 + Code quality: Maintaining quality control when moving from proof-of-concept to production becomes difficult.
 
-# Deep Dive: Kiro - The AI IDE for Prototype to Production
+## Deep Dive: Kiro - The AI IDE for Prototype to Production
 
 - Kiro, an AI-first Integrated Development Environment (IDE) that supports the AI-DLC, focusing on Spec-driven development
 
@@ -52,9 +52,9 @@ pre: " <b> 4.2. </b> "
 
 **- Agentic Workflows:** Kiro's AI agents implement the spec while keeping the human developer in control, with the key features being:
 
-**+ Implementation Plan:** Kiro generates a detailed Implementation Plan with start tasks, sub-tasks (e.g., "Implement user registration and login endpoints," "Implement JWT middleware"), and links them back to specific requirements for validation .
+**+ Implementation Plan:** Kiro generates a detailed Implementation Plan with start tasks, sub-tasks (e.g., "Implement user registration and login endpoints," "Implement JWT middleware"), and links them back to specific requirements for validation.
 
-**+ Agent Hooks:** These delegate tasks to AI agents that trigger on events such as "file save." They autonomously execute in the background based on pre-defined prompts, helping to scale work by generating documentation, unit tests, or optimizing code performance.
+**+ Agent Hooks:** These delegate tasks to AI agents that trigger on events such as "file save." They autonomously execute in the background based on predefined prompts, helping to scale work by generating documentation, unit tests, or optimizing code performance.
 ### Key Takeaways
 **- AI Ensures Production Readiness:** Kiro creating detailed design documents (like data flow diagrams and API contracts), and generating unit tests before the code is written, ensures that AI-generated code is production-ready and maintainable, not just a quick prototype.
 
