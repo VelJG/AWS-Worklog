@@ -67,3 +67,13 @@ During my internship, I participated in four events. Each one was a memorable ex
 &emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
 
 &emsp;**Role:** Attendee  
+
+### [Event 7](4.7-Event7/)  
+&emsp;**Event Name:** BUILDING AGENTIC AI - Context Optimization with Amazon Bedrock
+
+&emsp;**Date & Time:** 08:30, December 5th, 2025  
+
+&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+
+&emsp;**Role:** Attendee 
+

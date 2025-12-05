@@ -40,8 +40,12 @@ pre: " <b> 4.5. </b> "
 
 ### Key Highlights
 
-
-
+### AWS Cloud Club
+An introduction to AWS Cloud Club: 
+- Helps explore and grow cloud computing skills
+- Develop technical leadership
+- Build meaningful connections globally
+Provides hands-on AWS Experiences, mentorship with AWS Professional and long-term career support
 ### Event Experience
 
 #### Some event photos
@@ -49,5 +53,5 @@ pre: " <b> 4.5. </b> "
 ![All Attendee Picture](/images/4-Event/Event6AttendeePic.jpg)
 _Picture of all Attendee_
 
-![Group Picture With Speaker Mendel Grabski and Speaker Van Hoang Kha](images/4-Event/Event6PicturewithSpeakers.jpg)
+![Group Picture With Speaker Mendel Grabski and Speaker Van Hoang Kha](/images/4-Event/Event6PicturewithSpeakers.jpg)
 _Group Picture With Speaker Mendel Grabski and Speaker Van Hoang Kha_
