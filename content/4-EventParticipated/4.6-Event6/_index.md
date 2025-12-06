@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 4.5. </b> "
 ---
 
-# Summary Report: “AWS Well-Architected – Security Pillar Workshop”
+# Summary Report: “AWS Cloud Mastery Series #3: AWS Well-Architected – Security Pillar Workshop”
 
 ### Event Objectives
 
@@ -46,7 +46,17 @@ An introduction to AWS Cloud Club:
 - Develop technical leadership
 - Build meaningful connections globally
 Provides hands-on AWS Experiences, mentorship with AWS Professional and long-term career support
+
+AWS Cloud Clubs that are part of FCJA:
+- AWS Cloud Club HCMUTE
+- AWS Cloud Club SGU
+- AWS Cloud Club PTIT
+- AWS Cloud Club HUFLIT
+
+Benefits: Build Skills, Community and opportunity
 ### Event Experience
+
+- The event is extremely useful for our team, aligns directly with our project of Automated Incident Response and Forensics
 
 #### Some event photos
 
