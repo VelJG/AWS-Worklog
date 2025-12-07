@@ -21,3 +21,6 @@ This guide provides a complete, step-by-step procedure for deploying our automat
 3. [Phase 2: Monitoring Setup](5.4-Monitoring-Setup/)
 4. [Phase 3: Processing Setup](5.5-Processing-Setup/)
 5. [Phase 4: Automation Setup](5.6-Automation-Setup/)
+6. [Phase 5: Dashboard Setup](5.7-Dashboard-Setup/)
+7. [Use CDK](5.8-Use-CDK/)
+8. [Cleanup](5.9-Cleanup/)

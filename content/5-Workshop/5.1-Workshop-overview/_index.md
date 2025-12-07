@@ -16,4 +16,4 @@ In this workshop, you will deploy a multi-phase system to achieve end-to-end sec
 + **Foundation Setup**: Creating dedicated S3 buckets and IAM roles to support all services.
 + **Monitoring Setup**: Enabling and configuring key security logs (CloudTrail, GuardDuty, VPC Flow Logs) to direct data to the central log ingestion point.
 + **Processing Setup**: Deploying Kinesis Firehose, Lambda ETLs, and Glue/Athena tables to transform raw logs into an easily queryable security data lake.
-+ **Automation Setup**: Creating the **Isolation Security Group**, **SNS Topic**, **Incident Response Lambda Functions**, and the **Step Functions State Machine** that executes automatic quarantine actions when GuardDuty detects high-severity findings.
++ **Automation Setup**: Creating the **Isolation Security Group**, **SNS Topic**, **Incident Response Lambda Functions**, and the **Step Functions State Machine** that executes automatic quarantine actions when GuardDuty detects findings.
