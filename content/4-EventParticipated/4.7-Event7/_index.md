@@ -228,6 +228,8 @@ Agentic Architectures face a "Context Explosion" where the Input/Output token ra
 => Our team got a prize for using CloudThinker to analyze our problem: CloudThinker T-Shirt and CloudThinker Keychain
 
 #### Some event photos
+![Picture of all Attendees](/images/4-Event/Event7AllAttendee.jpg)
+_Picture of all attendees_
 
 ![Recieving Prize From CloudThinker1](/images/4-Event/CloudThinkerPrize1.jpg)
 _Recieving Prize From CloudThinker_
