@@ -1,32 +1,113 @@
 ---
-title : "Clean up"
+title : "Automation Setup"
 date: "2000-01-01"
-weight : 6
+weight : 06
 chapter : false
 pre : " <b> 5.6. </b> "
 ---
-Congratulations on completing this workshop! 
-In this workshop, you learned architecture patterns for accessing Amazon S3 without using the Public Internet. 
-+ By creating a gateway endpoint, you enabled direct communication between EC2 resources and Amazon S3, without traversing an Internet Gateway. 
-+ By creating an interface endpoint you extended S3 connectivity to resources running in your on-premises data center via AWS Site-to-Site VPN or Direct Connect. 
+## Phase 4: Automation Setup
 
-#### clean up
-1. Navigate to Hosted Zones on the left side of Route 53 console. Click the name of *s3.us-east-1.amazonaws.com* zone. Click Delete and confirm deletion by typing delete. 
+-----
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+## Create Isolation Security Group
 
-2. Disassociate the Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+1.  **EC2 Console** → **Security Groups** → **Create security group**
+2.  **Name**: `IR-Isolation-SG`
+3.  **Description**: `Denies all inbound and outbound traffic for compromised instances`
+4.  **VPC**: Select your VPC
+5.  **Inbound rules**: None (deny all)
+6.  **Outbound rules**: Remove default (deny all)
+7.  **Create and note Security Group ID** (e.g., `sg-0078026b70389e7b3`)
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+## Create SNS Topic
 
-4. Open the CloudFormation console  and delete the two CloudFormation Stacks that you created for this lab:
-+ PLOnpremSetup
-+ PLCloudSetup
+1.  **SNS Console** → **Create topic**
+2.  **Type**: Standard, **Name**: `IncidentResponseAlerts`
+3.  **Access policy**:
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+<!-- end list -->
 
-5. Delete S3 buckets
-+ Open S3 console
-+ Choose the bucket we created for the lab, click and confirm empty. Click delete and confirm delete.
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowEventBridgePublish",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "events.amazonaws.com"
+      },
+      "Action": "sns:Publish",
+      "Resource": "arn:aws:sns:REGION:ACCOUNT_ID:IncidentResponseAlerts"
+    }
+  ]
+}
+```
 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+## Create Lambda Functions - Incident Response
+
+### ir-parse-findings-lambda
+
+  - **Handler**: `parse_findings.lambda_handler`
+  - **Role**: `ParseFindingsLambdaServiceRole`
+  - **Code**: Appendix A.6
+
+### ir-isolate-ec2-lambda
+
+  - **Handler**: `isolate_ec2.lambda_handler`
+  - **Role**: `IsolateEC2LambdaServiceRole`
+  - **Env**: `ISOLATION_SG_ID=sg-XXXXXXX` (from step 12)
+  - **Code**: Appendix A.7
+
+### ir-quarantine-iam-lambda
+
+  - **Handler**: `quarantine_iam.lambda_handler`
+  - **Role**: `QuarantineIAMLambdaServiceRole`
+  - **Env**: `QUARANTINE_POLICY_ARN=arn:aws:iam::ACCOUNT_ID:policy/IrQuarantineIAMPolicy`
+  - **Code**: Appendix A.8
+
+### ir-alert-dispatch
+
+  - **Handler**: `alert_dispatch.lambda_handler`
+  - **Role**: `AlertDispatchLambdaServiceRole`
+  - **Env**: `SENDER_EMAIL`, `RECIPIENT_EMAIL`, `SLACK_WEBHOOK_URL`
+  - **Add SNS trigger**: Topic `IncidentResponseAlerts`
+  - **Code**: Appendix A.9
+
+## Update SNS Topic Subscription
+
+1.  **SNS Console** → `IncidentResponseAlerts` → **Subscriptions**
+2.  **Verify**: Protocol=AWS Lambda, Endpoint=`ir-alert-dispatch`, Status=Confirmed
+
+## Create Step Functions State Machine
+
+1.  **Step Functions Console** → **Create state machine**
+2.  **Type**: Standard, **Name**: `IncidentResponseStepFunctions`
+3.  **Definition**: Paste JSON from Appendix B (replace `ACCOUNT_ID/REGION`)
+4.  **Role**: `StepFunctionsRole`
+5.  **Create**
+
+## Create EventBridge Rule
+
+1.  **EventBridge Console** → **Rules** → **Create rule**
+2.  **Name**: `IncidentResponseAlert`
+3.  **Event pattern**:
+
+<!-- end list -->
+
+```json
+{
+  "source": ["aws.guardduty"],
+  "detail-type": ["GuardDuty Finding"]
+}
+```
+
+4.  **Targets (2)**:
+      - **SNS topic**: `IncidentResponseAlerts`
+      - **Step Functions**: `IncidentResponseStepFunctions` with role `IncidentResponseStepFunctionsEventRole`
+
+## 18\. Configure Athena Workgroup
+
+1.  **Athena Console** → **Workgroups** → `primary` → **Edit**
+2.  **Query result location**: `s3://athena-query-results-ACCOUNT_ID-REGION/`
+3.  **Save**

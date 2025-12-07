@@ -1,7 +1,7 @@
 ---
 title: "Translated Blogs"
 date: "2000-01-01"
-weight: 3
+weight: 03
 chapter: false
 pre: " <b> 3. </b> "
 ---
@@ -17,7 +17,3 @@ This blog introduces the powerful new capability of the Amazon Q Developer CLI t
 ###  [Blog 3 - Simulating partial failures with AWS Fault Injection Service](3.3-Blog3/)
 
 This blog details an advanced chaos engineering technique for simulating partial, or localized, system failures using AWS Fault Injection Service (FIS). You will learn why testing for these non-total failures is critical for building truly resilient applications and how traditional fault injection methods often overlook this important scenario. The article also provides a complete, step-by-step walkthrough of the solution, guiding you on how to combine FIS with an Application Load Balancer (ALB) and an AWS Lambda function to inject controlled faults that impact only a percentage of traffic, all without requiring any changes to your application's code.
-
-###  [Blog 4 - ...](3.4-Blog4/)
-###  [Blog 5 - ...](3.5-Blog5/)
-###  [Blog 6 - ...](3.6-Blog6/)
