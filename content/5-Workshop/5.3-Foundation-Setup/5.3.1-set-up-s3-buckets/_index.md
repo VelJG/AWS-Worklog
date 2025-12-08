@@ -1,57 +1,93 @@
 ---
-title : "Prepare the environment"
+title : "Set up S3 buckets"
 date: "2000-01-01"
-weight : 1
+weight : 01
 chapter : false
-pre : " <b> 5.4.1 </b> "
+pre : " <b> 5.3.1. </b> "
 ---
 
-To prepare for this part of the workshop you will need to:
-+ Deploying a CloudFormation stack 
-+ Modifying a VPC route table. 
+In this section, you will create 5 S3 buckets that serve as the foundation for the Auto Incident Response system.
 
-These components work together to simulate on-premises DNS forwarding and name resolution.
+**Important**: Replace `ACCOUNT_ID` with your AWS Account ID and `REGION` with your target region (e.g., us-east-1) in all bucket names.
 
-#### Deploy the CloudFormation stack
+### Bucket Names
 
-The CloudFormation template will create additional services to support an on-premises simulation:
-+ One Route 53 Private Hosted Zone that hosts Alias records for the PrivateLink S3 endpoint
-+ One Route 53 Inbound Resolver endpoint that enables "VPC Cloud" to resolve inbound DNS resolution requests to the Private Hosted Zone
-+ One Route 53 Outbound Resolver endpoint that enables "VPC On-prem" to forward DNS requests for S3 to "VPC Cloud"
+1. **incident-response-log-list-bucket-ACCOUNT_ID-REGION** - Primary log collection bucket
+2. **processed-cloudtrail-logs-ACCOUNT_ID-REGION** - Stores processed CloudTrail logs
+3. **athena-query-results-ACCOUNT_ID-REGION** - Stores Athena query results
+4. **processed-cloudwatch-logs-ACCOUNT_ID-REGION** - Stores processed CloudWatch logs
+5. **processed-guardduty-findings-ACCOUNT_ID-REGION** - Stores processed GuardDuty findings
 
-![route 53 diagram](/images/5-Workshop/5.4-S3-onprem/route53.png)
+### Bucket Creation Instructions
 
-1. Click the following link to open the [AWS CloudFormation console](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.amazonaws.com/reinvent-endpoints-builders-session/R53CF.yaml&stackName=PLOnpremSetup). The required template will be pre-loaded into the menu. Accept all default and click Create stack.
+1. **Open the Amazon S3 Console**
+   - Navigate to https://console.aws.amazon.com/s3/
+   - Or: AWS Management Console → Services → S3
 
-![Create stack](/images/5-Workshop/5.4-S3-onprem/create-stack.png)
+   > [Screenshot: AWS S3 Console Homepage]
 
-![Button](/images/5-Workshop/5.4-S3-onprem/create-stack-button.png)
+2. **Click on "Create bucket"**
 
-It may take a few minutes for stack deployment to complete. You can continue with the next step without waiting for the deployemnt to finish.
+   > [Screenshot: Create Bucket Button]
 
-#### Update on-premise private route table
+3. **General configuration**:
+   - **Bucket name**: Enter `incident-response-log-list-bucket-ACCOUNT_ID-REGION`
+     - Example: `incident-response-log-list-bucket-123456789012-us-east-1`
+   - **AWS Region**: Select your target region (e.g., US East (N. Virginia) us-east-1)
 
-This workshop uses a strongSwan VPN running on an EC2 instance to simulate connectivty between an on-premises datacenter and the AWS cloud. Most of the required components are provisioned before your start. To finalize the VPN configuration, you will modify the "VPC On-prem" routing table to direct traffic destined for the cloud to the strongSwan VPN instance.
+   > [Screenshot: S3 Bucket Configuration - Bucket name and region]
 
-1. Open the Amazon EC2 console 
+4. **Object Ownership**:
+   - Keep default: **ACLs disabled (recommended)**
 
-2. Select the instance named infra-vpngw-test. From the Details tab, copy the Instance ID and paste this into your text editor
+   > [Screenshot: S3 Bucket Configuration - Object Ownership]
 
-![ec2 id](/images/5-Workshop/5.4-S3-onprem/ec2-onprem-id.png)
+5. **Block Public Access settings for this bucket**:
+   - Check **"Block all public access"**
+   - Ensure all 4 sub-options are checked:
+     - ✓ Block public access to buckets and objects granted through new access control lists (ACLs)
+     - ✓ Block public access to buckets and objects granted through any access control lists (ACLs)
+     - ✓ Block public access to buckets and objects granted through new public bucket or access point policies
+     - ✓ Block public and cross-account access to buckets and objects through any public bucket or access point policies
 
-3. Navigate to the VPC menu by using the Search box at the top of the browser window.
+   > [Screenshot: S3 Bucket Configuration - Block Public Access settings]
 
-4. Click on Route Tables, select the RT Private On-prem route table, select the Routes tab, and click Edit Routes.
+6. **Bucket Versioning**:
+   - Select **"Enable"**
 
-![rt](/images/5-Workshop/5.4-S3-onprem/rt.png)
+   > [Screenshot: Bucket Versioning Setting]
 
-5. Click Add route.
-+ Destination: your Cloud VPC cidr range
-+ Target: ID of your infra-vpngw-test instance (you saved in your editor at step 1)
+7. **Tags** (optional):
+   - Add tags if desired
+   - Example: Key=`Purpose`, Value=`IncidentResponse`
 
-![add route](/images/5-Workshop/5.4-S3-onprem/add-route.png)
+8. **Default encryption**:
+   - **Encryption type**: Select **"Server-side encryption with Amazon S3 managed keys (SSE-S3)"**
+   - **Bucket Key**: Keep default (**Enabled**)
 
-6. Click Save changes
+   > [Screenshot: Default Encryption Settings]
 
+9. **Advanced settings**:
+   - Keep all defaults
 
+10. **Click "Create bucket"**
 
+    > [Screenshot: Create bucket button at bottom of page]
+
+11. **Verify bucket creation**:
+    - You should see a success message
+    - The bucket should appear in your S3 buckets list
+
+    > [Screenshot: S3 Console showing newly created bucket]
+
+12. **Repeat steps 2-10 for the remaining 4 buckets**:
+    - `processed-cloudtrail-logs-ACCOUNT_ID-REGION`
+    - `athena-query-results-ACCOUNT_ID-REGION`
+    - `processed-cloudwatch-logs-ACCOUNT_ID-REGION`
+    - `processed-guardduty-findings-ACCOUNT_ID-REGION`
+
+13. **Verify all 5 buckets are created**:
+    - Navigate to S3 Console
+    - You should see all 5 buckets listed
+
+    > [Screenshot: S3 Console showing all 5 buckets]
