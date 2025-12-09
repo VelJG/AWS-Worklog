@@ -62,9 +62,9 @@ Solution: CloudFront
 #### Cost optimization with Amazon CloudFront
 
 - AWS Data transfer out to CloudFront: Free
-- 
+  
 - HTTP compression: ~80% compression of object file
-- 
+  
 - HTTPS Encryption in transit:
     + AWS proprietary TLS
     + Automatic TLS certificate issuance and validation for no additional cost
