@@ -1,10 +1,11 @@
 ---
 title: "Proposal"
-date: "2025-12-08"
-weight: 02
+date: "2000-01-01"
+weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
+
 ![AWS Logo](/images/2-Proposal/AWSLogo.png)
 
 # FCJ Internship Project Proposal
@@ -364,7 +365,7 @@ We're designed as a foundation that's easy to build upon.
 
 Here's a typical monthly deployment cost breakdown using the free tier:
 
-[**Estimate Pricing**](https://calculator.aws/#/estimate?id=176905f64b24c0cdb23c108169b632e979492f75)
+[**Estimate Pricing**](https://calculator.aws/#/estimate?id=b9b2c0423dcd3b21dadd62e5053a5fdf2d003339)
 
 | AWS Service | Monthly Cost | Why We Use It | Region |
 | :--- | :---: | :--- | :--- |
@@ -375,18 +376,20 @@ Here's a typical monthly deployment cost breakdown using the free tier:
 | **S3** | $1.07-2 | Stores forensic evidence | Asia Pacific (Singapore) |
 | **Athena** | $0.29-1 | SQL queries against forensic data | Asia Pacific (Singapore) |
 | **GuardDuty** | $1.80-2 | Detects security findings | Asia Pacific (Singapore) |
-| **CloudTrail** | Cost included with GuardDuty | Logs all actions | Asia Pacific (Singapore) |
+| **CloudTrail** | $0.55-1 | Logs all actions | Asia Pacific (Singapore) |
 | **CloudWatch** | $0-1 | Monitoring and dashboards | Asia Pacific (Singapore) |
 | **SNS** | $0-1 | Incident notifications | Asia Pacific (Singapore) |
 | **API Gateway** | $0.05-1 | Dashboard backend API | Asia Pacific (Singapore) |
 | **Cognito** | $0-1 | Dashboard authentication | Asia Pacific (Singapore) |
 | **CloudFront** | $0-1 | Dashboard CDN acceleration | Asia Pacific (Singapore) |
 | **EC2 (t3.micro)** | $0-1 | Optional analysis instances | Asia Pacific (Singapore) |
-| **Total** | **$3.30-$15** | | |
+| **KMS** | $1.12-2 | Key management | Asia Pacific (Singapore) |
+| **Firehose** | $0.04-1 | Deliver data | Asia Pacific (Singapore) |
+| **Total** | **$5.01-19** | | |
 
 **Key Assumptions:**
 
-For our setup, it cost around **$3.30** for the whole month with this usage:
+For our setup, it cost around **$5.01** for the whole month with this usage:
 
 * Typical usage: 20-150 incidents per month
 * Dashboard served through CloudFront with WAF
@@ -417,7 +420,7 @@ For our setup, it cost around **$3.30** for the whole month with this usage:
 | **Huỳnh An Khương** | Team Lead | Coordination, Architecture design, CDK, GuardDuty, Lambda, ETL Pipeline, Forensic analysis. | huynhankhuong0511@gmail.com |
 | **Mai Quốc Anh** | Member | Project Management (Jira), Alerting (Email/Telegram), Authentication, Dashboard design. | maiquocanh2608@gmail.com |
 | **Nguyễn Trần Minh Quân** | Member | Lambda, ETL Pipeline, Forensic analysis, Alerting (Slack). | nguyentranminhquanb@gmail.com |
-| **Lâm Gia Kiệt** | Member | Dashboard design/deployment, CDK, Cloudfront, API Gateway. | lamgiakiet2005@gmail.com |
+| **Lâm Gia Kiệt** | Member | Dashboard design/deployment, CDK, CloudFront, API Gateway. | lamgiakiet2005@gmail.com |
 | **Lê Trần Gia Huy** | Member | Lambda, Step Functions automation development, GuardDuty, Eventbridge, Policies and IAM roles. | huyletran188205@gmail.com |
 
 **Project Escalation Contact**
@@ -437,7 +440,7 @@ For our setup, it cost around **$3.30** for the whole month with this usage:
 | :--- | :--- |
 | **Huỳnh An Khương** | Coordination, Architecture design, CDK, GuardDuty, Lambda, ETL Pipeline, Forensic analysis |
 | **Mai Quốc Anh** | Project Management (Jira), Alerting (Email/Telegram), Authentication, Dashboard design, Proposal. |
-| **Lâm Gia Kiệt** | Dashboard development, CDK, CLoudfront, API Gateway, Gitlab workflow |
+| **Lâm Gia Kiệt** | Dashboard development, CDK, CloudFront, API Gateway, Gitlab workflow |
 | **Nguyễn Trần Minh Quân** | Lambda, ETL Pipeline, Forensic analysis, Alerting (Slack), Validation, Documentation |
 | **Lê Trần Gia Huy** | Lambda, Step Functions automation development, GuardDuty, Eventbridge, Policies and IAM roles. |
 
@@ -506,11 +509,15 @@ The project is considered successful if:
 **Frontend & Dashboards:**
 * Custom HTML/CSS/JavaScript
 * AWS Management Console
+* API Gateway (facilitate the connection between the static dashboard and the backend forensic data functions.)
+* CloudFront (CDN for accelerating the delivery of the S3-hosted static dashboard.)
+
 
 **Backend & Processing:**
 * AWS Step Functions (workflow orchestration)
 * AWS Lambda (Python 3.12)
 * Amazon EC2 (analysis instances)
+* Amazon EventBridge (event router that sends security findings from GuardDuty to the Step Functions workflow.)
 
 **Data & Storage:**
 * Amazon S3 (forensic evidence storage)
@@ -518,6 +525,7 @@ The project is considered successful if:
 * Amazon Athena (SQL queries against S3 data)
 * AWS CloudTrail (audit logs)
 * AWS CloudWatch (flow logs)
+* Firehose (responsible for streaming processed forensic data to the S3)
 
 **Infrastructure & Automation:**
 * AWS CDK (Infrastructure-as-Code, Python)
@@ -528,6 +536,10 @@ The project is considered successful if:
 * Amazon GuardDuty (threat detection)
 * Amazon CloudWatch (monitoring and alarms)
 * Amazon Cognito (authentication)
+* SNS (Distributing incident alerts to channels like Slack and Email.)
+* SES (Sending email notifications as part of the alerting process.)
+* KMS (Used for key management, which is essential for the AES-256)
+
 
 ### Appendix B: Key Glossary
 

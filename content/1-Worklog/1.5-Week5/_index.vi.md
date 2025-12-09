@@ -1,59 +1,38 @@
 ---
-title: "Worklog Tuần 5"
-date: "2025-09-09"
-weight: 1
+title: "Nhật ký Công việc Tuần 5"
+date: "2025-10-06"
+weight: 05
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+
+### Mục tiêu Tuần 5:
+
+* Tiếp tục xây dựng và lập kế hoạch đề xuất dự án
+### Các nhiệm vụ được thực hiện trong tuần này:
+| Ngày | Nhiệm vụ | Ngày Bắt đầu | Ngày Hoàn thành | Tài liệu Tham khảo |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
+| 2   |- Việc gia đình | 06/10/2025 | 06/10/2025      | |
+| 3   |- Việc gia đình | 07/10/2025 | 07/10/2025      | |
+| 4   |- Học cách tạo Sơ đồ Kiến trúc **AWS** cơ bản <br> - Đã tạo sơ đồ kiến trúc **workshop** của nhóm | 08/10/2025 | 08/10/2025      | |
+| 5   | - Lab 35: <br>&emsp; + Thiết lập thành công **data stream** bằng **Kinesis** <br>&emsp; + Gửi thành công dữ liệu mẫu đến **S3** bằng **Kinesis Data Generator** với **Amazon Cognito** <br>&emsp; + Học cách sử dụng **AWS Glue Crawler** để **map data** đến **S3 Bucket** <br>&emsp; + Sử dụng **Athena** để truy vấn dữ liệu  <br>&emsp; + Sử dụng **AWS Glue Notebook** để xây dựng **dataset** dựa trên dữ liệu mẫu <br>&emsp; + Sử dụng **Athena** để phân tích dữ liệu và trực quan hóa với **QuickSight** <br> - Cập nhật sơ đồ kiến trúc dựa trên các thay đổi trong đề xuất **workshop** <br> - Bắt đầu nghiên cứu **GuardDuty** để sử dụng làm thành phần của **workshop** | 09/10/2025 | 09/10/2025      |<br> [Lab 35](https://000035.awsstudygroup.com/) |
+| 6   |- Lab 40: <br>&emsp; + Thực hành thêm với **AWS Glue** và **Athena**, sử dụng để phân tích dữ liệu **AWS Monthly Cost** <br> - Môn học ở trường: <br> &emsp; + **KS57**:  Hoàn thành **Giáo dục và Phát triển nguồn nhân lực số**  | 10/10/2025 | 10/10/2025      | [Lab 40](https://000040.awsstudygroup.com/) <br><br> [Giáo dục và Phát triển nguồn nhân lực số](https://www.coursera.org/account/accomplishments/verify/QN69JGYDY7PU)|
 
 
-### Mục tiêu tuần 5:
+### Thành tựu Tuần 5:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Phát triển Đề xuất: Đã tạo và cập nhật thành công **sơ đồ kiến trúc workshop** của nhóm, học các **best practices** cho việc vẽ sơ đồ kiến trúc **AWS**.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+* **Data Streaming** và **Analytics**: Hoàn thành một **lab** phức tạp tập trung vào các **data pipelines**:
 
+  *  Thiết lập thành công **data stream real-time** bằng **Amazon Kinesis**.
 
-### Kết quả đạt được tuần 5:
+  *  Sử dụng **Kinesis Data Generator** với **Amazon Cognito** để gửi dữ liệu mẫu đến **S3**.
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+  *  Học cách sử dụng **AWS Glue Crawler** để **map data** và **AWS Glue Notebook** để xây dựng **datasets**.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+  *  Sử dụng **Amazon Athena** để truy vấn dữ liệu và **Amazon QuickSight** để trực quan hóa dữ liệu.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Thực hành các kỹ năng **analytics** nâng cao bằng cách sử dụng **AWS Glue** và **Athena** để phân tích dữ liệu **AWS Monthly Cost**.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Nghiên cứu **Workshop**: Đã bắt đầu nghiên cứu về **Amazon GuardDuty** như một thành phần cho đề xuất **workshop** của nhóm.

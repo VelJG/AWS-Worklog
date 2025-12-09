@@ -1,58 +1,45 @@
 ---
-title: "Worklog Tuần 6"
-date: "2025-09-09"
-weight: 1
+title: "Nhật ký Công việc Tuần 6"
+date: "2025-10-13"
+weight: 06
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+### Mục tiêu Tuần 6:
+
+* Hoàn thành và nộp đề xuất dự án
+* Phân công nhiệm vụ cho thành viên nhóm để bắt đầu **workshop**
+
+### Các nhiệm vụ được thực hiện trong tuần này:
+| Ngày | Nhiệm vụ | Ngày Bắt đầu | Ngày Hoàn thành | Tài liệu Tham khảo |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
+| 2 | - Định dạng lại và tinh chỉnh **worklog**, thêm thông tin và tóm tắt <br> - Triển khai **worklog** thành công lên **GitHub Pages** | 13/10/2025 | 13/10/2025| |
+| 3 | - Họp nhóm <br> - Sửa đổi đề xuất **workshop**: Tập trung sử dụng **GuardDuty** để phát hiện xâm nhập thay vì hàm **Lambda** tùy chỉnh do cần bộ dữ liệu lớn và thời gian phát triển mở rộng. <br> - Vẽ lại Kiến trúc **AWS**: Thêm **GuardDuty** thay thế **CloudWatch Alarm** <br> - Viết bản nháp đề xuất phác thảo chức năng cơ bản và cung cấp ước tính chi phí sơ bộ. | 14/10/2025 | 14/10/2025      ||
+| 4 | - Họp nhóm <br> - Sửa đổi đề xuất **workshop**: <br> &emsp; + Kết hợp việc sử dụng **EventBridge** <br> &emsp; + Tính toán lại chi phí bằng cách giảm loại **EC2 instance** và số giờ hoạt động <br> - Cập nhật Kiến trúc **AWS**: Bao gồm biểu tượng **EventBridge** và các kết nối | 15/10/2025 | 15/10/2025 ||
+| 5   | - Cập nhật Kiến trúc **AWS**: <br> &emsp; + Sắp xếp lại các biểu tượng để các kết nối rõ ràng hơn. <br> &emsp; + Di chuyển **SSM** vào bên trong nhóm **region** <br> &emsp; + Thêm nhóm **public subnet** cho **EC2 Instance** <br> - Cài đặt **AmazonQ** để tăng cường phân tích đề xuất <br> - Sửa đổi đề xuất **workshop**: Tính toán lại chi phí bằng **AWS Pricing Calculator** <br> - Dịch bản nháp đề xuất sang mã **markdown** và triển khai thành công lên **GitHub Pages** <br> - Tham gia hội thảo trực tuyến **DX<inAction> Talk#7: Reinventing DevSecOps with AWS Generative AI** | 16/10/2025 | 16/10/2025      ||
+| 6   | - Biên soạn tài liệu học tập cho kỳ thi giữa kỳ <br> - Môn học ở trường: <br> &emsp; + **ENW493c**: Hoàn thành **Being a researcher (in Information Science and Technology)**   | 17/10/2025 | 17/10/2025      | [Being a researcher (in Information Science and Technology)](https://www.coursera.org/account/accomplishments/verify/JZB2HYOLEGOD) |
 
 
-### Mục tiêu tuần 6:
-
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
-
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+### Thành tựu Tuần 6:
 
 
-### Kết quả đạt được tuần 6:
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* **Tinh chỉnh Đề xuất**:
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+  * Hoàn thành nhiều lần sửa đổi đề xuất **workshop**, chuyển từ việc sử dụng hàm **Lambda** tùy chỉnh sang sử dụng **GuardDuty** để phát hiện xâm nhập.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+  * Tính toán lại thành công và giảm chi phí ước tính bằng cách tối ưu hóa loại **EC2 instance** và số giờ hoạt động.   
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
+  * Dịch sang **markdown**, và triển khai bản nháp đề xuất lên **GitHub Pages**.
 
 
+* **Cập nhật Kiến trúc và Hệ thống**:
+
+  * Sửa đổi sơ đồ Kiến trúc **AWS**, kết hợp **GuardDuty**, **EventBridge**, và tinh chỉnh cách sắp xếp biểu tượng cùng nhóm **subnet** để rõ ràng và chính xác hơn.
+
+  * Cập nhật **worklog** và triển khai thành công **worklog** đã tinh chỉnh lên **GitHub Pages**.
+
+  * Cài đặt **AmazonQ**.
+
+* Đã tham dự hội thảo trực tuyến **'DX<inAction> Talk#7: Reinventing DevSecOps with AWS Generative AI'**.
+
+* Biên soạn tài liệu học tập cho kỳ thi giữa kỳ.

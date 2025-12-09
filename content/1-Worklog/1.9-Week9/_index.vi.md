@@ -1,59 +1,42 @@
 ---
-title: "Worklog Tuần 9"
+title: "Nhật ký Công việc Tuần 9"
 date: "2025-09-09"
-weight: 1
+weight: 09
 chapter: false
 pre: " <b> 1.9. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+### Mục tiêu Tuần 9:
+
+* Tiếp tục thực hiện **workshop**
+
+### Các nhiệm vụ được thực hiện trong tuần này:
+| Ngày | Nhiệm vụ | Ngày Bắt đầu | Ngày Hoàn thành | Tài liệu Tham khảo |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
+| 2   | - Sửa đổi Kiến trúc **AWS** (**AWS Architecture revised**): <br>&emsp; + Loại bỏ **AWS Detective** <br>&emsp; + Cập nhật với **Step Function Workflow** thay vì một **AWS Lambda Function** đơn lẻ <br>&emsp; + Thêm **Custom Dashboard** (Dashboard Tùy chỉnh): Một trang web **static custom dashboard** được **host** bằng **S3** và sử dụng **Athena** để truy vấn từ **data lake** <br> - Môn học ở trường: <br> &emsp; + **KS57**: Hoàn thành **Quản trị dự án và duy trì đổi mới trong chuyển đổi số** | 03/11/2025 | 03/11/2025 | [Quản trị dự án và duy trì đổi mới trong chuyển đổi số](https://www.coursera.org/account/accomplishments/verify/IC06JCSZ7AVG) |
+| 3   | - **Export GuardDuty Findings** thành công sang **S3 Bucket** <br> - Thử nghiệm với **AWS Glue Crawler**: <br>&emsp; + Thất bại trên **CloudWatch** và **CloudTrail logs**, **schema** quá phức tạp đối với **Crawler** (Cần nghiên cứu cách thay thế) <br>&emsp; + Chạy thành công trên các **GuardDuty Findings** đã được **export**: Phải cập nhật **KMS Policy** để cho phép **Crawler** giải mã dữ liệu <br> - Nghiên cứu **ETL Pipeline** cho **logs**| 04/11/2025 | 04/11/2025      | |
+| 4   | - Họp nhóm: Báo cáo tiến độ: <br>&emsp; + **IR Workflow**: Hoàn thành một nửa, chức năng cách ly **EC2 (EC2 quarantine function)** đã xong, chưa kiểm thử với **findings** <br>&emsp; + Giao nhiệm vụ thiết kế **frontend dashboard** <br>&emsp; + Giao nhiệm vụ nghiên cứu **Glue ETL Pipeline** <br>&emsp; + Đăng ký tham gia **VPBank Cloud Day 2025** cùng các thành viên trong nhóm | 05/11/2025 | 05/11/2025 || 
+| 5   | - Họp nhóm <br> - Nghiên cứu phương pháp tiếp cận **ETL Pipeline**: <br>&emsp; + Thay vì sử dụng **Glue ETL Jobs**, chúng tôi sử dụng một **custom Lambda ETL pipeline** cho **CloudTrail** và **CloudWatch logs** <br>&emsp; + Lưu **raw logs** vào một **Raw Log S3 Bucket** sau đó sử dụng **ETL Lambda** để xử lý dữ liệu và ghi nó vào một **Processed Data S3** để sau đó được **Crawl** <br> - Sửa đổi Kiến trúc **AWS**: Thêm một nhóm mới: nhóm **DATA PREP** chứa **Raw Log S3 Bucket** và **ETL Lambda** <br>- Môn học ở trường: <br> &emsp; + **ENW493c**: Hoàn thành **Advanced Writing** | 06/11/2025 | 06/11/2025      | [Advanced Writing](https://www.coursera.org/account/accomplishments/verify/EDQ1NY2UG063) |
+| 6   | - Nghiên cứu **Kinesis Data Firehose** để thu thập **logs**: Tốt cho việc sử dụng trong tương lai, không phù hợp cho dự án hiện tại vì **real-time streaming data** không cần thiết, sử dụng **batch processing** tốt hơn <br> - Xây dựng thành công **ETL Pipeline** cho **CloudTrail logs**: Được kích hoạt bởi việc tạo **object** trong **CloudTrail Raw Log Bucket** và định dạng lại **raw logs** thành **JSONL** và lưu nó vào **Processed S3** <br> - **Crawl** và truy vấn thành công **log** đã xử lý để hiển thị **CloudTrail Events** | 07/11/2025 | 07/11/2025      | |
 
 
-### Mục tiêu tuần 9:
+### Thành tựu Tuần 9:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* **Tinh chỉnh Kiến trúc**:
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+  * Cập nhật cơ chế Ứng phó Sự cố (**IR**) để sử dụng **Step Functions Workflow** thay vì một hàm **Lambda** đơn lẻ.
 
+  * Giới thiệu **Custom Dashboard** (trang web tĩnh được **host** trên **S3**) sử dụng **Athena** để truy vấn **data lake**.
+  
+  * Tạo một nhóm **DATA PREP** mới trong kiến trúc, bao gồm **Raw Log S3 Bucket** và **ETL Lambda** để quản lý chuyển đổi **log**.
 
-### Kết quả đạt được tuần 9:
+* Cấu hình thành công **pipeline** để **export GuardDuty Findings** sang **S3 Bucket**.
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Xây dựng và triển khai **custom ETL Lambda pipeline** để xử lý **CloudTrail logs**, được kích hoạt bởi các **object** mới trong **Raw Log S3 Bucket**.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* **Crawl** và truy vấn thành công **CloudTrail logs** đã xử lý bằng **Glue/Athena** để hiển thị **CloudTrail Events**.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Các thành viên trong nhóm đã hoàn thành một nửa **IR Step Functions Workflow**, với chức năng cách ly **EC2 (EC2 quarantine function)** đã xong.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Giao nhiệm vụ thiết kế **frontend dashboard** và nghiên cứu **Glue ETL Pipeline**.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Đã đăng ký tham gia sự kiện **VPBank Cloud Day 2025** cùng các thành viên trong nhóm.
