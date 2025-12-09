@@ -19,6 +19,8 @@ chapter: false
 
 &emsp; **Major:** Information Technology
 
+&emsp; **Class** AWS082025
+
 &emsp; **Internship Company:** Amazon Web Services Vietnam Co., Ltd.
 
 &emsp; **Internship Position:** FCJA Cloud Intern

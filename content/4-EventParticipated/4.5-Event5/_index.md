@@ -23,9 +23,9 @@ pre: " <b> 4.5. </b> "
 
 ### Key Highlights
 
-## CloudFront
+### CloudFront
 
-# What Form Of Security Do Customers Need And The Solution
+#### What Form Of Security Do Customers Need And The Solution
 
 Customer Personas:
 - Small website owner: Basic security protection
@@ -36,7 +36,7 @@ Solution: CloudFront
 - Security with predictable monthly cost: Pay flat prices for CDN, WAF, DDoS Protection, DNS and Storage
 - Single plan selection
 
-# New CloudFront Pricing: CloudFront Flat-Rate
+#### New CloudFront Pricing: CloudFront Flat-Rate
 
 - Flat pricing for CDN, WAF, DDoS Protection, DNS and Storage, pay the same price for unlimited usage
 
@@ -54,12 +54,12 @@ Solution: CloudFront
 
 - Exceeding the usage limit => No extra cost but CloudFront will reduce performance and send alerts  
 
-# How CloudFront helps in perimeter protection
+#### How CloudFront helps in perimeter protection
 - Fight distributed attacks with distributed defense: Rather than defending attacks from all over the world at once, CloudFront helps by defending at edge locations nearest to the source of attacks
 - Shield Advanced: Gains visibility into infrastructure-layer attacks, access to Shield Response Team 24/7
 -  Volumetric attack: CloudFront offer inline mitigation, STN Proxy protect from SYN flood attack and automatic network routing
 
-# Cost optimization with Amazon CloudFront
+#### Cost optimization with Amazon CloudFront
 
 - AWS Data transfer out to CloudFront: Free
 - 
@@ -86,7 +86,7 @@ Solution: CloudFront
 
 - Graceful failure: Support for custom error pages, stale content and cached error result
 
-# Enhanced performance with Amazon CloudFront
+#### Enhanced performance with Amazon CloudFront
 
 - Multi-layer caching architecture: Aggregates traffic from CloudFront PoPs in Regional Edge Caches and Origin Shield, enable request collapsing and improve cache hit ratio
 
@@ -102,7 +102,7 @@ Solution: CloudFront
     + Device based content delivery
     + Respond faster without origin: Rate limiting / API Mocking / Health check / Error Handling
 
-# CloudFront use cases
+#### CloudFront use cases
 
 - Static web resources: High cache hit ratio => Performance gains + Minimal origin load
 
@@ -115,7 +115,7 @@ optimization
 
 - Large file download: Range requests + Edge caching + 80-90% cost savings
 
-# CloudFront best practices
+#### CloudFront best practices
 
 - End to end visibility: Real user/Internet/Infrastructure monitoring
 
@@ -127,9 +127,9 @@ optimization
 
 - Automatic failover: Route 53 failover routing + CloudFront Origin Group for request level failover
 
-## AWS WAF & Application Protection
+### AWS WAF & Application Protection
 
-# Threats and impact to business
+#### Threats and impact to business
 
 - Denial of Service
 
@@ -139,15 +139,15 @@ optimization
 
 **=>** Stolen data, compromised credentials, spam, downtime, manual intervention, raise infrastructure cost, losing credibility
 
-# Surge in bot activities
+#### Surge in bot activities
 
 Diverse AI bots from a wide range of source significantly increased in customer environment: 155% increase YoY
 
-# Route 53 in perimeter protection
+#### Route 53 in perimeter protection
 
 Globally dispersed DNS servers => Automatic scaling and DDoS mitigation + Availability SLA 100%
 
-# Infrastructure Protection with AWS Shield
+#### Infrastructure Protection with AWS Shield
 
 - At edge:
     + SYN Proxy
@@ -161,7 +161,7 @@ Globally dispersed DNS servers => Automatic scaling and DDoS mitigation + Availa
     + Resource-level detection and mitigation
     + Health-based detection
 
-# Inspecting HTTP with AWS WAF
+#### Inspecting HTTP with AWS WAF
 
 - WAF works together with CloudFront
 
@@ -171,7 +171,7 @@ Globally dispersed DNS servers => Automatic scaling and DDoS mitigation + Availa
 
 - Fraud control
 
-# Shield Advanced Incident Response
+#### Shield Advanced Incident Response
 
 - Shield/Shield Advanced has metric to trigger alarm to start incident response
 
@@ -179,7 +179,7 @@ Globally dispersed DNS servers => Automatic scaling and DDoS mitigation + Availa
 
 - Find attack vector and contributor
 
-# WAF Configuration
+#### WAF Configuration
 
 - Add rules and rules group
 
@@ -191,7 +191,7 @@ Globally dispersed DNS servers => Automatic scaling and DDoS mitigation + Availa
 
 - Scope-down to optimize cost
 
-# Web ACL/Protection Pack
+#### Web ACL/Protection Pack
 
 - Set of rules, rule groups and default action
 
@@ -199,13 +199,13 @@ Globally dispersed DNS servers => Automatic scaling and DDoS mitigation + Availa
 
 - Logging and sampling configurations
 
-# WAF Rules
+#### WAF Rules
 
 - Inspection criteria (IP Address/Header value/Request Body) => Action (Allow/Block/Count/Custom)
 
 - Rate-based rule: Based on number of HTTP request from one IP
 
-# WAF Anti-DDoS Application Layer Protection
+#### WAF Anti-DDoS Application Layer Protection
 
 - Automatic application layer DDoS mitigation
 
@@ -213,23 +213,23 @@ Globally dispersed DNS servers => Automatic scaling and DDoS mitigation + Availa
 
 - Configurable DDoS Protection based on application needs
 
-# WAF Labels
+#### WAF Labels
 
 Added by managed rules (Always) and custom rules (Optional): Indicate matched rule, session status, Geographic and IP-based data and Bot/Fraud activities
 
-# Common bots
+#### Common bots
 
 What: Self-identifying or Search Engines, Social media, HTTP library
 Common bot control: Looks for request, IP, TLS fingerprint and verifies the bot with labels
 
-# Evasive bots
+#### Evasive bots
 
 What: Scrapers, credential stuffers, vulnerability scanners, use existing browser headers and values, not well known and mimic real common bots
 Solution: Client interrogation, identify unique client session and monitor its behavior
 
-## CloudFront hands-on: Perimeter Protection Workshop
+### CloudFront hands-on: Perimeter Protection Workshop
 
-# Comparison between normal static S3 hosting Origin and S3 hosting with CloudFront
+#### Comparison between normal static S3 hosting Origin and S3 hosting with CloudFront
 
 - CloudFront delivers an object faster when its served from cache
 
@@ -237,7 +237,7 @@ Solution: Client interrogation, identify unique client session and monitor its b
 
 - In CloudFront, compression is applied, the object size is significantly reduced
 
-## AWS WAF hands-on: Strengthen Your Web Application Defenses with AWS WAF 
+#### AWS WAF hands-on: Strengthen Your Web Application Defenses with AWS WAF 
 
 - Created WAF rules to defend against:
   + Cross site Scripting (XSS)

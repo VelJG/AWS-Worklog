@@ -35,7 +35,7 @@ pre: " <b> 4.7. </b> "
 
 ### Key Highlights
 
-## Amazon Bedrock AgentCore
+### Amazon Bedrock AgentCore
 - The evolution to Agentic AI: The number of enterprise ultilizing Agentic AI systems is on the rise 
 => AWS provide the best place to build and scale AI Agents
 
@@ -54,7 +54,7 @@ What are Amazon Bedrock AgentCores?
 - Code Interpreter: Secure sandboxed code execution => Execute code securely, provide large-scale data processing and ease of use
 - Observability: Complete agent performance visibility => Maintain quality of trust and accelerate time to market, allow intergration with other observability tools
 
-## Diaflow: Amplify team's potential with AI Automation
+### Diaflow: Amplify team's potential with AI Automation
 Diaflow is an AI Automation Platform for Businesses whose mission is to unlock the full potential of teams by providing powerful, flexible tools to automate what matters most—fast and without code
 
 - Transforms manual processes into intelligent workflows in minutes, not months => solving 20+ hours/week/person wasted on repetitive tasks in 90% of businesses, and concerns over data privacy and security when deploying AI internally
@@ -65,7 +65,7 @@ Diaflow is an AI Automation Platform for Businesses whose mission is to unlock t
 
 - Locations: The USA, Switzerland, France, South Korea, Singapore, and Vietnam.
 
-# Diaflow Capabilities
+#### Diaflow Capabilities
 
 - AI-Powered Automation: Reduces manual tasks by 80% by connecting Databases, Apps, Knowledge bases, APIs, and Legacy systems
 
@@ -73,7 +73,7 @@ Diaflow is an AI Automation Platform for Businesses whose mission is to unlock t
 
 - Internal AI Tools & Apps: Deploy AI-powered apps tailored for specific business needs.
 
-# Diaflow Features
+#### Diaflow Features
 
 - Autonomous Task Execution: Describe your goal, Diaflow will plan and execute it
 
@@ -83,11 +83,11 @@ Diaflow is an AI Automation Platform for Businesses whose mission is to unlock t
 
 - Enterprise-Grade Security:  HIPAA, SOC2 and GDPR
 
-## CloudThinker
+### CloudThinker
 
 Some problems for customers using cloud platforms: Exploding Cloud Cost, Cloud Complexity > Cloud Capability and Reactive Incident Response
 
-# CloudThinker Capabilities
+#### CloudThinker Capabilities
 
 Agentic AI Cloud Operations: Insights -> Reasoning -> Execution
 - Multi-agent Collaboration
@@ -96,7 +96,7 @@ Agentic AI Cloud Operations: Insights -> Reasoning -> Execution
 - Continuous Learning
 - Multi-cloud Capability
 
-# CloudThinker Product Feature
+#### CloudThinker Product Feature
 
 - Code review
 - Incident Response
@@ -105,14 +105,14 @@ Agentic AI Cloud Operations: Insights -> Reasoning -> Execution
 - Kubernetes Management (Coming soon)
 - Cloud Keeper (Coming soon)
 
-# CloudThinker Solutions
+#### CloudThinker Solutions
 
 - Cloud Migration & Modernization
 - Cloud Operation & Optimization
 - Compliance Readiness
 - Security Assessment
 
-# CloudThinker AI Agent Team
+#### CloudThinker AI Agent Team
 
 - Alex: Cloud Engineer
 - Kai: Kubenetes Engineer
@@ -120,9 +120,9 @@ Agentic AI Cloud Operations: Insights -> Reasoning -> Execution
 - Oliver: Security Engineer
 - Tony: Database Engineer
 
-## CloudThinker Agentic Orchestration and Context Optimization on Amazon Bedrock
+### CloudThinker Agentic Orchestration and Context Optimization on Amazon Bedrock
 
-# AI Agent Evolution and Architecture
+#### AI Agent Evolution and Architecture
 
 - Chatbots: Reactive, use rule-based decisions for simple tasks, and have limited adaptability.
 
@@ -137,7 +137,7 @@ Agentic AI Cloud Operations: Insights -> Reasoning -> Execution
 
     + Action: Executes the plan and provides the final response.
 
-# Getting started with Agents
+#### Getting started with Agents
 
 - ReAct Agent Architecture: Interleaving thought and action for complex tasks => User Input → Reasoning (Thought) → Action (Tool Use) → Observation → Final Answer.
 
@@ -147,11 +147,11 @@ Agentic AI Cloud Operations: Insights -> Reasoning -> Execution
 
 - Quick win techniques: Prompt Caching -> Context Compaction -> Tool Consolidation -> Parallel tool calling
 
-# Multi-Agent vs Multi Session: Solving Single-Agent Bottlenecks
+#### Multi-Agent vs Multi Session: Solving Single-Agent Bottlenecks
 
 Single-Agent systems: which handle all tasks monolithically, face issues like context isolation (100k+ tokens), sequential processing, and multi-batch problems. This leads to two patterns for distributed orchestration: Multi-Agent and Multi-Session.
 
-# Agent Coordination Models
+#### Agent Coordination Models
 
  | Feature | Network (Peer-to-Peer) | Supervisor |
 | :--- | :--- | :--- |
@@ -159,12 +159,12 @@ Single-Agent systems: which handle all tasks monolithically, face issues like co
 | **Pros** | * Flexible communication. * Good fault tolerance. * Easier to switch from single-agent to multi-agent modes. | * Clear task delegation. * Central coordination. * Modular and scalable. |
 | **Cons** | * Complex debugging. * Ownership ambiguity. | * Bottleneck risk. * Cannot switch to single-agent mode. |
 
-# Supervisor Variants: Three Approaches
+#### Supervisor Variants: Three Approaches
 | Approach | Group Chat-based Supervisor | Supervisor as Tool (Subagents) | Hierarchical |
 | :--- | :--- | :--- | :--- |
 | **Notes** | Collaborative context, simple coordination, **Best for small teams**. **CloudThinker uses this.** | Fine-grained control, less worker autonomy, no direct user access. | Scales to large organizations, multiple supervision layers, more complex setup. |
 
-# Single-Agent and Multi-Agent in a Unified Architecture:
+#### Single-Agent and Multi-Agent in a Unified Architecture:
 
 - Unified architecture that dynamically routes tasks to the appropriate agents: Uses a Supervisor for multi-agent coordination and retry.
 
@@ -175,7 +175,7 @@ Single-Agent systems: which handle all tasks monolithically, face issues like co
     + Simple tasks that require collaboration are handled via a Group Chat.
     + A default specialist agent handles requests when no specific agent is mentioned 
 
-# Solving the 100:1 Agentic Cost Problem
+#### Solving the 100:1 Agentic Cost Problem
 
 Agentic Architectures face a "Context Explosion" where the Input/Output token ratio can be 100:1, compared to roughly 3:1 for chatbots. Input costs dominate due to 50–100 tool calls per task, compounding context degradation and latency.
 
@@ -207,15 +207,15 @@ Agentic Architectures face a "Context Explosion" where the Input/Output token ra
 
     + Method: Uses explicit instruction to parallelize tool calls and reasoning steps, which is necessary because modern LLMs can parallelize but won't without explicit guidance.
 
-# Cross-Region Inference
+#### Cross-Region Inference
 
 - Problem: Single-region deployments can hit rate limits due to 50–100 tool calls per task, creating a single point of failure.
 
 => Solution: Automatically routes workloads across regions (US, EU, APAC) to eliminate rate limit bottlenecks and provide a global profile for near-zero latency and improved throughput.
 
-# The best multi-agent system self-realizes when NOT to use multiple agents.
+#### The best multi-agent system self-realizes when NOT to use multiple agents.
 
-## CloudThinker Hack: Hands-On Workshop
+### CloudThinker Hack: Hands-On Workshop
 
 - Organizers provide attendees with CloudThinker instructions and Free Standard Plan Code to use on analyzing AWS Accounts
 

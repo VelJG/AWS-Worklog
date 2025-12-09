@@ -1,125 +1,96 @@
 ---
-title: "Event 2"
-date: "2000-01-01"
-weight: 1
+title: "Sự kiện 3"
+date: "2025-11-15"
+weight: 03
 chapter: false
-pre: " <b> 4.2. </b> "
+pre: " <b> 4.3. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Báo Cáo Tóm Tắt: “AWS Cloud Mastery Series #1 - AI/ML/GenAI trên AWS”
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+### Mục tiêu Sự kiện
 
-### Mục Đích Của Sự Kiện
+- Giới thiệu về **AI/ML/GenAI** trên **AWS**
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+### Diễn giả
 
-### Danh Sách Diễn Giả
+- **Lam Tuan Kiet** – Sr DevOps Engineer, FPT Software
+- **Danh Hoang Hieu Nghi** - AI Engineer, Renova Cloud
+- **Dinh Le Hoang Anh** - Cloud Engineer Trainee, First Cloud AI Journey
+- **Van Hoang Kha** - Cloud Security Engineer, AWS Community Builder
+### Điểm nhấn chính
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+# Khám phá Generative AI với Amazon Bedrock:
 
-### Nội Dung Nổi Bật
+**- Foundation Models (Mô hình Nền tảng):** Khác với Traditional Model (Mô hình Truyền thống) ở chỗ có thể được điều chỉnh cho nhiều tác vụ, cung cấp nhiều mô hình được quản lý hoàn toàn (**fully managed model**) từ các công ty AI hàng đầu như: OpenAI, Claude, Anthropic, v.v.
+**- Prompt Engineering:** Soạn thảo và Tinh chỉnh Lời nhắc (Instructions)
+   + **Zero-Shot Prompting:** Một lời nhắc không có ngữ cảnh hoặc ví dụ trước
+   + **Few-shot Prompting:** Một lời nhắc với một vài ngữ cảnh và ví dụ trước
+   + **Chain of Thought (Chuỗi Suy nghĩ):** Một lời nhắc bao gồm các quá trình suy nghĩ và các bước trước khi đưa ra câu trả lời thực tế
+**- Retrieval Augmented Generation (RAG):** Truy xuất thông tin liên quan từ một nguồn dữ liệu
+   + **R: Retrieval (Truy xuất) -** Lấy thông tin liên quan từ một kho kiến thức hoặc nguồn dữ liệu
+   + **A: Augmented (Tăng cường) -** Thêm thông tin được truy xuất làm ngữ cảnh bổ sung vào lời nhắc của người dùng trước khi đưa vào mô hình
+   + **G: Generation (Tạo ra) -** Phản hồi từ mô hình cho lời nhắc đã được tăng cường
+   + **Các trường hợp sử dụng:** Cải thiện chất lượng nội dung, chatbot và trả lời câu hỏi theo ngữ cảnh, tìm kiếm được cá nhân hóa và tóm tắt dữ liệu thời gian thực
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+**- Amazon Titan Embedding:** Mô hình nhẹ, nổi bật trong việc dịch văn bản thành biểu diễn số (**embeddings**) cho các tác vụ truy xuất độ chính xác cao, với sự hỗ trợ cho hơn 100 ngôn ngữ
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+**- Pretrained AI Services (Các Dịch vụ AI đã được đào tạo trước):**
+  + **Amazon Rekognition:** Phân tích Hình ảnh và Video
+  + **Amazon Translate:** Phát hiện và dịch văn bản
+  + **Amazon Textract:** Trích xuất Văn bản và Bố cục từ tài liệu
+  + **Amazon Transcribe:** Chuyển lời nói thành văn bản (**Speech-to-text**)
+  + **Amazon Polly:** Chuyển văn bản thành lời nói (**Text-to-speech**)
+  + **Amazon Comprehend:** Trích xuất Thông tin chi tiết và Mối quan hệ từ văn bản
+  + **Amazon Kendra:** Dịch vụ Tìm kiếm Thông minh
+  + **Amazon Lookout:** Phát hiện Bất thường (**Anomalies**) trong các chỉ số kinh doanh, thiết bị và hình ảnh
+  + **Amazon Personalize:** Điều chỉnh các đề xuất cho người dùng
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+**- Demo:** AMZPhoto: Nhận diện khuôn mặt từ hình ảnh bằng AI
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+**- Amazon Bedrock AgentCore:** Một nền tảng đại lý (**agentic platform**) toàn diện được thiết kế để giải quyết các thách thức trong việc đưa **agents** vào sản xuất:
+  + Thực thi và mở rộng mã **agent** một cách an toàn.
+  + Tích hợp bộ nhớ (**memory**) (ghi nhớ các tương tác trong quá khứ và học hỏi).
+  + Triển khai kiểm soát danh tính và truy cập (**identity and access controls**) cho **agents** và các công cụ (**tools**).
+  + Cung cấp việc sử dụng công cụ đại lý (**agentic tool use**) cho các quy trình làm việc phức tạp.
+  + Khám phá và kết nối với các công cụ và tài nguyên tùy chỉnh.
+  + Hiểu và kiểm toán mọi tương tác (**observability**).
+  **+ Foundational Services (Dịch vụ Nền tảng):** Các dịch vụ này được phân loại để chạy **agents** an toàn ở quy mô lớn.
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+  **+ Enhance with tools & memory (Tăng cường với công cụ & bộ nhớ):** Bao gồm Memory, Gateway, Browser tool và Code Interpreter.
 
-#### Domain-Driven Design (DDD)
+  **+ Deploy securely at scale (Triển khai an toàn ở quy mô lớn):** Bao gồm Runtime và Identity.
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
+  **+ Gain operational insights (Thu thập thông tin chi tiết về vận hành):** Bao gồm Observability.
 
-#### Event-Driven Architecture
+  **+ Enabling Agents at Scale (Architecture) (Kích hoạt Agents ở Quy mô lớn (Kiến trúc)):** Kết nối với AgentCore Gateway (qua MCP), Memory, Identity, Observability, Browser và Code Interpreter.
 
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
+  **+ Frameworks for Building Agents (Các Framework để Xây dựng Agents):** CrewAI, Google ADK, LangGraph/LangChain, LlamaIndex, OpenAI Agents SDK và Strands Agents SDK.
 
-#### Compute Evolution
+### Điểm nổi bật Chính
+- **Bedrock là Trung tâm GenAI:** Amazon Bedrock cung cấp các Foundation Models được quản lý hoàn toàn từ các công ty hàng đầu cho nhiều tác vụ khác nhau.
 
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
+- **Tùy chỉnh thông qua Prompts và Dữ liệu:** Nhiều cách khác nhau để tạo prompts (Zero-Shot, Few-shot, CoT) và sử dụng **RAG** để bổ sung thông tin cho các phản hồi tốt hơn của mô hình.
 
-#### Amazon Q Developer
+- **Embeddings thúc đẩy Tìm kiếm:** Amazon Titan Embedding là một mô hình nhẹ quan trọng để dịch văn bản sang số, giúp đạt được độ chính xác cao trong các tác vụ truy xuất (như RAG).
 
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+- **Mô hình được Đào tạo trước:** AWS cung cấp nhiều dịch vụ AI sẵn sàng sử dụng cho các nhu cầu chung, như **Rekognition** cho hình ảnh và **Textract** cho tài liệu.
 
-### Những Gì Học Được
+- **AgentCore Giải quyết các vấn đề Sản xuất:** Amazon Bedrock AgentCore là nền tảng toàn diện mới xử lý các phần khó khăn trong việc vận hành AI Agents ở quy mô lớn (như Memory, Identity và Observability).
 
-#### Tư Duy Thiết Kế
+### Áp dụng vào Công việc
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+- Rất hữu ích trong các dự án sau này của nhóm chúng tôi, có thể bao gồm việc sử dụng nhiều hơn các AI Foundation Models trong kiến trúc của chúng tôi.
 
-#### Kiến Trúc Kỹ Thuật
+### Trải nghiệm Sự kiện
+- Các diễn giả nói rất tốt và cung cấp nhiều thông tin
+- **Q&A:** Thành viên nhóm đã hỏi một câu hỏi lạc đề nhưng rất quan trọng đối với dự án của chúng tôi
+  + **Hỏi:** **SNS** trong kiến trúc của chúng tôi được sử dụng để xử lý Guard Duty Findings đã gặp phải tình huống hơn 1000+ cảnh báo xuất hiện cùng một lúc, làm thế nào để chúng tôi giải quyết việc này?
+  + **Đáp:** Thêm **SQS** để xếp hàng các sự kiện và đảm bảo không có cảnh báo nào bị bỏ lỡ
+- Lọt **top 10** trong trò chơi **Kahoot Quiz** cuối sự kiện và có một bức ảnh với các diễn giả
+- Tạo một nhóm không chính thức: "**Mèo Cam Đeo Khăn**", sự hợp tác chung giữa nhóm của tôi "**The Ballers**" và "**Vinhomies**"
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
-
-#### Chiến Lược Hiện Đại Hóa
-
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
-
-### Ứng Dụng Vào Công Việc
-
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
-
-### Trải nghiệm trong event
-
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
-
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
-
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
-
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
-
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
-
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
-
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+#### Một số hình ảnh sự kiện
+![Top 10 Kahoot](/images/4-Event/Kahoottop10.jpg)
+![Một bức ảnh với các diễn giả và 10 người chơi hàng đầu](/images/4-Event/WithSpeaker.jpg)
+![Nhóm Mèo Cam Đeo Khăn](/images/4-Event/Meocamdeokhan.jpg)

@@ -1,125 +1,176 @@
 ---
-title: "Event 2"
-date: "2000-01-01"
-weight: 1
+title: "Sự kiện 4"
+date: "2025-11-17"
+weight: 04
 chapter: false
-pre: " <b> 4.2. </b> "
+pre: " <b> 4.4. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Báo Cáo Tóm Tắt: “AWS Cloud Mastery Series #2 - DevOps on AWS”
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+### Mục tiêu Sự kiện
 
-### Mục Đích Của Sự Kiện
+- Giới thiệu các Dịch vụ DevOps của **AWS** – **CI/CD Pipeline**
+- Giới thiệu **Infrastructure as Code (IaC)** và các công cụ liên quan
+- Giới thiệu các Dịch vụ Container trên **AWS**
+- Đảm bảo khả năng Giám sát và Khả năng Quan sát (**Monitoring and Observability**) bằng cách sử dụng các Dịch vụ **AWS**
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+### Diễn giả
 
-### Danh Sách Diễn Giả
+- **Truong Quang Tinh** – AWS Community Builder, Platform Engineer - TymeX
+- **Bao Huynh** – AWS Community Builder
+- **Nguyen Khanh Phuc Thinh** – AWS Community Builder
+- **Tran Dai Vi** – AWS Community Builder
+- **Huynh Hoang Long** – AWS Community Builder
+- **Pham Hoang Quy** – AWS Community Builder
+- **Nghiem Le** – AWS Community Builder
+- **Dinh Le Hoang Anh** - Cloud Engineer Trainee, First Cloud AI Journey
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+### Điểm nhấn chính
 
-### Nội Dung Nổi Bật
+### Tư duy DevOps (DevOps Mindset)
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+**- Văn hóa (Culture):** Cộng tác, Tự động hóa, Học hỏi và Đo lường Liên tục (**Collaboration, Automation, Continuous Learning and Measurement**)
+**- Các Vai trò DevOps:** DevOps Engineer, Cloud Engineer, Platform Engineer, Site Reliability Engineer
+**- Các Chỉ số Thành công (Success Metrics):**
+    + Đảm bảo tình trạng triển khai (**deployment health**)
+    + Cải thiện tính linh hoạt (**agility**)
+    + Độ ổn định hệ thống (**System stability**)
+    + Tối ưu hóa Trải nghiệm Khách hàng (**Optimize customer Experience**)
+    + Chứng minh giá trị các khoản đầu tư công nghệ (**Justify technology investments**)
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+| NÊN LÀM (DO) | KHÔNG NÊN LÀM (DON'T) |
+| :--- | :--- |
+| Bắt đầu với các Khái niệm Cơ bản (Fundamentals) | Mắc kẹt trong Vòng lặp Tutorial (Tutorial Hell) |
+| Học bằng cách Xây dựng các Dự án Thực tế | Sao chép-dán một cách mù quáng (Copy-paste blindly) |
+| Tài liệu hóa Mọi thứ (Document Everything) | So sánh Tiến độ của Bản thân với Người khác |
+| Thành thạo từng thứ một | Bỏ cuộc Sau khi Thất bại |
+| Tăng cường Kỹ năng Mềm (Soft Skills Enhancement) | |
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+**- Tích hợp Liên tục (Continuous Integration):** Các thành viên trong nhóm tích hợp công việc của họ thường xuyên, nhằm mục đích Cung cấp Liên tục (**Continuous Delivery**) và Triển khai Liên tục (**Deployment**)
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+### Cơ sở hạ tầng dưới dạng Mã (Infrastructure as Code - IaC)
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+**- Lợi ích:** Tự động hóa, Khả năng Mở rộng, Khả năng Tái tạo (**Reproducibility**) và Cộng tác tốt hơn
 
-#### Domain-Driven Design (DDD)
+#### AWS CloudFormation
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
+Công cụ **IaC** tích hợp sẵn của **AWS**, sử dụng các template được viết bằng **YAML** hoặc **JSON**, có thể xây dựng mọi Cơ sở hạ tầng **AWS** một cách tự động
 
-#### Event-Driven Architecture
+**- Stack:** Một tập hợp các Tài nguyên **AWS** được định nghĩa trong một template, có thể được **CloudFormation** sử dụng để tạo, cập nhật hoặc xóa các tài nguyên đó
 
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
+**- CloudFormation Template:** Một tệp **YAML/JSON** định nghĩa Cơ sở hạ tầng **AWS**, hoạt động như một bản thiết kế (**blueprint**) để triển khai và cấu hình tài nguyên
 
-#### Compute Evolution
+**- Cách thức hoạt động:** Tạo template -> Lưu trữ trong S3 Bucket hoặc bộ nhớ cục bộ -> Sử dụng **CloudFormation** để tạo **Stacks** dựa trên template -> **CloudFormation** xây dựng tài nguyên
 
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
+**- Drift Detection (Phát hiện Lệch):** Phát hiện các thay đổi trong cơ sở hạ tầng so với **Stack** => Cập nhật **Stack** hoặc hoàn nguyên thay đổi, hữu ích cho việc quản lý phiên bản (**versioning**)
 
-#### Amazon Q Developer
+#### AWS Cloud Development Kit (CDK)
 
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+Khung phát triển phần mềm mã nguồn mở, hỗ trợ **IaC** bằng cách sử dụng các ngôn ngữ lập trình thực tế (**Python, Java, C#.Net, Type/JavaScript và Go**)
 
-### Những Gì Học Được
+**- Construct:** Các khối xây dựng, bao gồm các thành phần đại diện cho Tài nguyên **AWS** và Cấu hình của chúng, có 3 cấp độ **construct**:
+  + **L1 Construct:** Tài nguyên cấp thấp ánh xạ trực tiếp tới một tài nguyên **AWS CloudFormation** duy nhất
+  + **L2 Construct:** Cung cấp mức độ trừu tượng cao hơn thông qua **API** dựa trên ý định trực quan (**intuitive intent-based API**), đóng gói các phương pháp hay nhất và các mặc định bảo mật
+  + **L3 Construct:** Các mẫu kiến trúc hoàn chỉnh với nhiều tài nguyên, triển khai có ý kiến chuyên môn (**opinionated implementation**) và triển khai nhanh chóng
 
-#### Tư Duy Thiết Kế
+#### AWS Amplify
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+Nền tảng **AWS** giúp dễ dàng xây dựng, triển khai và mở rộng các ứng dụng web và di động, sử dụng **CloudFormation** bên dưới: Các **Stacks** được triển khai để xây dựng cơ sở hạ tầng theo chương trình (**programmatically**)
 
-#### Kiến Trúc Kỹ Thuật
+#### Terraform
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
+Công cụ **IaC**, bắt đầu bằng việc định nghĩa cơ sở hạ tầng bằng mã **Terraform** và lập kế hoạch sau đó áp dụng cơ sở hạ tầng trên nhiều nền tảng **cloud** như **Azure, AWS, Google Cloud**, v.v.
 
-#### Chiến Lược Hiện Đại Hóa
+**- Điểm mạnh:** Hỗ trợ Đa đám mây (**Multi-Cloud**), Theo dõi Trạng thái (**State tracking**) với cùng một cấu hình
 
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
+#### Cách chọn Công cụ IaC?
+**- Tiêu chí:**
+  + Lập kế hoạch sử dụng một **Cloud** hay nhiều **Cloud**?
+  + Vai trò là Developer hay Ops?
+  + **Cloud** và Hệ sinh thái có hỗ trợ công cụ đó không?
 
-### Ứng Dụng Vào Công Việc
+### Dịch vụ Container trên AWS
 
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
+#### Dockerfile
 
-### Trải nghiệm trong event
+Một **Dockerfile** định nghĩa cách xây dựng một **container image**, mô tả môi trường, các phụ thuộc, các bước xây dựng và cấu hình thời gian chạy cuối cùng, đảm bảo rằng ứng dụng chạy nhất quán trên bất kỳ hệ thống nào hỗ trợ **Dockers**
 
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
+**- Images:** Một bản thiết kế đóng gói của một ứng dụng, được xây dựng từ một **Dockerfile** bằng cách sử dụng hệ thống tệp phân lớp (**layered file system**), được sử dụng để tạo các **container** nhất quán giữa các môi trường
 
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
+**- Quy trình làm việc:** **Dockerfile** xây dựng **Docker Image**, sau đó có thể được sử dụng để chạy **Container** và đẩy lên **ECR/Docker Hub**
 
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
+#### Amazon ECR
 
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
+Một **container registry** được quản lý hoàn toàn, giúp dễ dàng lưu trữ, quản lý và chia sẻ hình ảnh **Docker container** một cách an toàn.
+**Container registry** riêng tư, an toàn và có khả năng mở rộng của **AWS**
 
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
+**- Tính năng:**
+  + Quét hình ảnh (**Image Scanning**)
+  + Thẻ Bất biến (**Immutable Tags**)
+  + Chính sách Vòng đời (**Lifecycle Policies**)
+  + Mã hóa & **IAM**
 
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
+**- Điều phối (Orchestration):** Điều phối nhiều quy trình **container**: khởi động lại **container**, tự động mở rộng quy mô khi tải cao, phân phối lưu lượng truy cập hiệu quả, quản lý nơi đặt và chạy **container**
 
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+#### Kubernetes
+Mã nguồn mở, tự động hóa việc triển khai, mở rộng quy mô, tự phục hồi (**healing**) và cân bằng tải (**load balancing**)
+**- Các thành phần:**
+  + **Master Node:** **Control Plane**, quản lý **worker nodes** và **pods**
+  + **Worker Node:** Chạy khối lượng công việc ứng dụng bên trong **pods**
+  + **Pod:** Đơn vị triển khai nhỏ nhất, có thể chứa một hoặc nhiều **container**
+  + **Service**
+
+ECS so với EKS
+
+| Tính năng | Amazon ECS (Elastic Container Service) | Amazon EKS (Elastic Kubernetes Service) |
+| :--- | :--- | :--- |
+| **Công nghệ Cốt lõi** | Điều phối **container** gốc **AWS** (**AWS-native container orchestration**) | Dựa trên **Kubernetes** (tiêu chuẩn mã nguồn mở) |
+| **Độ phức tạp** | Đơn giản hơn, dễ vận hành hơn | Rất linh hoạt nhưng **phức tạp** hơn |
+| **Kiến thức Yêu cầu** | **Không cần kiến thức về Kubernetes** | Yêu cầu **kiến thức về Kubernetes** (pods, deployments, v.v.) |
+| **Tích hợp AWS** | Tích hợp sâu với **AWS** (ALB, IAM, CloudWatch, v.v.) | Tích hợp **Kubernetes** tiêu chuẩn |
+| **Trường hợp Sử dụng/Lợi ích** | Tuyệt vời cho **triển khai nhanh** & **chi phí vận hành thấp hơn** | Tính **di động đa cluster**, **đa đám mây** |
+| **Hệ sinh thái/Cộng đồng** | Cộng đồng và công cụ gốc **AWS** | **Hệ sinh thái & công cụ cộng đồng lớn hơn** |
+| **Tóm tắt** | ECS = dễ hơn, chạy nhanh hơn, **chi phí vận hành thấp hơn** | EKS = linh hoạt hơn, kiểm soát nhiều hơn, **phức tạp hơn** |
+
+#### App Runner
+
+Thích hợp cho việc triển khai nhanh các ứng dụng web và **REST API**, lý tưởng cho khối lượng công việc sản xuất từ nhỏ đến trung bình
+
+### Giám sát & Khả năng Quan sát (Monitoring & Observability)
+
+#### CloudWatch
+- Giám sát Tài nguyên **AWS** và Ứng dụng chạy trên **AWS** theo thời gian thực
+- Cung cấp khả năng quan sát
+- Báo động (**Alarms**) và phản hồi tự động
+- **Dashboard** giúp tối ưu hóa vận hành và chi phí
+
+**- CloudWatch metrics:** Dữ liệu về hiệu suất của hệ thống trên **AWS** hoặc tại chỗ với **CloudWatch Agent**, tích hợp tốt với **EventBridge**, **Auto Scaling** và quy trình làm việc **DevOps**
+
+# AWS X-Ray
+**- Truy vết Phân tán (Distributed Tracing):** Theo dõi các yêu cầu từ đầu đến cuối, và vẽ bản đồ cùng đường dẫn giữa các dịch vụ đã truy cập, thêm **SDK** vào mã để truy vết **IDs**
+
+**- Thông tin chi tiết về Hiệu suất (Performance Insight):** Phân tích nguyên nhân gốc rễ cho độ trễ và lỗi, suy luận thông tin chi tiết từ các dấu vết và cung cấp Giám sát Người dùng Thật (**Real User Monitoring**)
+
+### Trải nghiệm Sự kiện
+
+Sự kiện này rất quan trọng đối với dự án của chúng tôi vì nó giải quyết kế hoạch bổ sung **IaC** bằng cách sử dụng **CDK**, thay vì sử dụng **ClickOps** để duy trì và tái tạo. Ngoài ra, một số thông tin chi tiết hơn về **CloudWatch** đã giúp ích rất nhiều cho tính năng giám sát dữ liệu của chúng tôi
+
+Các diễn giả đã trả lời câu hỏi của nhóm chúng tôi:
+
+- **Hỏi:** Dự án của chúng tôi cho đến nay chỉ được xây dựng bằng **ClickOps**, và chúng tôi đang có kế hoạch sử dụng **CDK**. Có công cụ nào có thể quét và biến cơ sở hạ tầng hiện có của chúng tôi thành **CDK** hoặc **CloudFormation** thay vì phải tái tạo lại cơ sở hạ tầng từ đầu bằng **IaC** không?
+- **Đáp:** Rất tiếc là chưa có công cụ nào có thể hỗ trợ vấn đề đó, nhóm của bạn sẽ phải xây dựng lại cơ sở hạ tầng từ đầu. Nếu có bất kỳ cơ hội nào mà bạn tìm thấy một công cụ có thể hỗ trợ, hãy chia sẻ với chúng tôi.
+
+- **Hỏi:** Chúng tôi nhận thấy rằng **AWS X-Ray** được sử dụng với **CloudWatch** tương tự như **CloudTrail** trong phương pháp truy vết của nó, bạn có thể giải thích thêm về điểm khác biệt giữa chúng không?
+- **Đáp:** **X-Ray** được sử dụng cho **CloudWatch** và dùng để truy vết các tài nguyên và dịch vụ mà hệ thống tương tác, trong khi **CloudTrail** thường được sử dụng để truy vết các hành động của người dùng **AWS**.
+
+- **Hỏi:** Dự án của chúng tôi được xây dựng xoay quanh **Guard Duty Findings**, bạn có kinh nghiệm nào về cách kích hoạt **Findings** một cách đáng tin cậy cho các kịch bản demo không?
+- **Đáp:** Theo kinh nghiệm của tôi, tôi biết rằng **Guard Duty Findings** có thể được kích hoạt bằng các hoạt động quét cổng (**port scanning activities**) nhưng tôi chắc chắn rằng cũng có những cách khác.
+- **Đáp:** **Guard Duty** có thể được cấu hình để có một danh sách mối đe dọa (**threat list**) chứa các quy tắc tùy chỉnh để kích hoạt **findings** khi có các hoạt động liên quan đến các miền hoặc **IP** độc hại đã được cấu hình.
+
+Sự kiện này cũng là lần đầu tiên một số diễn giả trình bày một chủ đề:
+- Các phần **DevOps** và **IaC** được trình bày tốt
+- Phần **Monitoring & Observability** không được tốt bằng và chúng tôi có thể nhận thấy sự lo lắng của diễn giả nhưng vẫn truyền tải được những giá trị tuyệt vời.
+
+#### Một số hình ảnh sự kiện
+![Group picture during the event taken by speaker Tran Dai Vi](/images/4-Event/CM2GroupPic.jpg)

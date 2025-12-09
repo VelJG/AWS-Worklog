@@ -28,7 +28,7 @@ pre: " <b> 4.4. </b> "
 
 ### Key Highlights
 
-## DevOps Mindset
+### DevOps Mindset
 
 **- Culture:** Collaboration, Automation, Continuous Learning and Measurement
 **- DevOps Roles:** DevOps Engineer, Cloud Engineer, Platform Engineer, Site Reliability Engineer
@@ -49,11 +49,11 @@ pre: " <b> 4.4. </b> "
 
 **- Continuous Integration:** Team members integrate their work frequently, aims for continuous Delivery and Deployment
 
-## Infrastructure as Code (IaC)
+### Infrastructure as Code (IaC)
 
 **-Benefits:** Automation, Scalability, Reproducibility and better Collaboration
 
-# AWS CloudFormation
+#### AWS CloudFormation
 
 AWS's own built in IaC tool, use templates written with YAML or JSON, can build every AWS Infrastructure automatically
 
@@ -65,7 +65,7 @@ AWS's own built in IaC tool, use templates written with YAML or JSON, can build 
 
 **- Drift Detection:** Detect changes in the infrastructure compared to the Stack => Update Stack or revert change, useful for versioning 
 
-# AWS Cloud Development Kit(CDK)
+#### AWS Cloud Development Kit(CDK)
 
 Open-source software development framework, support IaC using real programming languages(Python,Java,C#.Net, Type/JavaScript and Go)
 
@@ -74,25 +74,25 @@ Open-source software development framework, support IaC using real programming l
   + L2 Construct: Provide a higher-level abstraction through an intuitive intent-based API,encapsulate best practices and security defaults 
   + L3 Construct: Complete architecture patterns with multiple resources, opinionated implementation and fast deployment
 
-# AWS Amplify
+#### AWS Amplify
 
 AWS platform that makes it easy to build, deploy, and scale web and mobile apps, uses CloudFormation under the hood: Stacks deployed to built infrastructure programmatically 
 
-# Terraform
+#### Terraform
 
 IaC tool, start by defining infrastructure in Terraform code and plan then apply the infrastructure on multiple cloud platforms like Azure, AWS, Google Cloud, etc..
 
 **- Strength:** Multi-Cloud support, State tracking with the same configuration
 
-# How to choose IaC Tools?
+#### How to choose IaC Tools?
 **-Criteria:**
   + Plan using one Cloud or many?
   + Role as Developer or Ops?
   + Does the Cloud and Ecosystem support the tool?
 
-## Container Services on AWS
+### Container Services on AWS
 
-# Dockerfile
+#### Dockerfile
 
 A Dockerfile defines how to build a container image, which describe the environment, dependencies, build steps, and final runtime configuration, ensuring that the application run consistently across any system that support Dockers
 
@@ -100,7 +100,7 @@ A Dockerfile defines how to build a container image, which describe the environm
 
 **- Workflow:** Dockerfile build a Docker Image which can be used to run Container and push to ECR/Docker Hub
 
-# Amazon ECR
+#### Amazon ECR
 
 A fully managed container registry that make it easy to store, manage, and securely share Docker container image.
 AWS's own secure and scalable private container registry
@@ -113,7 +113,7 @@ AWS's own secure and scalable private container registry
 
 **- Orchestration:** Orchestrate many containers processes: restart containers, scale up automatically under high load, distribute traffic efficiently, manage where containers are placed and run
 
-# Kubernetes
+#### Kubernetes
 Open source, automates deployment, scaling, healing, and load balancing
 **- Components:**
   + Master Node: Control Plane, manage worker nodes and pods
@@ -133,13 +133,13 @@ ECS vs EKS
 | **Ecosystem/Community** | AWS-native tools and community | **Larger ecosystem** & community tools |
 | **Summary** | ECS = easier, faster to run, **lower operational overhead** | EKS = more flexibility, more control, **more complexity** |
 
-# App Runner
+#### App Runner
 
 Suitable for quick deployment of web applications and REST APIS, ideal for small to medium production workload
 
-## Monitoring & Observability
+### Monitoring & Observability
 
-# CloudWatch
+#### CloudWatch
 - Monitor AWS Resources and Applications running on AWS in real time
 - Provide observabilty
 - Alarms and automated responses
