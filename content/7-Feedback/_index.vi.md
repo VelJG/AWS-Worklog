@@ -26,7 +26,7 @@ Trong quá trình thực tập, mình đã học được nhiều kỹ năng m�
 Văn hóa công ty rất tích cực: mọi người tôn trọng nhau, làm việc nghiêm túc nhưng vẫn vui vẻ, nhiều mentor trẻ tuổi và thân thiện. Mình rất trân trọng các thành viên trong nhóm, ai cũng chủ động, ham học hỏi và hoàn thành nhiệm vụ tốt nhất có thể. Chúng mình cũng quan tâm đến nhau, không chỉ về công việc mà còn về sức khỏe, đặc biệt ở giai đoạn cuối dự án, ai cũng cố gắng hoàn thành đúng hạn.
 
 **6. Chính sách / phúc lợi thực tập**  
-Công ty cho phép làm việc linh hoạt khi cần, chủ yếu làm việc từ xa. Ngoài ra, công ty giới thiệu AWS Study Group và tổ chức các sự kiện về thông tin quan trọng trong lĩnh vực.
+Công ty cho phép làm việc linh hoạt khi cần, cho phép làm việc từ xa. Ngoài ra, công ty giới thiệu  về AWS Study Group và tổ chức các sự kiện về nội dung quan trọng trong lĩnh vực.
 
 ---
 
@@ -38,7 +38,7 @@ Công ty cho phép làm việc linh hoạt khi cần, chủ yếu làm việc t�
 - Trả lời: Có thêm không gian làm việc tại văn phòng sẽ tốt hơn, nhưng điều này khó thực hiện. Một điểm nữa là bài kiểm tra giữa kỳ, hầu hết chúng mình đánh giá thấp phạm vi đề thi, không biết nó sẽ giống định dạng bài thi SAA. Nếu biết trước phạm vi lớn như vậy, chúng mình sẽ chuẩn bị tốt hơn.
   
 - Nếu giới thiệu cho bạn bè, bạn có **khuyên họ thực tập ở đây không**? Vì sao?  
-- Trả lời: Có, nhưng chỉ khi bạn đã có nhóm tốt và đủ kỷ luật để làm việc từ xa. Mình thấy một số thực tập sinh OJT gặp khó khăn vì chọn nhóm ngẫu nhiên, ít hỗ trợ và trao đổi.
+- Trả lời: Có, nhưng chỉ khi bạn đã có nhóm tốt và đủ kỷ luật để làm việc từ xa. Mình thấy một số thực tập sinh OJT gặp khó khăn vì chọn nhóm ngẫu nhiên nên có ít sự hỗ trợ và trao đổi với nhau.
 ---
 
 ### Đề xuất & mong muốn

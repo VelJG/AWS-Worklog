@@ -1,37 +1,225 @@
 ---
-title : "Dọn dẹp tài nguyên"
+title : "GuardDuty ETL Code"
 date: "2000-01-01"
-weight : 6
+weight : 02
 chapter : false
-pre : " <b> 5.6. </b> "
+pre : " <b> 5.11.2. </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+```python
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+import json
+import boto3
+import gzip
+import os
+from datetime import datetime
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+s3 = boto3.client('s3')
+glue = boto3.client('glue')
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+DESTINATION_BUCKET = os.environ['DESTINATION_BUCKET']
+S3_LOCATION_GUARDDUTY = os.environ['S3_LOCATION_GUARDDUTY']
+DATABASE_NAME = os.environ['DATABASE_NAME']
+TABLE_NAME_GUARDDUTY = os.environ['TABLE_NAME_GUARDDUTY']
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+def lambda_handler(event, context):
+    """
+    Processes GuardDuty findings from S3, extracts key fields,
+    and stores them in partitioned S3 location with Glue catalog updates.
+    """
+    
+    for record in event['Records']:
+        bucket = record['s3']['bucket']['name']
+        key = record['s3']['object']['key']
+        
+        print(f"Processing GuardDuty finding: s3://{bucket}/{key}")
+        
+        try:
+            # Download and decompress GuardDuty finding
+            response = s3.get_object(Bucket=bucket, Key=key)
+            
+            if key.endswith('.gz'):
+                content = gzip.decompress(response['Body'].read())
+            else:
+                content = response['Body'].read()
+            
+            finding = json.loads(content)
+            
+            # Process the finding
+            processed_finding = process_guardduty_finding(finding)
+            
+            # Determine partition path
+            partition_path = get_partition_path(processed_finding)
+            
+            # Write to S3
+            write_to_s3(processed_finding, partition_path)
+            
+            # Update Glue partition
+            update_glue_partition(partition_path)
+            
+            print(f"Successfully processed GuardDuty finding: {processed_finding['finding_id']}")
+            
+        except Exception as e:
+            print(f"Error processing {key}: {str(e)}")
+            raise
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+    return {
+        'statusCode': 200,
+        'body': json.dumps('GuardDuty ETL completed successfully')
+    }
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+def process_guardduty_finding(finding):
+    """
+    Extracts and flattens GuardDuty finding data.
+    """
+    
+    service = finding.get('service', {})
+    resource = finding.get('resource', {})
+    
+    # Extract network connection details
+    action = service.get('action', {})
+    network_connection = action.get('networkConnectionAction', {})
+    port_probe = action.get('portProbeAction', {})
+    dns_request = action.get('dnsRequestAction', {})
+    aws_api_call = action.get('awsApiCallAction', {})
+    
+    # Extract resource details
+    instance_details = resource.get('instanceDetails', {})
+    access_key_details = resource.get('accessKeyDetails', {})
+    s3_bucket_details = resource.get('s3BucketDetails', [])
+    
+    # Build processed finding
+    processed = {
+        'finding_id': finding.get('id', ''),
+        'finding_type': finding.get('type', ''),
+        'title': finding.get('title', ''),
+        'severity': finding.get('severity', 0),
+        'account_id': finding.get('accountId', ''),
+        'region': finding.get('region', ''),
+        'created_at': finding.get('createdAt', ''),
+        'event_last_seen': service.get('eventLastSeen', ''),
+        
+        # Network connection details
+        'remote_ip': network_connection.get('remoteIpDetails', {}).get('ipAddressV4', ''),
+        'remote_port': network_connection.get('remotePortDetails', {}).get('port', 0),
+        'connection_direction': network_connection.get('connectionDirection', ''),
+        'protocol': network_connection.get('protocol', ''),
+        
+        # DNS request details
+        'dns_domain': dns_request.get('domain', ''),
+        'dns_protocol': dns_request.get('protocol', ''),
+        
+        # Port probe details
+        'scanned_ip': port_probe.get('portProbeDetails', [{}])[0].get('remoteIpDetails', {}).get('ipAddressV4', '') if port_probe.get('portProbeDetails') else '',
+        'scanned_port': port_probe.get('portProbeDetails', [{}])[0].get('localPortDetails', {}).get('port', 0) if port_probe.get('portProbeDetails') else 0,
+        
+        # AWS API call details
+        'aws_api_service': aws_api_call.get('serviceName', ''),
+        'aws_api_name': aws_api_call.get('api', ''),
+        'aws_api_caller_type': aws_api_call.get('callerType', ''),
+        'aws_api_error': aws_api_call.get('errorCode', ''),
+        'aws_api_remote_ip': aws_api_call.get('remoteIpDetails', {}).get('ipAddressV4', ''),
+        
+        # Resource details
+        'target_resource_arn': resource.get('resourceType', ''),
+        'instance_id': instance_details.get('instanceId', ''),
+        'instance_type': instance_details.get('instanceType', ''),
+        'image_id': instance_details.get('imageId', ''),
+        'instance_tags': json.dumps(instance_details.get('tags', [])),
+        'resource_region': resource.get('region', ''),
+        
+        # Access key details
+        'access_key_id': access_key_details.get('accessKeyId', ''),
+        'principal_id': access_key_details.get('principalId', ''),
+        'user_name': access_key_details.get('userName', ''),
+        
+        # S3 bucket details
+        's3_bucket_name': s3_bucket_details[0].get('name', '') if s3_bucket_details else '',
+        
+        # Date for partitioning
+        'date': finding.get('createdAt', '')[:10] if finding.get('createdAt') else '',
+        
+        # Raw JSON for reference
+        'service_raw': json.dumps(service),
+        'resource_raw': json.dumps(resource),
+        'metadata_raw': json.dumps(finding)
+    }
+    
+    return processed
 
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
+def get_partition_path(finding):
+    """
+    Determines the S3 partition path based on finding type and date.
+    """
+    finding_type = finding['finding_type'].replace('/', '_').replace(':', '_')
+    created_at = finding['created_at']
+    
+    if created_at:
+        dt = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+        year = dt.strftime('%Y')
+        month = dt.strftime('%m')
+        day = dt.strftime('%d')
+    else:
+        year = '0000'
+        month = '00'
+        day = '00'
+    
+    return f"type={finding_type}/year={year}/month={month}/day={day}"
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+def write_to_s3(finding, partition_path):
+    """
+    Writes the processed finding to S3 in the partitioned location.
+    """
+    finding_id = finding['finding_id'].replace('/', '_')
+    s3_key = f"processed-guardduty/{partition_path}/{finding_id}.json.gz"
+    
+    # Compress and upload
+    compressed_data = gzip.compress(json.dumps(finding).encode('utf-8'))
+    
+    s3.put_object(
+        Bucket=DESTINATION_BUCKET,
+        Key=s3_key,
+        Body=compressed_data,
+        ContentType='application/json',
+        ContentEncoding='gzip'
+    )
+    
+    print(f"Written to s3://{DESTINATION_BUCKET}/{s3_key}")
 
-5. Xóa các S3 bucket
-
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+def update_glue_partition(partition_path):
+    """
+    Creates or updates the Glue partition for the finding.
+    """
+    parts = partition_path.split('/')
+    partition_values = [part.split('=')[1] for part in parts]
+    
+    partition_location = f"{S3_LOCATION_GUARDDUTY}{partition_path}/"
+    
+    try:
+        # Try to get existing partition
+        glue.get_partition(
+            DatabaseName=DATABASE_NAME,
+            TableName=TABLE_NAME_GUARDDUTY,
+            PartitionValues=partition_values
+        )
+        print(f"Partition already exists: {partition_path}")
+        
+    except glue.exceptions.EntityNotFoundException:
+        # Create new partition
+        glue.create_partition(
+            DatabaseName=DATABASE_NAME,
+            TableName=TABLE_NAME_GUARDDUTY,
+            PartitionInput={
+                'Values': partition_values,
+                'StorageDescriptor': {
+                    'Location': partition_location,
+                    'InputFormat': 'org.apache.hadoop.mapred.TextInputFormat',
+                    'OutputFormat': 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',
+                    'SerdeInfo': {
+                        'SerializationLibrary': 'org.openx.data.jsonserde.JsonSerDe'
+                    }
+                }
+            }
+        )
+        print(f"Created partition: {partition_path}")
+```

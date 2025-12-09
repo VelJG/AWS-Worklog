@@ -1,37 +1,75 @@
 ---
-title : "Dọn dẹp tài nguyên"
+title : "Isolate EC2 Code"
 date: "2000-01-01"
-weight : 6
+weight : 07
 chapter : false
-pre : " <b> 5.6. </b> "
+pre : " <b> 5.11.7. </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+```python
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+import json
+import boto3
+import os
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+ec2 = boto3.client('ec2')
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+ISOLATION_SG_ID = os.environ['ISOLATION_SG_ID']
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+def lambda_handler(event, context):
+    """
+    Isolates a compromised EC2 instance by changing its security group
+    to a deny-all security group.
+    """
+    
+    instance_id = event.get('InstanceId', '')
+    region = event.get('Region', 'us-east-1')
+    
+    print(f"Isolating EC2 instance: {instance_id} in region {region}")
+    
+    if not instance_id:
+        raise ValueError("InstanceId is required")
+    
+    try:
+        # Get current instance details
+        response = ec2.describe_instances(InstanceIds=[instance_id])
+        
+        if not response['Reservations']:
+            raise ValueError(f"Instance {instance_id} not found")
+        
+        instance = response['Reservations'][0]['Instances'][0]
+        current_sgs = [sg['GroupId'] for sg in instance.get('SecurityGroups', [])]
+        
+        print(f"Current security groups: {current_sgs}")
+        
+        # Check if already isolated
+        if ISOLATION_SG_ID in current_sgs and len(current_sgs) == 1:
+            print(f"Instance {instance_id} is already isolated")
+            return {
+                'statusCode': 200,
+                'InstanceId': instance_id,
+                'IsolationSG': None,
+                'Message': 'Instance already isolated'
+            }
+        
+        # Change security group to isolation SG
+        ec2.modify_instance_attribute(
+            InstanceId=instance_id,
+            Groups=[ISOLATION_SG_ID]
+        )
+        
+        print(f"Successfully isolated instance {instance_id} with SG {ISOLATION_SG_ID}")
+        
+        return {
+            'statusCode': 200,
+            'InstanceId': instance_id,
+            'IsolationSG': ISOLATION_SG_ID,
+            'PreviousSGs': current_sgs,
+            'Message': 'Instance successfully isolated'
+        }
+        
+    except Exception as e:
+        print(f"Error isolating instance {instance_id}: {str(e)}")
+        raise
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
-
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
-
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
-
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
-
-5. Xóa các S3 bucket
-
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+```

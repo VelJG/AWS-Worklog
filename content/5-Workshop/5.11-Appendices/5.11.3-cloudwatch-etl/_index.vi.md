@@ -1,37 +1,121 @@
 ---
-title : "Dọn dẹp tài nguyên"
+title : "CloudWatch ETL Code"
 date: "2000-01-01"
-weight : 6
+weight : 03
 chapter : false
-pre : " <b> 5.6. </b> "
+pre : " <b> 5.11.3. </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+```python
+import json
+import boto3
+import gzip
+import base64
+import os
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+firehose = boto3.client('firehose')
+s3 = boto3.client('s3')
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+FIREHOSE_STREAM_NAME = os.environ['FIREHOSE_STREAM_NAME']
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+def lambda_handler(event, context):
+    """
+    Processes VPC DNS query logs from S3 and sends them to Kinesis Firehose.
+    """
+    
+    for record in event['Records']:
+        bucket = record['s3']['bucket']['name']
+        key = record['s3']['object']['key']
+        
+        print(f"Processing VPC DNS log: s3://{bucket}/{key}")
+        
+        try:
+            # Download and decompress log file
+            response = s3.get_object(Bucket=bucket, Key=key)
+            
+            if key.endswith('.gz'):
+                content = gzip.decompress(response['Body'].read())
+            else:
+                content = response['Body'].read()
+            
+            # Process each log line
+            processed_records = []
+            for line in content.decode('utf-8').split('
+'):
+                if line.strip():
+                    try:
+                        log_entry = json.loads(line)
+                        processed_record = process_dns_log(log_entry)
+                        processed_records.append(processed_record)
+                    except json.JSONDecodeError:
+                        print(f"Skipping invalid JSON line: {line[:100]}")
+                        continue
+            
+            # Send to Firehose
+            if processed_records:
+                send_to_firehose(processed_records)
+                print(f"Successfully processed {len(processed_records)} DNS log entries")
+            
+        except Exception as e:
+            print(f"Error processing {key}: {str(e)}")
+            raise
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+    return {
+        'statusCode': 200,
+        'body': json.dumps('VPC DNS ETL completed successfully')
+    }
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+def process_dns_log(log_entry):
+    """
+    Processes a single DNS query log entry.
+    """
+    return {
+        'version': log_entry.get('version', ''),
+        'account_id': log_entry.get('account_id', ''),
+        'region': log_entry.get('region', ''),
+        'vpc_id': log_entry.get('vpc_id', ''),
+        'query_timestamp': log_entry.get('query_timestamp', ''),
+        'query_name': log_entry.get('query_name', ''),
+        'query_type': log_entry.get('query_type', ''),
+        'query_class': log_entry.get('query_class', ''),
+        'rcode': log_entry.get('rcode', ''),
+        'answers': json.dumps(log_entry.get('answers', [])),
+        'srcaddr': log_entry.get('srcaddr', ''),
+        'srcport': log_entry.get('srcport', 0),
+        'transport': log_entry.get('transport', ''),
+        'srcids_instance': log_entry.get('srcids', {}).get('instance', ''),
+        'timestamp': log_entry.get('query_timestamp', '')
+    }
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+def send_to_firehose(records):
+    """
+    Sends processed records to Kinesis Firehose in batches.
+    """
+    batch_size = 500
+    
+    for i in range(0, len(records), batch_size):
+        batch = records[i:i + batch_size]
+        
+        firehose_records = [
+            {
+                'Data': json.dumps(record) + '
+'
+            }
+            for record in batch
+        ]
+        
+        try:
+            response = firehose.put_record_batch(
+                DeliveryStreamName=FIREHOSE_STREAM_NAME,
+                Records=firehose_records
+            )
+            
+            failed_count = response['FailedPutCount']
+            if failed_count > 0:
+                print(f"Warning: {failed_count} records failed to send to Firehose")
+                
+        except Exception as e:
+            print(f"Error sending batch to Firehose: {str(e)}")
+            raise
 
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
-
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
-
-5. Xóa các S3 bucket
-
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+```

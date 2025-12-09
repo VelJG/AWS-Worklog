@@ -1,37 +1,71 @@
 ---
-title : "Dọn dẹp tài nguyên"
+title : "CloudWatch Autoexport Code"
 date: "2000-01-01"
-weight : 6
+weight : 05
 chapter : false
-pre : " <b> 5.6. </b> "
+pre : " <b> 5.11.5. </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+```python
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+import json
+import boto3
+import os
+from datetime import datetime, timedelta
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+logs = boto3.client('logs')
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+DESTINATION_BUCKET = os.environ['DESTINATION_BUCKET']
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+def lambda_handler(event, context):
+    """
+    Automatically exports CloudWatch log groups to S3.
+    Triggered by CloudWatch Logs subscription filter.
+    """
+    
+    log_group = event.get('logGroup', '/aws/incident-response/centralized-logs')
+    
+    print(f"Exporting log group: {log_group}")
+    
+    try:
+        # Calculate time range (last hour)
+        end_time = datetime.utcnow()
+        start_time = end_time - timedelta(hours=1)
+        
+        # Convert to milliseconds since epoch
+        from_time = int(start_time.timestamp() * 1000)
+        to_time = int(end_time.timestamp() * 1000)
+        
+        # Determine export prefix based on log type
+        if 'vpc-flow-logs' in log_group or 'flow' in log_group.lower():
+            prefix = 'exportedlogs/vpc-flow-logs/'
+        elif 'dns' in log_group.lower():
+            prefix = 'exportedlogs/vpc-dns-logs/'
+        else:
+            prefix = 'exportedlogs/other/'
+        
+        # Create export task
+        response = logs.create_export_task(
+            logGroupName=log_group,
+            fromTime=from_time,
+            to=to_time,
+            destination=DESTINATION_BUCKET,
+            destinationPrefix=prefix
+        )
+        
+        task_id = response['taskId']
+        print(f"Created export task: {task_id}")
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps({
+                'message': 'Export task created successfully',
+                'taskId': task_id
+            })
+        }
+        
+    except Exception as e:
+        print(f"Error creating export task: {str(e)}")
+        raise
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
-
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
-
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
-
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
-
-5. Xóa các S3 bucket
-
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+```
