@@ -1,7 +1,7 @@
 ---
 title : "Dọn dẹp thủ công"
 date: "2000-01-01"
-weight : 10
+weight : 01
 chapter : false
 pre : " <b> 5.10.1 </b> "
 ---

@@ -147,7 +147,7 @@ Thích hợp cho việc triển khai nhanh các ứng dụng web và **REST API*
 
 **- CloudWatch metrics:** Dữ liệu về hiệu suất của hệ thống trên **AWS** hoặc tại chỗ với **CloudWatch Agent**, tích hợp tốt với **EventBridge**, **Auto Scaling** và quy trình làm việc **DevOps**
 
-# AWS X-Ray
+#### AWS X-Ray
 **- Truy vết Phân tán (Distributed Tracing):** Theo dõi các yêu cầu từ đầu đến cuối, và vẽ bản đồ cùng đường dẫn giữa các dịch vụ đã truy cập, thêm **SDK** vào mã để truy vết **IDs**
 
 **- Thông tin chi tiết về Hiệu suất (Performance Insight):** Phân tích nguyên nhân gốc rễ cho độ trễ và lỗi, suy luận thông tin chi tiết từ các dấu vết và cung cấp Giám sát Người dùng Thật (**Real User Monitoring**)
