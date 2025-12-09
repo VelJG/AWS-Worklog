@@ -16,7 +16,7 @@ Về tác phong, mình luôn cố gắng hoàn thành mọi nhiệm vụ đượ
 
 | STT | Tiêu chí                            | Mô tả                                                                                      | Tốt | Khá | Trung bình |
 | --- | ----------------------------------- | ------------------------------------------------------------------------------------------ | ---- | ---- | ------- |
-| 1   | **Kiến thức & kỹ năng chuyên môn**  | Hiểu biết lĩnh vực, áp dụng kiến thức thực tế, thành thạo công cụ, chất lượng công việc     | ✅    | ☐    | ☐       |
+| 1   | **Kiến thức & kỹ năng chuyên môn**  | Hiểu biết lĩnh vực, áp dụng kiến thức thực tế, thành thạo công cụ, chất lượng công việc     |   ☐   | ✅   | ☐       |
 | 2   | **Khả năng học hỏi**                | Tiếp thu kiến thức mới, học hỏi nhanh                                                      | ✅    | ☐    | ☐       |
 | 3   | **Chủ động**                        | Tự tìm hiểu, nhận việc mà không chờ chỉ dẫn                                                | ✅    | ☐    | ☐       |
 | 4   | **Tinh thần trách nhiệm**           | Hoàn thành nhiệm vụ đúng hạn, đảm bảo chất lượng                                           | ✅    | ☐    | ☐       |
@@ -29,7 +29,7 @@ Về tác phong, mình luôn cố gắng hoàn thành mọi nhiệm vụ đượ
 | 11  | **Đóng góp dự án/nhóm**             | Hiệu quả công việc, sáng kiến, được ghi nhận bởi nhóm                                      | ✅    | ☐    | ☐       |
 | 12  | **Tổng thể**                        | Đánh giá chung toàn bộ quá trình thực tập                                                  | ✅    | ☐    | ☐       |
 
-### Cần cải thiện (dịch từ tiếng Anh)
+### Cần cải thiện
 
 * Dù làm việc từ xa khá ổn, năng suất tổng thể không cao như khi làm tại văn phòng
 * Chưa giao tiếp đủ với mentor và các thành viên FCJ như mong muốn
