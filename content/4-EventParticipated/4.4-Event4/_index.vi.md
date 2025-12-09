@@ -174,3 +174,4 @@ Sự kiện này cũng là lần đầu tiên một số diễn giả trình bà
 
 #### Một số hình ảnh sự kiện
 ![Group picture during the event taken by speaker Tran Dai Vi](/images/4-Event/CM2GroupPic.jpg)
+_Ảnh nhóm chụp bởi Tran Dai Vi_

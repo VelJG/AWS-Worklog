@@ -92,5 +92,8 @@ pre: " <b> 4.3. </b> "
 
 #### Một số hình ảnh sự kiện
 ![Top 10 Kahoot](/images/4-Event/Kahoottop10.jpg)
+_Top 10 Kahoot_
 ![Một bức ảnh với các diễn giả và 10 người chơi hàng đầu](/images/4-Event/WithSpeaker.jpg)
+_Top 10 người chơi_
 ![Nhóm Mèo Cam Đeo Khăn](/images/4-Event/Meocamdeokhan.jpg)
+_Ảnh nhóm Mèo Cam Đeo Khăn_

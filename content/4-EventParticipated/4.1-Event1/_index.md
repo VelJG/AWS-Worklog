@@ -86,4 +86,6 @@ I left the event with a much clearer understanding of current industry trends an
 
 #### Some event photos
 ![Selfie](/images/4-Event/SelfieCD.jpg)
+_Selfie_
 ![Group picture](/images/4-Event/GroupCD.jpg)
+_Group Picture_

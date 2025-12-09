@@ -76,3 +76,4 @@ Tham dự sự kiện **AI-Driven Development Life Cycle: Reimagining Software E
 
 #### Một số hình ảnh sự kiện
 ![Group picture during the event](/images/4-Event/TheBois-AIDLC.jpg)
+_Ảnh nhóm_

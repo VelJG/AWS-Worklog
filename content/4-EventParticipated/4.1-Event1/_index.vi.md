@@ -86,4 +86,6 @@ Kết thúc sự kiện, mình có cái nhìn rõ ràng hơn về xu hướng ng
 
 #### Một số hình ảnh sự kiện
 ![Selfie](/images/4-Event/SelfieCD.jpg)
+_Selfie_
 ![Group picture](/images/4-Event/GroupCD.jpg)
+_Ảnh nhóm_

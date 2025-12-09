@@ -174,3 +174,4 @@ This event is also the first time some of the speaker's first time presenting a 
 
 #### Some event photos
 ![Group picture during the event taken by speaker Tran Dai Vi](/images/4-Event/CM2GroupPic.jpg)
+_Group picture by speaker Tran Dai Vi_
