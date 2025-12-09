@@ -1,5 +1,5 @@
 ---
-title : "CloudTrail ETL Code"
+title : "Mã CloudTrail ETL"
 date: "2000-01-01"
 weight : 01
 chapter : false
@@ -11,206 +11,147 @@ pre : " <b> 5.11.1. </b> "
 import json
 import boto3
 import gzip
-import base64
+import re
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
-firehose = boto3.client('firehose')
-s3 = boto3.client('s3')
+s3 = boto3.client("s3")
+firehose= boto3.client("firehose")
 
-FIREHOSE_STREAM_NAME = os.environ['FIREHOSE_STREAM_NAME']
+# --------------------------------------------------
+# CẤU HÌNH (CONFIG)
+# --------------------------------------------------
+SOURCE_PREFIX = "exportedlogs/vpc-dns-logs/"
+FIREHOSE_STREAM_NAME = os.environ.get("FIREHOSE_STREAM_NAME")
+
+VPC_RE = re.compile(r"/(vpc-[0-9A-Za-z\-]+)")
+ISO_TS_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T")
+
+def read_gz(bucket, key):
+    obj = s3.get_object(Bucket=bucket, Key=key)
+    with gzip.GzipFile(fileobj=obj["Body"]) as f:
+        return f.read().decode("utf-8", errors="replace")
+
+def flatten_once(d):
+    out = {}
+    for k, v in (d or {}).items():
+        if isinstance(v, dict):
+            for k2, v2 in v.items():
+                out[f"{k}_{k2}"] = v2
+        else:
+            out[k] = v
+    return out
+
+
+def safe_int(x):
+    try:
+        return int(x)
+    except:
+        return None
+
+def parse_dns_line(line):
+    raw = line.strip()
+    if not raw:
+        return None
+
+    json_part = raw
+    prefix_ts = None
+
+    if ISO_TS_RE.match(raw):
+        try:
+            prefix_ts, rest = raw.split(" ", 1)
+            json_part = rest
+        except:
+            pass
+
+    if not json_part.startswith("{"):
+        idx = json_part.find("{")
+        if idx != -1:
+            json_part = json_part[idx:]
+
+    try:
+        obj = json.loads(json_part)
+    except:
+        return None
+
+    flat = flatten_once(obj)
+    if prefix_ts:
+        flat["_prefix_ts"] = prefix_ts
+    return flat
+
 
 def lambda_handler(event, context):
-    """
-    Processes CloudTrail logs from S3, extracts and enriches events,
-    and sends them to Kinesis Firehose for delivery to S3.
-    """
+    print(f"Received S3 Event. Records: {len(event.get('Records', []))}")
     
-    for record in event['Records']:
-        bucket = record['s3']['bucket']['name']
-        key = record['s3']['object']['key']
+    firehose_records = []
+
+    for record in event.get("Records", []):
+        if "s3" not in record: 
+            continue
+
+        bucket = record["s3"]["bucket"]["name"]
+        key = record["s3"]["object"]["key"]
         
-        print(f"Processing CloudTrail log: s3://{bucket}/{key}")
+        if not key.startswith(SOURCE_PREFIX) or not key.endswith(".gz"):
+            print(f"Skipping file: {key}")
+            continue
+
+        print(f"Processing S3 file: {key}")
         
-        try:
-            # Download and decompress CloudTrail log file
-            response = s3.get_object(Bucket=bucket, Key=key)
-            
-            if key.endswith('.gz'):
-                content = gzip.decompress(response['Body'].read())
-            else:
-                content = response['Body'].read()
-            
-            cloudtrail_data = json.loads(content)
-            
-            # Process each CloudTrail record
-            processed_records = []
-            for ct_record in cloudtrail_data.get('Records', []):
-                processed_record = process_cloudtrail_record(ct_record)
-                processed_records.append(processed_record)
-            
-            # Send to Firehose in batches
-            send_to_firehose(processed_records)
-            
-            print(f"Successfully processed {len(processed_records)} CloudTrail events")
-            
-        except Exception as e:
-            print(f"Error processing {key}: {str(e)}")
-            raise
+        # Trích xuất VPC ID từ đường dẫn file (Extract VPC ID from file path)
+        vpc_id_match = VPC_RE.search(key)
+        vpc_id = vpc_id_match.group(1) if vpc_id_match else "unknown"
 
-    return {
-        'statusCode': 200,
-        'body': json.dumps('CloudTrail ETL completed successfully')
-    }
-
-def process_cloudtrail_record(record):
-    """
-    Extracts and enriches CloudTrail event data.
-    """
-    
-    user_identity = record.get('userIdentity', {})
-    
-    # Extract user information
-    user_type = user_identity.get('type', '')
-    username = extract_username(user_identity)
-    
-    # Determine event characteristics
-    is_console_login = record.get('eventName') == 'ConsoleLogin'
-    is_failed_login = is_console_login and record.get('errorMessage') is not None
-    is_root_user = user_type == 'Root'
-    is_assumed_role = user_type == 'AssumedRole'
-    
-    # Identify high-risk events
-    high_risk_events = [
-        'DeleteTrail', 'StopLogging', 'DeleteFlowLogs',
-        'DisableLogging', 'PutBucketPolicy', 'DeleteBucketPolicy',
-        'CreateAccessKey', 'DeleteAccessKey', 'UpdateAccessKey'
-    ]
-    is_high_risk_event = record.get('eventName') in high_risk_events
-    
-    # Identify privileged actions
-    privileged_actions = [
-        'CreateUser', 'DeleteUser', 'AttachUserPolicy', 'DetachUserPolicy',
-        'CreateRole', 'DeleteRole', 'AttachRolePolicy', 'DetachRolePolicy',
-        'PutUserPolicy', 'PutRolePolicy', 'DeleteUserPolicy', 'DeleteRolePolicy'
-    ]
-    is_privileged_action = record.get('eventName') in privileged_actions
-    
-    # Identify data access events
-    data_access_events = ['GetObject', 'PutObject', 'DeleteObject']
-    is_data_access = record.get('eventName') in data_access_events
-    
-    # Extract target resources from request parameters
-    request_params = record.get('requestParameters', {})
-    target_bucket = request_params.get('bucketName', '')
-    target_key = request_params.get('key', '')
-    target_username = request_params.get('userName', '')
-    target_rolename = request_params.get('roleName', '')
-    target_policyname = request_params.get('policyName', '')
-    
-    # Extract new resources from response elements
-    response_elements = record.get('responseElements', {})
-    new_access_key = ''
-    new_instance_id = ''
-    target_group_id = ''
-    
-    if isinstance(response_elements, dict):
-        if 'accessKey' in response_elements:
-            new_access_key = response_elements['accessKey'].get('accessKeyId', '')
-        if 'instancesSet' in response_elements:
-            instances = response_elements['instancesSet'].get('items', [])
-            if instances:
-                new_instance_id = instances[0].get('instanceId', '')
-        if 'groupId' in response_elements:
-            target_group_id = response_elements.get('groupId', '')
-    
-    # Build processed record
-    processed = {
-        'eventtime': record.get('eventTime', ''),
-        'eventname': record.get('eventName', ''),
-        'eventsource': record.get('eventSource', ''),
-        'awsregion': record.get('awsRegion', ''),
-        'sourceipaddress': record.get('sourceIPAddress', ''),
-        'useragent': record.get('userAgent', ''),
-        'useridentity': user_identity,
-        'requestparameters': json.dumps(request_params) if request_params else '',
-        'responseelements': json.dumps(response_elements) if response_elements else '',
-        'resources': record.get('resources', []),
-        'recipientaccountid': record.get('recipientAccountId', ''),
-        'serviceeventdetails': json.dumps(record.get('serviceEventDetails', {})),
-        'errorcode': record.get('errorCode', ''),
-        'errormessage': record.get('errorMessage', ''),
-        'hour': datetime.fromisoformat(record.get('eventTime', '').replace('Z', '+00:00')).strftime('%Y-%m-%d-%H') if record.get('eventTime') else '',
-        'usertype': user_type,
-        'username': username,
-        'isconsolelogin': is_console_login,
-        'isfailedlogin': is_failed_login,
-        'isrootuser': is_root_user,
-        'isassumedrole': is_assumed_role,
-        'ishighriskevent': is_high_risk_event,
-        'isprivilegedaction': is_privileged_action,
-        'isdataaccess': is_data_access,
-        'target_bucket': target_bucket,
-        'target_key': target_key,
-        'target_username': target_username,
-        'target_rolename': target_rolename,
-        'target_policyname': target_policyname,
-        'new_access_key': new_access_key,
-        'new_instance_id': new_instance_id,
-        'target_group_id': target_group_id,
-        'identity_principalid': user_identity.get('principalId', '')
-    }
-    
-    return processed
-
-def extract_username(user_identity):
-    """
-    Extracts username from userIdentity object.
-    """
-    user_type = user_identity.get('type', '')
-    
-    if user_type == 'Root':
-        return 'ROOT'
-    elif user_type == 'IAMUser':
-        return user_identity.get('userName', '')
-    elif user_type == 'AssumedRole':
-        arn = user_identity.get('arn', '')
-        if '/' in arn:
-            return arn.split('/')[-1]
-        return user_identity.get('principalId', '')
-    elif user_type == 'FederatedUser':
-        return user_identity.get('principalId', '')
-    else:
-        return user_identity.get('principalId', '')
-
-def send_to_firehose(records):
-    """
-    Sends processed records to Kinesis Firehose in batches.
-    """
-    batch_size = 500
-    
-    for i in range(0, len(records), batch_size):
-        batch = records[i:i + batch_size]
+        # Đọc và xử lý nội dung file (Read and process file content)
+        content = read_gz(bucket, key)
+        if not content: 
+            continue
         
-        firehose_records = [
-            {
-                'Data': json.dumps(record) + '
-'
+        for line in content.splitlines():
+            r = parse_dns_line(line)
+            if not r: 
+                continue
+            
+            # Tạo flattened JSON record (Create flattened JSON record)
+            out = {
+                "version": r.get("version"),
+                "account_id": r.get("account_id"),
+                "region": r.get("region"),
+                "vpc_id": r.get("vpc_id", vpc_id),
+                "query_timestamp": r.get("query_timestamp"),
+                "query_name": r.get("query_name"),
+                "query_type": r.get("query_type"),
+                "query_class": r.get("query_class"),
+                "rcode": r.get("rcode"),
+                "answers": json.dumps(r.get("answers"), ensure_ascii=False),
+                "srcaddr": r.get("srcaddr"),
+                "srcport": safe_int(r.get("srcport")),
+                "transport": r.get("transport"),
+                "srcids_instance": r.get("srcids_instance"),
+                "timestamp": (r.get("query_timestamp") or r.get("timestamp") or r.get("_prefix_ts"))
             }
-            for record in batch
-        ]
-        
-        try:
-            response = firehose.put_record_batch(
-                DeliveryStreamName=FIREHOSE_STREAM_NAME,
-                Records=firehose_records
-            )
             
-            failed_count = response['FailedPutCount']
-            if failed_count > 0:
-                print(f"Warning: {failed_count} records failed to send to Firehose")
-                
-        except Exception as e:
-            print(f"Error sending batch to Firehose: {str(e)}")
-            raise
+            # Thêm dòng mới cho định dạng JSONL (Add newline for JSONL format)
+            json_row = json.dumps(out, ensure_ascii=False) + "\n"
+            firehose_records.append({'Data': json_row})
+
+    # Gửi đến Firehose theo batch 500 (Send to Firehose in batches of 500)
+    if firehose_records:
+        total_records = len(firehose_records)
+        print(f"Sending {total_records} records to Firehose...")
+        
+        batch_size = 500
+        for i in range(0, total_records, batch_size):
+            batch = firehose_records[i:i + batch_size]
+            try:
+                response = firehose.put_record_batch(
+                    DeliveryStreamName=FIREHOSE_STREAM_NAME,
+                    Records=batch
+                )
+                if response['FailedPutCount'] > 0:
+                    print(f"Warning: {response['FailedPutCount']} records failed")
+            except Exception as e:
+                print(f"Firehose error: {e}")
+
+    return {"status": "ok", "total_records": len(firehose_records)}
 ```

@@ -8,179 +8,284 @@ pre : " <b> 5.11.1. </b> "
 
 ```python
 
-import json
-import boto3
 import os
-import urllib3
+import json
+import logging
+import urllib.request
+import boto3
+from botocore.exceptions import ClientError
+import html
 
-ses = boto3.client('ses')
-http = urllib3.PoolManager()
+# --- Telegram ENV ---
 
-SENDER_EMAIL = os.environ.get('SENDER_EMAIL', '')
-RECIPIENT_EMAIL = os.environ.get('RECIPIENT_EMAIL', '')
-SLACK_WEBHOOK_URL = os.environ.get('SLACK_WEBHOOK_URL', '')
+# BOT_TOKEN = os.environ.get('BOT_TOKEN')
+# CHAT_ID = os.environ.get('CHAT_ID')
+# MESSAGE_THREAD_ID = os.environ.get('MESSAGE_THREAD_ID')
 
-def lambda_handler(event, context):
-    """
-    Dispatches security alerts via email (SES) and Slack.
-    Triggered by SNS topic when GuardDuty findings are detected.
-    """
-    
-    print(f"Processing alert: {json.dumps(event)}")
-    
+# --- Slack ENV ---
+
+SLACK_WEBHOOK_URL = os.environ.get("SLACK_WEBHOOK_URL")
+
+# --- SES ENV ---
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL')
+RECIPIENT_EMAIL = os.environ.get('RECIPIENT_EMAIL') # Can now be "a@b.com, c@d.com"
+AWS_REGION = os.environ.get('AWS_REGION', 'ap-southeast-1')
+
+# --- Setup ---
+
+# TELEGRAM_URL = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage" if BOT_TOKEN else None
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+# Initialize SES Client
+ses_client = boto3.client('ses', region_name=AWS_REGION)
+
+
+# ====================================================================
+# SEND TO TELEGRAM
+# ====================================================================
+
+# def send_to_telegram(finding, chat_id, thread_id):
+#     logger.info("Formatting message for Telegram...")
+
+#     severity_num = finding.get('severity', 0)
+#     if severity_num >= 7.0:
+#         severity = "🔴 HIGH"
+#     elif severity_num >= 4.0:
+#         severity = "🟠 MEDIUM"
+#     else:
+#         severity = "🔵 LOW"
+
+#     title = finding.get('title', 'N/A')
+#     description = finding.get('description', 'N/A')
+#     account_id = finding.get('accountId', 'N/A')
+#     region = finding.get('region', 'N/A')
+#     finding_type = finding.get('type', 'N/A')
+
+#     message_text = (
+#         f"🚨 *GuardDuty Finding* 🚨\n\n"
+#         f"*Severity:* {severity}\n"
+#         f"*Account:* {account_id}\n"
+#         f"*Region:* {region}\n"
+#         f"*Title:* {title}\n"
+#         f"*Description:* {description}\n\n"
+#         f"*Finding Type:* `{finding_type}`"
+#     )
+
+#     payload = {'chat_id': chat_id, 'text': message_text, 'parse_mode': 'Markdown'}
+#     if thread_id:
+#         payload['message_thread_id'] = thread_id
+
+#     try:
+#         req = urllib.request.Request(
+#             TELEGRAM_URL,
+#             data=json.dumps(payload).encode('utf-8'),
+#             headers={'Content-Type': 'application/json'}
+#         )
+#         with urllib.request.urlopen(req) as response:
+#             logger.info("Telegram response: " + response.read().decode('utf-8'))
+#     except Exception as e:
+#         logger.error(f"TELEGRAM FAILED: {e}")
+
+
+# ====================================================================
+# SEND TO SLACK
+# ====================================================================
+
+def send_to_slack(finding):
+    if not SLACK_WEBHOOK_URL:
+        logger.warning("Slack ENV missing. Skipping.")
+        return
+
+    severity_num = finding.get("severity", 0)
+    title        = finding.get("title", "No Title")
+    description  = finding.get("description", "No Description")
+    region       = finding.get("region", "N/A")
+    account_id   = finding.get("accountId", "N/A")
+    finding_type = finding.get("type", "N/A")
+
+    if severity_num >= 7:
+        color = "#ff0000"
+        sev = "🔴 HIGH"
+    elif severity_num >= 4:
+        color = "#ffa500"
+        sev = "🟠 MEDIUM"
+    else:
+        color = "#007bff"
+        sev = "🔵 LOW"
+
+    payload = {
+        "text": f"🚨 {sev} – {title}",
+        "attachments": [{
+            "color": color,
+            "blocks": [
+                {"type": "header", "text": {"type": "plain_text", "text": f"🚨 GuardDuty Finding: {title}"}},
+                {"type": "section", "fields": [
+                    {"type": "mrkdwn", "text": f"*Severity:*\n{sev}"},
+                    {"type": "mrkdwn", "text": f"*Region:*\n{region}"}
+                ]},
+                {"type": "section", "text": {"type": "mrkdwn", "text": f"*Description:*\n{description}"}},
+                {"type": "divider"},
+                {"type": "context", "elements": [
+                    {"type": "mrkdwn", "text": f"*Account:* `{account_id}`"},
+                    {"type": "mrkdwn", "text": f"*Type:* `{finding_type}`"}
+                ]}
+            ]
+        }]
+    }
+
     try:
-        # Parse SNS message
-        for record in event['Records']:
-            if record['EventSource'] == 'aws:sns':
-                message = json.loads(record['Sns']['Message'])
-                
-                # Extract finding details
-                finding_type = message.get('type', 'Unknown')
-                severity = message.get('severity', 0)
-                title = message.get('title', 'Security Finding')
-                description = message.get('description', '')
-                region = message.get('region', '')
-                account_id = message.get('accountId', '')
-                
-                # Build alert message
-                alert_subject = f"🚨 GuardDuty Alert: {title}"
-                alert_body = build_alert_message(message)
-                
-                # Send email alert
-                if SENDER_EMAIL and RECIPIENT_EMAIL:
-                    send_email_alert(alert_subject, alert_body)
-                
-                # Send Slack alert
-                if SLACK_WEBHOOK_URL:
-                    send_slack_alert(alert_subject, alert_body, severity)
-        
-        return {
-            'statusCode': 200,
-            'body': json.dumps('Alerts dispatched successfully')
-        }
-        
+        req = urllib.request.Request(
+            SLACK_WEBHOOK_URL,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Content-Type": "application/json"}
+        )
+        with urllib.request.urlopen(req) as response:
+            logger.info("Slack response: " + response.read().decode("utf-8"))
     except Exception as e:
-        print(f"Error dispatching alerts: {str(e)}")
-        raise
+        logger.error(f"SLACK FAILED: {e}")
 
-def build_alert_message(finding):
+
+# ====================================================================
+# SEND TO SES EMAIL (UPDATED FOR MULTIPLE RECIPIENTS)
+# ====================================================================
+def send_to_ses(finding):
+    if not SENDER_EMAIL or not RECIPIENT_EMAIL:
+        logger.warning("SES Env vars missing. Skipping Email.")
+        return
+
+    logger.info("Formatting message for SES Email...")
+
+    recipient_list = [email.strip() for email in RECIPIENT_EMAIL.split(',')]
+
+    severity_num = finding.get("severity", 0)
+    title        = finding.get("title", "No Title")
+    description  = finding.get("description", "No Description")
+    region       = finding.get("region", "N/A")
+    account_id   = finding.get("accountId", "N/A")
+    finding_type = finding.get("type", "N/A")
+    finding_id   = finding.get("id", "N/A")
+
+    if severity_num >= 7:
+        color = "#ff0000"
+        sev = "HIGH"
+    elif severity_num >= 4:
+        color = "#ffa500"
+        sev = "MEDIUM"
+    else:
+        color = "#007bff"
+        sev = "LOW"
+
+    html_body = f"""
+    <html>
+    <head>
+        <style>
+            body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+            .container {{ width: 100%; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }}
+            .header {{ background-color: {color}; color: white; padding: 15px; text-align: center; }}
+            .content {{ padding: 20px; }}
+            .footer {{ background-color: #f4f4f4; padding: 10px; text-align: center; font-size: 12px; color: #666; }}
+            .label {{ font-weight: bold; color: #555; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h2>🚨 GuardDuty Alert: {sev}</h2>
+            </div>
+            <div class="content">
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <hr>
+                <p><span class="label">Account ID:</span> {account_id}</p>
+                <p><span class="label">Region:</span> {region}</p>
+                <p><span class="label">Type:</span> {finding_type}</p>
+                <p><span class="label">Finding ID:</span> {finding_id}</p>
+            </div>
+            <div class="footer">
+                Generated by AWS Lambda Alert Dispatch
+            </div>
+        </div>
+    </body>
+    </html>
     """
-    Builds a formatted alert message from GuardDuty finding.
-    """
-    finding_type = finding.get('type', 'Unknown')
-    severity = finding.get('severity', 0)
-    title = finding.get('title', 'Security Finding')
-    description = finding.get('description', '')
-    region = finding.get('region', '')
-    account_id = finding.get('accountId', '')
-    created_at = finding.get('createdAt', '')
-    
-    # Extract resource information
-    resource = finding.get('resource', {})
-    resource_type = resource.get('resourceType', '')
-    instance_details = resource.get('instanceDetails', {})
-    instance_id = instance_details.get('instanceId', 'N/A')
-    
-    # Build message
-    message = f"""
-GUARDDUTY SECURITY ALERT
 
-Finding Type: {finding_type}
-Severity: {severity}
-Title: {title}
-
-Description:
-{description}
-
-Resource Information:
-- Resource Type: {resource_type}
-- Instance ID: {instance_id}
-- Region: {region}
-- Account ID: {account_id}
-
-Timestamp: {created_at}
-
-Action Required:
-Please investigate this security finding immediately. The incident response workflow has been automatically triggered.
-
----
-This is an automated alert from the AWS Auto Incident Response System.
-"""
-    
-    return message
-
-def send_email_alert(subject, body):
-    """
-    Sends email alert via Amazon SES.
-    """
     try:
-        recipients = [email.strip() for email in RECIPIENT_EMAIL.split(',')]
-        
-        response = ses.send_email(
+        response = ses_client.send_email(
             Source=SENDER_EMAIL,
-            Destination={
-                'ToAddresses': recipients
-            },
+            Destination={'ToAddresses': recipient_list}, # Uses the list now
             Message={
-                'Subject': {
-                    'Data': subject,
-                    'Charset': 'UTF-8'
-                },
-                'Body': {
-                    'Text': {
-                        'Data': body,
-                        'Charset': 'UTF-8'
-                    }
-                }
+                'Subject': {'Data': f"GuardDuty Alert [{sev}]: {title}", 'Charset': 'UTF-8'},
+                'Body': {'Html': {'Data': html_body, 'Charset': 'UTF-8'}}
             }
         )
-        
-        print(f"Email sent successfully: {response['MessageId']}")
-        
-    except Exception as e:
-        print(f"Error sending email: {str(e)}")
-        raise
+        logger.info(f"SES Email sent to {len(recipient_list)} recipients! MessageId: {response['MessageId']}")
+    except ClientError as e:
+        logger.error(f"SES FAILED: {e.response['Error']['Message']}")
 
-def send_slack_alert(subject, body, severity):
-    """
-    Sends alert to Slack via webhook.
-    """
+
+# ====================================================================
+# MAIN HANDLER
+# ====================================================================
+def lambda_handler(event, context):
+    logger.info(f"Event received: {json.dumps(event)}")
+
     try:
-        # Determine color based on severity
-        if severity >= 7:
-            color = '#FF0000'  # Red for high severity
-        elif severity >= 4:
-            color = '#FFA500'  # Orange for medium severity
+        sns_message_raw = event["Records"][0]["Sns"]["Message"]
+        message_data = json.loads(sns_message_raw)
+        
+        # Normalization Logic
+        finding = {}
+        if "detail-type" in message_data and message_data["detail-type"] == "GuardDuty Finding":
+            detail = message_data["detail"]
+            finding = {
+                "severity": detail.get("severity", 0),
+                "title": detail.get("title", "GuardDuty Finding"),
+                "description": detail.get("description", "No description provided"),
+                "accountId": detail.get("accountId", "N/A"),
+                "region": detail.get("region", "N/A"),
+                "type": detail.get("type", "N/A"),
+                "id": detail.get("id", "N/A")
+            }
+        elif "AlarmName" in message_data:
+            state = message_data.get("NewStateValue")
+            severity = 8 if state == "ALARM" else 0
+            finding = {
+                "severity": severity,
+                "title": f"CloudWatch Alarm: {message_data.get('AlarmName')}",
+                "description": message_data.get("NewStateReason", "State change detected"),
+                "accountId": message_data.get("AWSAccountId", "N/A"),
+                "region": message_data.get("Region", "N/A"),
+                "type": "CloudWatch Alarm",
+                "id": "N/A"
+            }
         else:
-            color = '#FFFF00'  # Yellow for low severity
-        
-        # Build Slack message
-        slack_message = {
-            'attachments': [
-                {
-                    'color': color,
-                    'title': subject,
-                    'text': body,
-                    'footer': 'AWS Auto Incident Response System'
-                }
-            ]
-        }
-        
-        # Send to Slack
-        encoded_data = json.dumps(slack_message).encode('utf-8')
-        response = http.request(
-            'POST',
-            SLACK_WEBHOOK_URL,
-            body=encoded_data,
-            headers={'Content-Type': 'application/json'}
-        )
-        
-        if response.status == 200:
-            print("Slack alert sent successfully")
-        else:
-            print(f"Slack alert failed with status {response.status}: {response.data}")
-        
+            finding = {
+                "severity": 0,
+                "title": "Unknown Alert",
+                "description": f"Raw Payload: {json.dumps(message_data)}",
+                "accountId": "N/A",
+                "region": "N/A",
+                "type": "Unknown",
+                "id": "N/A"
+            }
+            
     except Exception as e:
-        print(f"Error sending Slack alert: {str(e)}")
-        # Don't raise - email is primary notification method
+        logger.error(f"FATAL: Could not parse incoming SNS event: {e}")
+        return {"statusCode": 500}
+
+    # --- Send Telegram ---
+    # if BOT_TOKEN and CHAT_ID:
+    #     send_to_telegram(finding, CHAT_ID, MESSAGE_THREAD_ID)
+
+    # --- Send Slack ---
+    if SLACK_WEBHOOK_URL:
+        send_to_slack(finding)
+
+    # --- Send SES Email ---
+    if SENDER_EMAIL and RECIPIENT_EMAIL:
+        send_to_ses(finding)
+
+    return {"statusCode": 200, "body": "Dispatch complete"}
 ```

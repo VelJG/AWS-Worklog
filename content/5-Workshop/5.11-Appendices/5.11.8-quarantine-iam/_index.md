@@ -11,62 +11,46 @@ import json
 import boto3
 import os
 
-iam = boto3.client('iam')
 
-QUARANTINE_POLICY_ARN = os.environ['QUARANTINE_POLICY_ARN']
+QUARANTINE_POLICY_ARN = os.environ.get("QUARANTINE_POLICY_ARN")
 
 def lambda_handler(event, context):
-    """
-    Quarantines a compromised IAM user by attaching a deny-all policy.
-    """
-    
-    print(f"Quarantining IAM user from event: {json.dumps(event)}")
+    print("=== EVENT RECEIVED ===")
+    print(json.dumps(event, indent=2))
     
     try:
-        # Extract user information from GuardDuty finding
-        detail = event.get('detail', {})
-        resource = detail.get('resource', {})
-        access_key_details = resource.get('accessKeyDetails', {})
-        
-        user_name = access_key_details.get('userName', '')
-        
-        if not user_name:
-            print("No IAM user found in finding")
-            return {
-                'statusCode': 200,
-                'Message': 'No IAM user to quarantine'
-            }
-        
-        print(f"Quarantining IAM user: {user_name}")
-        
-        # Check if policy is already attached
-        response = iam.list_attached_user_policies(UserName=user_name)
-        attached_policies = [p['PolicyArn'] for p in response['AttachedPolicies']]
-        
-        if QUARANTINE_POLICY_ARN in attached_policies:
-            print(f"User {user_name} is already quarantined")
-            return {
-                'statusCode': 200,
-                'UserName': user_name,
-                'Message': 'User already quarantined'
-            }
-        
-        # Attach quarantine policy
-        iam.attach_user_policy(
-            UserName=user_name,
-            PolicyArn=QUARANTINE_POLICY_ARN
+        finding = event.get('detail', {})
+        user_name = (
+            finding.get('resource', {})
+                    .get('accessKeyDetails', {})
+                    .get('userName')
         )
-        
-        print(f"Successfully quarantined user {user_name}")
-        
-        return {
-            'statusCode': 200,
-            'UserName': user_name,
-            'QuarantinePolicyArn': QUARANTINE_POLICY_ARN,
-            'Message': 'User successfully quarantined'
-        }
+
+        if not user_name:
+            print("[WARNING] No IAM user found in this finding. Skipping.")
+            return {"status": "no_user"}
+
+        print(f"[ACTION] Quarantining IAM User '{user_name}'...")
+
+        iam = boto3.client('iam')
+
+        # Kiểm tra nếu policy đã được gán
+        attached_policies = iam.list_attached_user_policies(UserName=user_name)['AttachedPolicies']
+        policy_arns = [p['PolicyArn'] for p in attached_policies]
+
+        if QUARANTINE_POLICY_ARN in policy_arns:
+            print(f"[INFO] Policy {QUARANTINE_POLICY_ARN} is already attached to user {user_name}.")
+        else:
+            iam.attach_user_policy(
+                UserName=user_name,
+                PolicyArn=QUARANTINE_POLICY_ARN
+            )
+            print(f"[SUCCESS] Policy attached. User {user_name} is now quarantined.")
         
     except Exception as e:
-        print(f"Error quarantining IAM user: {str(e)}")
-        raise
+        print(f"[ERROR] Failed to quarantine user: {str(e)}")
+        raise e
+
+    return {"status": "processed", "action": "iam_quarantined"}
+
 ```

@@ -9,48 +9,39 @@ pre : " <b> 5.11.6. </b> "
 ```python
 
 import json
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
-    """
-    Parses GuardDuty findings to extract instance IDs and regions
-    for incident response actions.
-    """
+    instance_ids = []
     
-    print(f"Parsing GuardDuty finding: {json.dumps(event)}")
+    detail = event.get('detail', {})
     
-    try:
-        # Extract finding details
-        detail = event.get('detail', {})
-        resource = detail.get('resource', {})
-        resource_type = resource.get('resourceType', '')
-        
-        # Extract instance information
-        instance_details = resource.get('instanceDetails', {})
-        instance_ids = []
-        
-        if resource_type == 'Instance' and instance_details:
-            instance_id = instance_details.get('instanceId', '')
-            if instance_id:
-                instance_ids.append(instance_id)
-        
-        # Extract region
-        region = detail.get('region', 'us-east-1')
-        
-        # Build response
-        response = {
-            'InstanceIds': instance_ids,
-            'Region': region,
-            'FindingType': detail.get('type', ''),
-            'Severity': detail.get('severity', 0),
-            'ResourceType': resource_type
-        }
-        
-        print(f"Parsed finding: {json.dumps(response)}")
-        
-        return response
-        
-    except Exception as e:
-        print(f"Error parsing finding: {str(e)}")
-        raise
+    region = event.get('region') or detail.get('region') or 'ap-southeast-1'
+    
+    instance_id_primary = detail.get('resource', {}).get('instanceDetails', {}).get('instanceId')
+    if instance_id_primary:
+        instance_ids.append(instance_id_primary)
+
+    # --- 2. Extract from the older/secondary 'resources' array structure ---
+    for r in detail.get("resources", []):
+        if r.get("type") == "AwsEc2Instance":
+            id_from_details = r.get('details', {}).get('instanceId')
+            
+            if id_from_details:
+                instance_ids.append(id_from_details)
+            else:
+                arn_id = r.get('id')
+                if arn_id and arn_id.startswith('arn:aws:ec2:'):
+                    instance_ids.append(arn_id.split('/')[-1])
+    
+    unique_instance_ids = list(set([id for id in instance_ids if id]))
+    
+    return {
+        "InstanceIds": unique_instance_ids, 
+        "Region": region
+    }
 
 ```

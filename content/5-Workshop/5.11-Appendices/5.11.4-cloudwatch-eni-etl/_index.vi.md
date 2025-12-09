@@ -1,5 +1,5 @@
 ---
-title : "CloudWatch ENI ETL Code"
+title : "Mã CloudWatch ENI ETL"
 date: "2000-01-01"
 weight : 04
 chapter : false
@@ -14,118 +14,114 @@ import gzip
 import os
 from datetime import datetime
 
-firehose = boto3.client('firehose')
-s3 = boto3.client('s3')
+s3 = boto3.client("s3")
+firehose = boto3.client("firehose")
 
-FIREHOSE_STREAM_NAME = os.environ['FIREHOSE_STREAM_NAME']
+# --------------------------------------------------
+# CONFIGURATION
+# --------------------------------------------------
 
-def lambda_handler(event, context):
-    """
-    Processes VPC Flow Logs from S3 and sends them to Kinesis Firehose.
-    """
-    
-    for record in event['Records']:
-        bucket = record['s3']['bucket']['name']
-        key = record['s3']['object']['key']
-        
-        print(f"Processing VPC Flow log: s3://{bucket}/{key}")
-        
-        try:
-            # Download and decompress log file
-            response = s3.get_object(Bucket=bucket, Key=key)
-            
-            if key.endswith('.gz'):
-                content = gzip.decompress(response['Body'].read())
-            else:
-                content = response['Body'].read()
-            
-            # Process each log line
-            processed_records = []
-            for line in content.decode('utf-8').split('
-'):
-                if line.strip() and not line.startswith('version'):
-                    processed_record = process_flow_log(line)
-                    if processed_record:
-                        processed_records.append(processed_record)
-            
-            # Send to Firehose
-            if processed_records:
-                send_to_firehose(processed_records)
-                print(f"Successfully processed {len(processed_records)} flow log entries")
-            
-        except Exception as e:
-            print(f"Error processing {key}: {str(e)}")
-            raise
+FIREHOSE_STREAM_NAME = os.environ.get("FIREHOSE_STREAM_NAME")
 
-    return {
-        'statusCode': 200,
-        'body': json.dumps('VPC Flow ETL completed successfully')
-    }
+# ----------------------------- UTILS -----------------------------
 
-def process_flow_log(log_line):
-    """
-    Processes a single VPC Flow Log entry.
-    Format: version account-id interface-id srcaddr dstaddr srcport dstport protocol packets bytes start end action log-status
-    """
+def read_gz(bucket, key):
+    obj = s3.get_object(Bucket=bucket, Key=key)
+    with gzip.GzipFile(fileobj=obj["Body"]) as f:
+        return f.read().decode("utf-8", errors="replace")
+
+def safe_int(x):
     try:
-        fields = log_line.split()
-        
-        if len(fields) < 14:
-            return None
-        
-        start_time = int(fields[10])
-        timestamp_str = datetime.fromtimestamp(start_time).isoformat()
-        
-        return {
-            'version': int(fields[0]),
-            'account_id': fields[1],
-            'interface_id': fields[2],
-            'srcaddr': fields[3],
-            'dstaddr': fields[4],
-            'srcport': int(fields[5]),
-            'dstport': int(fields[6]),
-            'protocol': int(fields[7]),
-            'packets': int(fields[8]),
-            'bytes': int(fields[9]),
-            'start_time': start_time,
-            'end_time': int(fields[11]),
-            'action': fields[12],
-            'log_status': fields[13],
-            'timestamp_str': timestamp_str
-        }
-    except (ValueError, IndexError) as e:
-        print(f"Error parsing flow log line: {log_line[:100]} - {str(e)}")
+        return int(x)
+    except:
         return None
 
-def send_to_firehose(records):
-    """
-    Sends processed records to Kinesis Firehose in batches.
-    """
-    batch_size = 500
+
+def parse_flow_log_line(line):
+    parts = line.strip().split(' ')
     
-    for i in range(0, len(records), batch_size):
-        batch = records[i:i + batch_size]
+    if len(parts) < 14:
+        return None
+
+    try:
+        start_timestamp = safe_int(parts[10])
+        time_str = None
+        if start_timestamp:
+            dt_object = datetime.fromtimestamp(start_timestamp)
+            time_str = dt_object.strftime('%Y-%m-%d %H:%M:%S')
+
+        record = {
+            "version": safe_int(parts[0]),       # Cột 1: version (int)
+            "account_id": parts[1],              # Cột 2: account_id (STRING)
+            "interface_id": parts[2],            # Cột 3: eni-...
+            "srcaddr": parts[3],
+            "dstaddr": parts[4],
+            "srcport": safe_int(parts[5]),
+            "dstport": safe_int(parts[6]),
+            "protocol": safe_int(parts[7]),
+            "packets": safe_int(parts[8]),
+            "bytes": safe_int(parts[9]),
+            "start_time": start_timestamp,       # Cột 11
+            "end_time": safe_int(parts[11]),
+            "action": parts[12],
+            "log_status": parts[13],
+            "timestamp_str": time_str
+        }
+        return record
+    except Exception as e:
+        print(f"Error parsing line: {e}")
+        return None
+
+def lambda_handler(event, context):
+    print(f"Received S3 Event. Records: {len(event.get('Records', []))}")
+    firehose_records = []
+
+    # Duyệt qua các file S3 gửi về (Iterate through files sent from S3)
+    for record in event.get("Records", []):
+        if "s3" not in record: continue
+
+        bucket = record["s3"]["bucket"]["name"]
+        key = record["s3"]["object"]["key"]
+
+        # Chỉ xử lý file .gz (Process .gz files only)
+        if not key.endswith(".gz"):
+            print(f"Skipping non-gz: {key}")
+            continue
+
+        print(f"Processing: {key}")
         
-        firehose_records = [
-            {
-                'Data': json.dumps(record) + '
-'
-            }
-            for record in batch
-        ]
-        
-        try:
-            response = firehose.put_record_batch(
-                DeliveryStreamName=FIREHOSE_STREAM_NAME,
-                Records=firehose_records
-            )
+        # Đọc nội dung (Read content)
+        content = read_gz(bucket, key)
+        if not content: continue
+
+        # Parse từng dòng log (Parse each log line)
+        for line in content.splitlines():
+            rec = parse_flow_log_line(line)
+            if not rec: continue
+
+            # Chuyển thành JSON string và thêm xuống dòng (\n) (Convert to JSON string and add newline)
+            json_row = json.dumps(rec) + "\n"
             
-            failed_count = response['FailedPutCount']
-            if failed_count > 0:
-                print(f"Warning: {failed_count} records failed to send to Firehose")
-                
-        except Exception as e:
-            print(f"Error sending batch to Firehose: {str(e)}")
-            raise
+            firehose_records.append({'Data': json_row})
+
+    # Đẩy sang Firehose (Batching 500 dòng) (Push to Firehose - batching 500 lines)
+    if firehose_records:
+        total = len(firehose_records)
+        print(f"Flushing {total} records to Firehose...")
+        
+        batch_size = 500
+        for i in range(0, total, batch_size):
+            batch = firehose_records[i:i + batch_size]
+            try:
+                response = firehose.put_record_batch(
+                    DeliveryStreamName=FIREHOSE_STREAM_NAME,
+                    Records=batch
+                )
+                if response['FailedPutCount'] > 0:
+                    print(f"Warning: {response['FailedPutCount']} records failed.")
+            except Exception as e:
+                print(f"Firehose API Error: {e}")
+
+    return {"status": "ok", "count": len(firehose_records)}
 
 ```

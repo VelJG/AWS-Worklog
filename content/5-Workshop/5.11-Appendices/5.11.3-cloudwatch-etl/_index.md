@@ -10,112 +10,147 @@ pre : " <b> 5.11.3. </b> "
 import json
 import boto3
 import gzip
-import base64
+import re
 import os
+from datetime import datetime, timezone
 
-firehose = boto3.client('firehose')
-s3 = boto3.client('s3')
+s3 = boto3.client("s3")
+firehose= boto3.client("firehose")
 
-FIREHOSE_STREAM_NAME = os.environ['FIREHOSE_STREAM_NAME']
+# --------------------------------------------------
+# CONFIG
+# --------------------------------------------------
+SOURCE_PREFIX = "exportedlogs/vpc-dns-logs/"
+FIREHOSE_STREAM_NAME = os.environ.get("FIREHOSE_STREAM_NAME")
+
+VPC_RE = re.compile(r"/(vpc-[0-9A-Za-z\-]+)")
+ISO_TS_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T")
+
+def read_gz(bucket, key):
+    obj = s3.get_object(Bucket=bucket, Key=key)
+    with gzip.GzipFile(fileobj=obj["Body"]) as f:
+        return f.read().decode("utf-8", errors="replace")
+
+def flatten_once(d):
+    out = {}
+    for k, v in (d or {}).items():
+        if isinstance(v, dict):
+            for k2, v2 in v.items():
+                out[f"{k}_{k2}"] = v2
+        else:
+            out[k] = v
+    return out
+
+
+def safe_int(x):
+    try:
+        return int(x)
+    except:
+        return None
+
+def parse_dns_line(line):
+    raw = line.strip()
+    if not raw:
+        return None
+
+    json_part = raw
+    prefix_ts = None
+
+    if ISO_TS_RE.match(raw):
+        try:
+            prefix_ts, rest = raw.split(" ", 1)
+            json_part = rest
+        except:
+            pass
+
+    if not json_part.startswith("{"):
+        idx = json_part.find("{")
+        if idx != -1:
+            json_part = json_part[idx:]
+
+    try:
+        obj = json.loads(json_part)
+    except:
+        return None
+
+    flat = flatten_once(obj)
+    if prefix_ts:
+        flat["_prefix_ts"] = prefix_ts
+    return flat
+
 
 def lambda_handler(event, context):
-    """
-    Processes VPC DNS query logs from S3 and sends them to Kinesis Firehose.
-    """
+    print(f"Received S3 Event. Records: {len(event.get('Records', []))}")
     
-    for record in event['Records']:
-        bucket = record['s3']['bucket']['name']
-        key = record['s3']['object']['key']
-        
-        print(f"Processing VPC DNS log: s3://{bucket}/{key}")
-        
-        try:
-            # Download and decompress log file
-            response = s3.get_object(Bucket=bucket, Key=key)
-            
-            if key.endswith('.gz'):
-                content = gzip.decompress(response['Body'].read())
-            else:
-                content = response['Body'].read()
-            
-            # Process each log line
-            processed_records = []
-            for line in content.decode('utf-8').split('
-'):
-                if line.strip():
-                    try:
-                        log_entry = json.loads(line)
-                        processed_record = process_dns_log(log_entry)
-                        processed_records.append(processed_record)
-                    except json.JSONDecodeError:
-                        print(f"Skipping invalid JSON line: {line[:100]}")
-                        continue
-            
-            # Send to Firehose
-            if processed_records:
-                send_to_firehose(processed_records)
-                print(f"Successfully processed {len(processed_records)} DNS log entries")
-            
-        except Exception as e:
-            print(f"Error processing {key}: {str(e)}")
-            raise
+    firehose_records = []
 
-    return {
-        'statusCode': 200,
-        'body': json.dumps('VPC DNS ETL completed successfully')
-    }
+    for record in event.get("Records", []):
+        if "s3" not in record: 
+            continue
 
-def process_dns_log(log_entry):
-    """
-    Processes a single DNS query log entry.
-    """
-    return {
-        'version': log_entry.get('version', ''),
-        'account_id': log_entry.get('account_id', ''),
-        'region': log_entry.get('region', ''),
-        'vpc_id': log_entry.get('vpc_id', ''),
-        'query_timestamp': log_entry.get('query_timestamp', ''),
-        'query_name': log_entry.get('query_name', ''),
-        'query_type': log_entry.get('query_type', ''),
-        'query_class': log_entry.get('query_class', ''),
-        'rcode': log_entry.get('rcode', ''),
-        'answers': json.dumps(log_entry.get('answers', [])),
-        'srcaddr': log_entry.get('srcaddr', ''),
-        'srcport': log_entry.get('srcport', 0),
-        'transport': log_entry.get('transport', ''),
-        'srcids_instance': log_entry.get('srcids', {}).get('instance', ''),
-        'timestamp': log_entry.get('query_timestamp', '')
-    }
-
-def send_to_firehose(records):
-    """
-    Sends processed records to Kinesis Firehose in batches.
-    """
-    batch_size = 500
-    
-    for i in range(0, len(records), batch_size):
-        batch = records[i:i + batch_size]
+        bucket = record["s3"]["bucket"]["name"]
+        key = record["s3"]["object"]["key"]
         
-        firehose_records = [
-            {
-                'Data': json.dumps(record) + '
-'
+        if not key.startswith(SOURCE_PREFIX) or not key.endswith(".gz"):
+            print(f"Skipping file: {key}")
+            continue
+
+        print(f"Processing S3 file: {key}")
+        
+        # Extract VPC ID from file path
+        vpc_id_match = VPC_RE.search(key)
+        vpc_id = vpc_id_match.group(1) if vpc_id_match else "unknown"
+
+        # Read and process file content
+        content = read_gz(bucket, key)
+        if not content: 
+            continue
+        
+        for line in content.splitlines():
+            r = parse_dns_line(line)
+            if not r: 
+                continue
+            
+            # Create flattened JSON record
+            out = {
+                "version": r.get("version"),
+                "account_id": r.get("account_id"),
+                "region": r.get("region"),
+                "vpc_id": r.get("vpc_id", vpc_id),
+                "query_timestamp": r.get("query_timestamp"),
+                "query_name": r.get("query_name"),
+                "query_type": r.get("query_type"),
+                "query_class": r.get("query_class"),
+                "rcode": r.get("rcode"),
+                "answers": json.dumps(r.get("answers"), ensure_ascii=False),
+                "srcaddr": r.get("srcaddr"),
+                "srcport": safe_int(r.get("srcport")),
+                "transport": r.get("transport"),
+                "srcids_instance": r.get("srcids_instance"),
+                "timestamp": (r.get("query_timestamp") or r.get("timestamp") or r.get("_prefix_ts"))
             }
-            for record in batch
-        ]
-        
-        try:
-            response = firehose.put_record_batch(
-                DeliveryStreamName=FIREHOSE_STREAM_NAME,
-                Records=firehose_records
-            )
             
-            failed_count = response['FailedPutCount']
-            if failed_count > 0:
-                print(f"Warning: {failed_count} records failed to send to Firehose")
-                
-        except Exception as e:
-            print(f"Error sending batch to Firehose: {str(e)}")
-            raise
+            # Add newline for JSONL format
+            json_row = json.dumps(out, ensure_ascii=False) + "\n"
+            firehose_records.append({'Data': json_row})
 
+    # Send to Firehose in batches of 500
+    if firehose_records:
+        total_records = len(firehose_records)
+        print(f"Sending {total_records} records to Firehose...")
+        
+        batch_size = 500
+        for i in range(0, total_records, batch_size):
+            batch = firehose_records[i:i + batch_size]
+            try:
+                response = firehose.put_record_batch(
+                    DeliveryStreamName=FIREHOSE_STREAM_NAME,
+                    Records=batch
+                )
+                if response['FailedPutCount'] > 0:
+                    print(f"Warning: {response['FailedPutCount']} records failed")
+            except Exception as e:
+                print(f"Firehose error: {e}")
+
+    return {"status": "ok", "total_records": len(firehose_records)}
 ```
