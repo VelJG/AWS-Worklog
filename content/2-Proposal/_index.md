@@ -5,7 +5,7 @@ weight: 02
 chapter: false
 pre: " <b> 2. </b> "
 ---
-![AWS Logo](../2-Proposal/image.png)
+![AWS Logo](/images/2-Proposal/AWSLogo.png)
 
 # FCJ Internship Project Proposal
 
@@ -98,7 +98,7 @@ Implementing these enhanced risk mitigation strategies will provide a more resil
 
 ### 2.1 Technical Architecture Diagram
 
-![AWS Architecture](../2-Proposal/AWSWorkshopArchitecture-Stepfunctions.drawio.png)
+![AWS Architecture](/images/2-Proposal/AWSWorkshopArchitecture-Final.png)
 
 Our solution uses a comprehensive multi-stage architecture for automated incident response and forensics:
 
