@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 
-![AWS Logo](/images/2-Proposal/image.png)
+![AWS Logo](/images/2-Proposal/AWSLogo.png)
 
 # Bản Đề Xuất Dự Án Thực Tập FCJ
 
@@ -99,7 +99,7 @@ Việc thực hiện các chiến lược giảm thiểu rủi ro nâng cao này
 
 ### 2.1 Sơ đồ Kiến trúc Kỹ thuật
 
-![AWS Architecture](/images/2-Proposal/AWSWorkshopArchitecture-Stepfunctions.drawio.png)
+![AWS Architecture](/images/2-Proposal/AWSWorkshopArchitecture-Final.png)
 
 Giải pháp của chúng tôi sử dụng một kiến trúc đa giai đoạn toàn diện cho việc ứng phó sự cố và điều tra số tự động:
 
