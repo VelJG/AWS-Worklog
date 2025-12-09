@@ -10,9 +10,9 @@ pre: " <b> 2. </b> "
 
 # Hệ thống Ứng phó Sự cố và Điều tra Số Tự động trên AWS
 
-**Liên kết Đề xuất:** [Proposal](https://docs.google.com/document/d/1RcPJmiVxS80qdi0wOvHltBcSoZtRC97LngEZEkKC09k/edit?brid=hv-MPz2j8n_U1ZiCdslbyw&tab=t.0)
+# Proposal Link: [Proposal](https://docs.google.com/document/d/1RcPJmiVxS80qdi0wOvHltBcSoZtRC97LngEZEkKC09k/edit?brid=hv-MPz2j8n_U1ZiCdslbyw&tab=t.0)
 
-## 1. Tóm tắt Điều hành
+## 1. Tóm tắt 
 Nhóm của chúng tôi đang xây dựng một giải pháp ứng phó sự cố và điều tra số tự động như một phần của chương trình thực tập AWS First Cloud Journey. Ý tưởng rất đơn giản—khi một vấn đề bảo mật xảy ra trong AWS, chúng tôi muốn hệ thống phản ứng tự động mà không cần chờ đợi sự can thiệp thủ công.
 
 Chúng tôi đang tạo ra một nền tảng tự động phát hiện các phát hiện bảo mật từ GuardDuty, cô lập các tài nguyên bị ảnh hưởng, thu thập bằng chứng pháp y thông qua việc thu thập dữ liệu toàn diện, và cung cấp các phân tích và bảng điều khiển để các đội bảo mật có thể điều tra những gì đã xảy ra. Mọi thứ được xây dựng bằng Infrastructure-as-Code với AWS CDK, vì vậy khách hàng có thể dễ dàng triển khai nó vào tài khoản AWS của riêng họ.
