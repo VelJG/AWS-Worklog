@@ -9,7 +9,7 @@ chapter: false
 ### Thông tin sinh viên:
 &emsp; **Họ và tên:** Huỳnh An Khương
 
-&emsp; **Số điện thoại:** 0964443042
+&emsp; **Số điện thoại:** 0964440342
 
 &emsp; **Email:** huynhankhuong0511@gmail.com
 
@@ -23,7 +23,7 @@ chapter: false
 
 &emsp; **Vị trí thực tập:** FCJ Cloud Intern
 
-&emsp; **Thời gian thực tập:** Từ ngày 12/08/2025 đến ngày 12/11/2025
+&emsp; **Thời gian thực tập:** Từ ngày 08/09/2025 đến ngày 12/12/2025
 
 ![Your profile picture](/images/KhuongAnhThe.jpg)
 
