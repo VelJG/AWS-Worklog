@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# AWS Auto Incident Response System Setup
+# AWS Automated Incident Response and Forensics System Setup
 
 #### Overview
 

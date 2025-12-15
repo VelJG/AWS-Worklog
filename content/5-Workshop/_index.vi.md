@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# Thiết lập hệ thống phản hồi sự cố tự động AWS
+# Thiết lập hệ thống phản hồi sự cố tự động và pháp y số trên AWS
 
 #### Tổng quan
 
